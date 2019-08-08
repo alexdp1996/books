@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<table class="table table-striped table-bordered dataTable" id="books">
+    <thead>
+        <tr>
+            <th>
+                Caption
+            </th>
+            <th>
+                Pages
+            </th>
+            <th>
+                Rate
+            </th>
+            <th>
+                Authors
+            </th>
+            <th>
+                <a class="btn btn-default" href="/Book/Create"><i class="glyphicon glyphicon-plus"></i></a>
+            </th>
+    </thead>
+    <tbody></tbody>
+</table>
+
+@section scripts{
+    @Scripts.Render("~/Scripts/book-list.js")
+}

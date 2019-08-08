@@ -19,6 +19,7 @@ namespace Logic
             book.Id = model.Id;
             book.Name = model.Name;
             book.Rate = model.Rate;
+            book.Pages = model.Pages;
 
             foreach (var author in model.Authors)
             {
@@ -32,6 +33,7 @@ namespace Logic
         {
             target.Name = model.Name;
             target.Rate = model.Rate;
+            target.Pages = model.Pages;
         }
 
         private BookEM Find(long Id)
@@ -39,10 +41,11 @@ namespace Logic
             return DataContext.Books.FirstOrDefault(b => b.Id == Id);
         }
 
-        public void AddBook(BookVM model, long authorId)
+        public void AddBook(BookVM model)
         {
             var book = new BookEM();
             MapBook(book, model);
+            DataContext.Books.Add(book);
             DataContext.SaveChanges();
         }
 
@@ -66,17 +69,24 @@ namespace Logic
             return MapBook(Find(bookId));
         }
 
-        public IEnumerable<BookVM> GetBooks(DatatableDataVM model)
+        public DatatableDataVM GetBooks(DataTableVM model)
         {
-            var result = new List<BookVM>();
+            var result = new DatatableDataVM();
+
+            var list = new List<BookVM>();
             
             var books = DataContext.Books.AsQueryable();
+            result.draw = model.draw;
+            result.recordsTotal = books.Count();
+
             //add sorting/filtering here later
 
             foreach (var book in books)
             {
-                result.Add(MapBook(book));
+                list.Add(MapBook(book));
             }
+            result.recordsFiltered = list.Count;
+            result.data = list;
 
             return result;
         }

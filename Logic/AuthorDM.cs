@@ -13,11 +13,33 @@ namespace Logic
     {
         private DataContext DataContext { get; } = new DataContext();
 
+        public List<KeyValuePair<long, string>> GetAuthorsByTerm(string term)
+        {
+            var items = DataContext.Authors.Where(a => (a.Name + " " + a.Surname).ToLower().Contains(term.ToLower()));
+            var result = new List<KeyValuePair<long, string>>();
+            foreach (var i in items)
+            {
+                result.Add(new KeyValuePair<long, string>(i.Id, i.Name + " " + i.Surname));
+            }
+            return result;
+        }
+
+        public List<AuthorVM> GetAuthorsByIds(IEnumerable<long> Ids)
+        {
+            var result = new List<AuthorVM>();
+            foreach (var id in Ids)
+            {
+                result.Add(MapAuthor(Find(id)));
+            }
+            return result;
+        }
+
         internal static AuthorVM MapAuthor(AuthorEM model, bool booksNeeded = false)
         {
             var author = new AuthorVM();
             author.Id = model.Id;
             author.Surname = model.Surname;
+            author.Name = model.Name;
 
             if (booksNeeded)
             {
@@ -35,6 +57,7 @@ namespace Logic
         private void MapAuthor(AuthorEM target, AuthorVM model)
         {
             target.Surname = model.Surname;
+            target.Name = model.Name;
         }
 
         private AuthorEM Find(long Id)
@@ -42,17 +65,25 @@ namespace Logic
             return DataContext.Authors.FirstOrDefault(b => b.Id == Id);
         }
 
-        public IEnumerable<AuthorVM> GetAuthors(DatatableDataVM vm, bool booksNeeded = false)
+        public DatatableDataVM GetAuthors(DataTableVM model, bool booksNeeded = false)
         {
-            var result = new List<AuthorVM>();
+            var result = new DatatableDataVM();
+
+            var list = new List<AuthorVM>();
 
             var authors = DataContext.Authors.AsQueryable();
+            result.draw = model.draw;
+            result.recordsTotal = authors.Count();
+
             //add sorting/filtering here later
 
             foreach (var author in authors)
             {
-                result.Add(MapAuthor(author, booksNeeded));
+                list.Add(MapAuthor(author, booksNeeded));
             }
+
+            result.recordsFiltered = list.Count;
+            result.data = list;
 
             return result;
         }
@@ -62,6 +93,13 @@ namespace Logic
             return MapAuthor(Find(authorId), booksNeeded);
         }
 
+        public void AddAuthor(AuthorVM model)
+        {
+            var author = new AuthorEM();
+            MapAuthor(author, model);
+            DataContext.Authors.Add(author);
+            DataContext.SaveChanges();
+        }
 
         public void DeleteAuthor(long authorId)
         {

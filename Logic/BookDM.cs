@@ -97,12 +97,5 @@ namespace Logic
 
             return result;
         }
-
-        public void AddAuthorToBook(long bookId, long authorId)
-        {
-            var book = Find(bookId);
-            book.Authors.Add(DataContext.Authors.FirstOrDefault(a => a.Id == authorId));
-            DataContext.SaveChanges();
-        }
     }
 }

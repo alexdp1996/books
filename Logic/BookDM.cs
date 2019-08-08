@@ -34,6 +34,13 @@ namespace Logic
             target.Name = model.Name;
             target.Rate = model.Rate;
             target.Pages = model.Pages;
+            target.Authors.RemoveAll(a => !model.AuthorIds.Contains(a.Id));
+            var leftIds = target.Authors.Select(a => a.Id).ToList();
+            var newIds = model.AuthorIds.Where(id => !leftIds.Contains(id));
+            foreach (var authorId in newIds)
+            {
+                target.Authors.Add(DataContext.Authors.FirstOrDefault(a => a.Id == authorId));
+            }
         }
 
         private BookEM Find(long Id)

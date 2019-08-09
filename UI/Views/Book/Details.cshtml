@@ -36,5 +36,23 @@
             @Html.DisplayFor(model => model.Pages)
         </dd>
 
+        @if (Model.Authors.Any())
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Authors)
+            </dt>
+
+            <dd>
+                <ul>
+                    @foreach (var author in Model.Authors)
+                    {
+                        <li>
+                            <a href="/Author/Details?id=@author.Id">@(author.Name + " " + author.Surname)</a>
+                        </li>
+                    }
+                </ul>
+            </dd>
+        }
+
     </dl>
 </div>

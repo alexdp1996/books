@@ -33,8 +33,8 @@ $(document).ready(function () {
             },
             {
                 "data": function (data) {
-                    let date = data.Date;
-                    return date.toString();
+                    let date = moment(data.Date).format('LL');
+                    return date;
                 }
             },
             {

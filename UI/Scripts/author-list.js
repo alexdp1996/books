@@ -18,7 +18,12 @@ $(document).ready(function () {
         columns: [
             {
                 "data": function (data) {
-                    return '<a href="/Author/Details?id=' + data.Id + '">' + data.Name + " " + data.Surname + '</a>';
+                    return '<a href="/Author/Details?id=' + data.Id + '">' + data.Name + '</a>';
+                }
+            },
+            {
+                "data": function (data) {
+                    return '<a href="/Author/Details?id=' + data.Id + '">' + data.Surname + '</a>';
                 }
             },
             {

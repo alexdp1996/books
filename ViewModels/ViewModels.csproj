@@ -48,6 +48,8 @@
     <Compile Include="DatatableDataVM.cs" />
     <Compile Include="DataTableVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DataTableColumns\AuthorColumn.cs" />
+    <Compile Include="DataTableColumns\BookColumn.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

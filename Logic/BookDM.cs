@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ViewModels;
+using ViewModels.DataTableColumns;
 
 namespace Logic
 {
@@ -88,7 +89,29 @@ namespace Logic
             result.draw = model.draw;
             result.recordsTotal = books.Count();
 
-            //add sorting/filtering here later
+            switch ((BookColumn) model.order[0].column)
+            {
+                case BookColumn.Name :
+                    {
+                        books = books.OrderBy(b => b.Name);
+                        break;
+                    }
+                case BookColumn.Pages:
+                    {
+                        books = books.OrderBy(b => b.Pages);
+                        break;
+                    }
+                case BookColumn.Rate:
+                    {
+                        books = books.OrderBy(b => b.Rate);
+                        break;
+                    }
+                case BookColumn.Date:
+                    {
+                        books = books.OrderBy(b => b.Date);
+                        break;
+                    }
+            }
 
             foreach (var book in books)
             {

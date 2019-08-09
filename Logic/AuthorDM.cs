@@ -24,7 +24,7 @@ namespace Logic
             return result;
         }
 
-        public List<AuthorVM> GetAuthorsByIds(IEnumerable<long> Ids)
+        public List<AuthorVM> GetByIds(IEnumerable<long> Ids)
         {
             var result = new List<AuthorVM>();
             foreach (var id in Ids)
@@ -62,16 +62,16 @@ namespace Logic
 
         private AuthorEM Find(long Id)
         {
-            return DataContext.Authors.FirstOrDefault(b => b.Id == Id);
+            return DataContext.Authors.Include("Books").FirstOrDefault(b => b.Id == Id);
         }
 
-        public DatatableDataVM GetAuthors(DataTableVM model, bool booksNeeded = false)
+        public DatatableDataVM Get(DataTableVM model, bool booksNeeded = false)
         {
             var result = new DatatableDataVM();
 
             var list = new List<AuthorVM>();
 
-            var authors = DataContext.Authors.AsQueryable();
+            var authors = DataContext.Authors.Include("Books").AsQueryable();
             result.draw = model.draw;
             result.recordsTotal = authors.Count();
 
@@ -88,12 +88,12 @@ namespace Logic
             return result;
         }
 
-        public AuthorVM GetAuthor(long authorId, bool booksNeeded = false)
+        public AuthorVM Get(long authorId, bool booksNeeded = false)
         {
             return MapAuthor(Find(authorId), booksNeeded);
         }
 
-        public void AddAuthor(AuthorVM model)
+        public void Add(AuthorVM model)
         {
             var author = new AuthorEM();
             MapAuthor(author, model);
@@ -101,14 +101,14 @@ namespace Logic
             DataContext.SaveChanges();
         }
 
-        public void DeleteAuthor(long authorId)
+        public void Delete(long authorId)
         {
             var author = Find(authorId);
             author.Books.Clear();
             DataContext.SaveChanges();
         }
 
-        public void UpdateAuthor(AuthorVM model)
+        public void Update(AuthorVM model)
         {
             var author = Find(model.Id);
             MapAuthor(author, model);

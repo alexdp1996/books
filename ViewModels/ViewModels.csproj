@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="AuthorVM.cs" />
     <Compile Include="BookVM.cs" />
+    <Compile Include="DataAttributes\DateRange.cs" />
     <Compile Include="DatatableDataVM.cs" />
     <Compile Include="DataTableVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

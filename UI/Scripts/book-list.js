@@ -33,13 +33,19 @@ $(document).ready(function () {
             },
             {
                 "data": function (data) {
+                    let date = data.Date;
+                    return date.toString();
+                }
+            },
+            {
+                "data": function (data) {
                     let authors = data.Authors;
-                    if (!authors.lenght) {
+                    if (!authors.length) {
                         return '';
                     } else {
                         let result = [];
-                        for (let i = 0; i < authors.lenght; ++i) {
-                            result.push('<li>authors[i].Name + ' + authors[i].Surname + '</li>');
+                        for (let i = 0; i < authors.length; ++i) {
+                            result.push('<li><a href="/Author/Details?id=' + authors[i].Id + '" >' +authors[i].Name + ' ' + authors[i].Surname + '</a></li>');
                         }
                         return '<ul>' + result.join() + '</ul>';
                     }
@@ -52,6 +58,6 @@ $(document).ready(function () {
                 }
             }
         ],
-        columnDefs: [{ orderable: false, targets: [3, 4] }]
+        columnDefs: [{ orderable: false, targets: [4, 5] }]
     });
 });

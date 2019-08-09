@@ -13,6 +13,7 @@ namespace Entities
         public int Rate { get; set; }
         public int Pages { get; set; }
         public List<AuthorEM> Authors { get; set; }
+        public DateTime Date { get; set; }
 
         public BookEM()
         {

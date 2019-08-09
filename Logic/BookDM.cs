@@ -20,6 +20,7 @@ namespace Logic
             book.Name = model.Name;
             book.Rate = model.Rate;
             book.Pages = model.Pages;
+            book.Date = model.Date;
 
             foreach (var author in model.Authors)
             {
@@ -35,6 +36,7 @@ namespace Logic
             target.Rate = model.Rate;
             target.Pages = model.Pages;
             target.Authors.RemoveAll(a => !model.AuthorIds.Contains(a.Id));
+            target.Date = model.Date;
             var leftIds = target.Authors.Select(a => a.Id).ToList();
             var newIds = model.AuthorIds.Where(id => !leftIds.Contains(id));
             foreach (var authorId in newIds)
@@ -45,10 +47,10 @@ namespace Logic
 
         private BookEM Find(long Id)
         {
-            return DataContext.Books.FirstOrDefault(b => b.Id == Id);
+            return DataContext.Books.Include("Authors").FirstOrDefault(b => b.Id == Id);
         }
 
-        public void AddBook(BookVM model)
+        public void Add(BookVM model)
         {
             var book = new BookEM();
             MapBook(book, model);
@@ -56,7 +58,7 @@ namespace Logic
             DataContext.SaveChanges();
         }
 
-        public void DeleteBook(long bookId)
+        public void Delete(long bookId)
         {
             var book = Find(bookId);
             book.Authors.Clear();
@@ -71,18 +73,18 @@ namespace Logic
             DataContext.SaveChanges();
         }
 
-        public BookVM GetBook(long bookId)
+        public BookVM Get(long bookId)
         {
             return MapBook(Find(bookId));
         }
 
-        public DatatableDataVM GetBooks(DataTableVM model)
+        public DatatableDataVM Get(DataTableVM model)
         {
             var result = new DatatableDataVM();
 
             var list = new List<BookVM>();
             
-            var books = DataContext.Books.AsQueryable();
+            var books = DataContext.Books.Include("Authors").AsQueryable();
             result.draw = model.draw;
             result.recordsTotal = books.Count();
 

@@ -22,7 +22,7 @@ namespace UI.Controllers
         [HttpPost]
         public ActionResult GetAuthors(DataTableVM model)
         {
-            var tableVM = AuthorDM.GetAuthors(model);
+            var tableVM = AuthorDM.Get(model);
             return new JsonResult
             {
                 Data = tableVM,
@@ -33,7 +33,7 @@ namespace UI.Controllers
         [HttpGet]
         public ActionResult Details(long id)
         {
-            var model = AuthorDM.GetAuthor(id, true);
+            var model = AuthorDM.Get(id, true);
             return View(model);
         }
 
@@ -48,7 +48,7 @@ namespace UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                AuthorDM.AddAuthor(model);
+                AuthorDM.Add(model);
                 return RedirectToAction("Index", new { alert = "Author was created" });
             }
             ViewBag.Alert = "Failed to create author";
@@ -58,7 +58,7 @@ namespace UI.Controllers
         [HttpGet]
         public ActionResult Edit(long id)
         {
-            var model = AuthorDM.GetAuthor(id);
+            var model = AuthorDM.Get(id);
             return View(model);
         }
 
@@ -67,7 +67,7 @@ namespace UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                AuthorDM.UpdateAuthor(model);
+                AuthorDM.Update(model);
                 return RedirectToAction("Index", new { alert = "Author was edited" });
             }
             ViewBag.Alert = "Failed to edit author";
@@ -77,7 +77,7 @@ namespace UI.Controllers
         [HttpPost]
         public ActionResult Delete(long id)
         {
-            AuthorDM.DeleteAuthor(id);
+            AuthorDM.Delete(id);
             return new EmptyResult();
         }
     }

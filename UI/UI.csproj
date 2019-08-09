@@ -137,6 +137,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\author-list.js" />
+    <Content Include="Scripts\book-create-edit.js" />
     <Content Include="Scripts\book-list.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

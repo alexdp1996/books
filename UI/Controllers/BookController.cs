@@ -22,7 +22,7 @@ namespace UI.Controllers
         [HttpPost]
         public ActionResult GetBooks(DataTableVM model)
         {
-            var tableVM = BookDM.GetBooks(model);
+            var tableVM = BookDM.Get(model);
             return new JsonResult
             {
                 Data = tableVM,
@@ -41,7 +41,7 @@ namespace UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                BookDM.AddBook(model);
+                BookDM.Add(model);
                 return RedirectToAction("Index", new { alert = "Book was created" });
             }
             ViewBag.Alert = "Failed to create book";
@@ -51,14 +51,14 @@ namespace UI.Controllers
         [HttpGet]
         public ActionResult Details(long id)
         {
-            var model = BookDM.GetBook(id);
+            var model = BookDM.Get(id);
             return View(model);
         }
 
         [HttpGet]
         public ActionResult Edit(long id)
         {
-            var model = BookDM.GetBook(id);
+            var model = BookDM.Get(id);
             return View(model);
         }
 
@@ -72,7 +72,7 @@ namespace UI.Controllers
             }
             ViewBag.Alert = "Failed to edit book";
             var dm = new AuthorDM();
-            model.Authors = dm.GetAuthorsByIds(model.AuthorIds);
+            model.Authors = dm.GetByIds(model.AuthorIds);
             return View(model);
         }
 
@@ -87,7 +87,7 @@ namespace UI.Controllers
         [HttpPost]
         public ActionResult Delete(long id)
         {
-            BookDM.DeleteBook(id);
+            BookDM.Delete(id);
             return new EmptyResult();
         }
     }

@@ -43,6 +43,9 @@
   <ItemGroup>
     <Compile Include="AuthorEM.cs" />
     <Compile Include="BookEM.cs" />
+    <Compile Include="DataTableEM.cs" />
+    <Compile Include="Enums\AuthorColumn.cs" />
+    <Compile Include="Enums\BookColumn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,27 +1,34 @@
 ﻿using Data;
+using Data.Repositories;
 using Entities;
-using System;
+using Entities.Enums;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ViewModels;
-using ViewModels.DataTableColumns;
 
 namespace Logic
 {
     public class BookDM
     {
-        private DataContext DataContext { get; } = new DataContext();
+        private DataContext DataContext { get; } 
+        private BookRepo BookRepo { get; }
+
+        public BookDM()
+        {
+            DataContext = new DataContext();
+            BookRepo = new BookRepo(DataContext);
+        }
 
         static internal BookVM MapBook(BookEM model)
         {
-            var book = new BookVM();
-            book.Id = model.Id;
-            book.Name = model.Name;
-            book.Rate = model.Rate;
-            book.Pages = model.Pages;
-            book.Date = model.Date;
+            var book = new BookVM
+            {
+                Id = model.Id,
+                Name = model.Name,
+                Rate = model.Rate,
+                Pages = model.Pages,
+                Date = model.Date
+            };
 
             foreach (var author in model.Authors)
             {
@@ -33,92 +40,67 @@ namespace Logic
 
         private void MapBook(BookEM target, BookVM model)
         {
+            target.Id = model.Id;
             target.Name = model.Name;
             target.Rate = model.Rate;
             target.Pages = model.Pages;
-            target.Authors.RemoveAll(a => !model.AuthorIds.Contains(a.Id));
             target.Date = model.Date;
-            var leftIds = target.Authors.Select(a => a.Id).ToList();
-            var newIds = model.AuthorIds.Where(id => !leftIds.Contains(id));
-            foreach (var authorId in newIds)
-            {
-                target.Authors.Add(DataContext.Authors.FirstOrDefault(a => a.Id == authorId));
-            }
-        }
-
-        private BookEM Find(long Id)
-        {
-            return DataContext.Books.Include("Authors").FirstOrDefault(b => b.Id == Id);
         }
 
         public void Add(BookVM model)
         {
             var book = new BookEM();
             MapBook(book, model);
-            DataContext.Books.Add(book);
-            DataContext.SaveChanges();
+            BookRepo.Add(book);
         }
 
         public void Delete(long bookId)
         {
-            var book = Find(bookId);
-            book.Authors.Clear();
-            DataContext.Books.Remove(book);
-            DataContext.SaveChanges();
+            BookRepo.Delete(bookId);
         }
 
-        public void Update(BookVM model)
+        public void Update(BookEditVM model)
         {
-            var book = Find(model.Id);
+            var book = new BookEM();
             MapBook(book, model);
-            DataContext.SaveChanges();
+            BookRepo.Update(book);
+            BookRepo.UpdateAuthors(model.Id, model.AuthorIds);
         }
 
         public BookVM Get(long bookId)
         {
-            return MapBook(Find(bookId));
+            return MapBook(BookRepo.Get(bookId));
         }
 
-        public DatatableDataVM Get(DataTableVM model)
+        public DataTableDataVM Get(DataTableVM model)
         {
-            var result = new DatatableDataVM();
+            var result = new DataTableDataVM();
+
+            var books = BookRepo.Get(new DataTableEM
+            {
+                Start = model.start,
+                Length = model.length,
+                Order = new List<OrderEM>
+                {
+                    new OrderEM
+                    {
+                        Column = model.order[0].column,
+                        Dir = model.order[0].dir
+                    }
+                }
+            }, out int recordsTotal, out int recordsFiltered);
 
             var list = new List<BookVM>();
-            
-            var books = DataContext.Books.Include("Authors").AsQueryable();
-            result.draw = model.draw;
-            result.recordsTotal = books.Count();
-
-            switch ((BookColumn) model.order[0].column)
-            {
-                case BookColumn.Name :
-                    {
-                        books = books.OrderBy(b => b.Name);
-                        break;
-                    }
-                case BookColumn.Pages:
-                    {
-                        books = books.OrderBy(b => b.Pages);
-                        break;
-                    }
-                case BookColumn.Rate:
-                    {
-                        books = books.OrderBy(b => b.Rate);
-                        break;
-                    }
-                case BookColumn.Date:
-                    {
-                        books = books.OrderBy(b => b.Date);
-                        break;
-                    }
-            }
-
             foreach (var book in books)
             {
                 list.Add(MapBook(book));
             }
-            result.recordsFiltered = list.Count;
+
             result.data = list;
+
+            result.recordsFiltered = recordsFiltered;
+            result.recordsTotal = recordsTotal;
+            result.draw = model.draw;
 
             return result;
         }

@@ -33,11 +33,12 @@ $(document).ready(function () {
             },
             {
                 "data": function (data) {
-                    return '<a class="btn btn-default" href="/Author/Details?id=' + data.Id + '">Edit</a>' +
+                    return '<a class="btn btn-default" href="/Author/Edit?id=' + data.Id + '&surname=' + data.Surname + '">Edit</a>' +
                         '<button class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" data-id="' + data.Id + '">Delete</button>';
                 }
             }
         ],
-        columnDefs: [{ orderable: false, targets: [2] }]
+        columnDefs: [{ orderable: false, targets: [3] }],
+        "orderMulti": false
     });
 });

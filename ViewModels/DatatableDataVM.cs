@@ -1,13 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace ViewModels
+﻿namespace ViewModels
 {
-    public class DatatableDataVM
+    public class DataTableDataVM
     {
-        /*
-            https://datatables.net/manual/server-side#DataTables_Table_1_wrapper
-        */
-
         public object data { get; set; }
         public string error { get; set; }
         public int recordsFiltered { get; set; }

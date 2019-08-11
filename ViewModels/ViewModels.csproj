@@ -42,14 +42,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthorBaseVM.cs" />
     <Compile Include="AuthorVM.cs" />
+    <Compile Include="BookBaseVM.cs" />
+    <Compile Include="BookEditVM.cs" />
     <Compile Include="BookVM.cs" />
     <Compile Include="DataAttributes\DateRange.cs" />
-    <Compile Include="DatatableDataVM.cs" />
+    <Compile Include="DataTableDataVM.cs" />
     <Compile Include="DataTableVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DataTableColumns\AuthorColumn.cs" />
-    <Compile Include="DataTableColumns\BookColumn.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

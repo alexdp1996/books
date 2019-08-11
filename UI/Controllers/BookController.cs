@@ -63,7 +63,7 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(BookVM model)
+        public ActionResult Edit(BookEditVM model)
         {
             if (ModelState.IsValid)
             {
@@ -72,7 +72,7 @@ namespace UI.Controllers
             }
             ViewBag.Alert = "Failed to edit book";
             var dm = new AuthorDM();
-            model.Authors = dm.GetByIds(model.AuthorIds);
+            model.Authors = dm.Get(model.AuthorIds).ToList();
             return View(model);
         }
 
@@ -80,7 +80,7 @@ namespace UI.Controllers
         public ActionResult GetAuthorsByTerm(string term)
         {
             var dm = new AuthorDM();
-            var res = dm.GetAuthorsByTerm(term);
+            var res = dm.Get(term);
             return new JsonResult { Data = res, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 

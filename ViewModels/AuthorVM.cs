@@ -7,20 +7,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ViewModels
 {
-    public class AuthorVM
+    public class AuthorVM : AuthorBaseVM
     {
-        public long Id { get; set; }
-        [Required]
-        public string Name { get; set; }
-        [Required]
-        public string Surname { get; set; }
         [Display(Name = "Amount of books")]
         public int CountOfBooks { get; set; }
-        public virtual List<BookVM> Books { get; set; }
+        public List<BookBaseVM> Books { get; set; }
 
         public AuthorVM()
         {
-            Books = new List<BookVM>();
+            Books = new List<BookBaseVM>();
         }
     }
 }

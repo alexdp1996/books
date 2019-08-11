@@ -2,7 +2,7 @@
 
 namespace ViewModels
 {
-    //Start - JSon class sent from Datatables
+    ///Start - JSon class sent from Datatables
 
     public class DataTableVM
     {

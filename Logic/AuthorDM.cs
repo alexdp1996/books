@@ -1,46 +1,58 @@
 ﻿using Data;
+using Data.Repositories;
 using Entities;
-using System;
+using Entities.Enums;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ViewModels;
-using ViewModels.DataTableColumns;
 
 namespace Logic
 {
     public class AuthorDM
     {
-        private DataContext DataContext { get; } = new DataContext();
+        private DataContext DataContext { get; }
+        private AuthorRepo AuthorRepo { get; }
 
-        public List<KeyValuePair<long, string>> GetAuthorsByTerm(string term)
+        public AuthorDM()
         {
-            var items = DataContext.Authors.Where(a => (a.Name + " " + a.Surname).ToLower().Contains(term.ToLower()));
-            var result = new List<KeyValuePair<long, string>>();
-            foreach (var i in items)
+            DataContext = new DataContext();
+            AuthorRepo  = new AuthorRepo(DataContext);
+        }
+
+        public IEnumerable<AuthorBaseVM> Get(string term)
+        {
+            var authors = AuthorRepo.Get(term);
+            var result = new List<AuthorBaseVM>();
+            foreach (var author in authors)
             {
-                result.Add(new KeyValuePair<long, string>(i.Id, i.Name + " " + i.Surname));
+                result.Add(new AuthorBaseVM
+                {
+                    Id = author.Id,
+                    Name = author.Name,
+                    Surname = author.Surname
+                });
             }
             return result;
         }
 
-        public List<AuthorVM> GetByIds(IEnumerable<long> Ids)
+        public IEnumerable<AuthorBaseVM> Get(IEnumerable<long> ids)
         {
-            var result = new List<AuthorVM>();
-            foreach (var id in Ids)
+            var result = new List<AuthorBaseVM>();
+            foreach (var author in AuthorRepo.Get(ids))
             {
-                result.Add(MapAuthor(Find(id)));
+                result.Add(MapAuthor(author));
             }
             return result;
         }
 
         internal static AuthorVM MapAuthor(AuthorEM model, bool booksNeeded = false)
         {
-            var author = new AuthorVM();
-            author.Id = model.Id;
-            author.Surname = model.Surname;
-            author.Name = model.Name;
+            var author = new AuthorVM
+            {
+                Id = model.Id,
+                Surname = model.Surname,
+                Name = model.Name
+            };
 
             if (booksNeeded)
             {
@@ -61,77 +73,61 @@ namespace Logic
             target.Name = model.Name;
         }
 
-        private AuthorEM Find(long Id)
+        public DataTableDataVM Get(DataTableVM model)
         {
-            return DataContext.Authors.Include("Books").FirstOrDefault(b => b.Id == Id);
-        }
+            var result = new DataTableDataVM();
 
-        public DatatableDataVM Get(DataTableVM model, bool booksNeeded = false)
-        {
-            var result = new DatatableDataVM();
-
-            var list = new List<AuthorVM>();
-
-            var authors = DataContext.Authors.Include("Books").AsQueryable();
-            result.draw = model.draw;
-            result.recordsTotal = authors.Count();
-
-            switch ((AuthorColumn)model.order[0].column)
+            var authors = AuthorRepo.Get(new DataTableEM
             {
-                case AuthorColumn.Name:
+                Start = model.start,
+                Length = model.length,
+                Order = new List<OrderEM>
+                {
+                    new OrderEM
                     {
-                        authors = authors.OrderBy(b => b.Name);
-                        break;
+                        Column = model.order[0].column,
+                        Dir = model.order[0].dir
                     }
-                case AuthorColumn.AmountOfBooks:
-                    {
-                        authors = authors.OrderBy(b => b.Books.Count);
-                        break;
-                    }
-                case AuthorColumn.Surname:
-                    {
-                        authors = authors.OrderBy(b => b.Surname);
-                        break;
-                    }
-            }
+                }
+            }, out int recordsTotal, out int recordsFiltered);
 
+            var list = new List<AuthorBaseVM>();
             foreach (var author in authors)
             {
-                list.Add(MapAuthor(author, booksNeeded));
+                list.Add(MapAuthor(author));
             }
 
-            result.recordsFiltered = list.Count;
             result.data = list;
+
+            result.recordsFiltered = recordsFiltered;
+            result.recordsTotal = recordsTotal;
+            result.draw = model.draw;
 
             return result;
         }
 
         public AuthorVM Get(long authorId, bool booksNeeded = false)
         {
-            return MapAuthor(Find(authorId), booksNeeded);
+            return MapAuthor(AuthorRepo.Get(authorId), booksNeeded);
         }
 
         public void Add(AuthorVM model)
         {
             var author = new AuthorEM();
             MapAuthor(author, model);
-            DataContext.Authors.Add(author);
-            DataContext.SaveChanges();
+            AuthorRepo.Add(author);
         }
 
         public void Delete(long authorId)
         {
-            var author = Find(authorId);
-            author.Books.Clear();
-            DataContext.Authors.Remove(author);
-            DataContext.SaveChanges();
+            AuthorRepo.Delete(authorId);
         }
 
         public void Update(AuthorVM model)
         {
-            var author = Find(model.Id);
+            var author = AuthorRepo.Get(model.Id);
             MapAuthor(author, model);
-            DataContext.SaveChanges();
+            AuthorRepo.Update(author);
         }
     }
 }

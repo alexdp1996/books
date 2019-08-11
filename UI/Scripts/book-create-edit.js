@@ -11,9 +11,9 @@
                 return {
                     results: $.map(data, function (item) {
                         return {
-                            text: item.Value,
-                            id: item.Key
-                        }
+                            text: item.Name + " " + item.Surname,
+                            id: item.Id
+                        };
                     })
                 };
             }

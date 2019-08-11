@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="AuthorDM.cs" />
     <Compile Include="BookDM.cs" />
+    <Compile Include="Automapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

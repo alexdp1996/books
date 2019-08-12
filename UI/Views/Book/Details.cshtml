@@ -43,14 +43,10 @@
             </dt>
 
             <dd>
-                <ul>
-                    @foreach (var author in Model.Authors)
-                    {
-                        <li>
-                            <a href="/Author/Details?id=@author.Id">@(author.Name + " " + author.Surname)</a>
-                        </li>
-                    }
-                </ul>
+                @foreach (var author in Model.Authors)
+                {
+                        <a href="/Author/Details?id=@author.Id">@(author.Name + " " + author.Surname)</a>
+                }
             </dd>
         }
 

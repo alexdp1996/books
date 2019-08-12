@@ -21,12 +21,9 @@ namespace Data.Repositories
         public void UpdateAuthors(long bookId, IEnumerable<long> authorIds)
         {
             var book = Get(bookId);
-            var previousIds = book.Authors.Select(a => a.Id).ToList();
-            var newIds = authorIds.Except(previousIds);
-            var removedIds = previousIds.Except(newIds);
-            book.Authors.RemoveAll(a => removedIds.Contains(a.Id));
+            book.Authors.Clear();
             var authorRepo = new AuthorRepo(DataContext);
-            book.Authors.AddRange(authorRepo.Get(newIds));
+            book.Authors.AddRange(authorRepo.Get(authorIds));
             DataContext.SaveChanges();
         }
 

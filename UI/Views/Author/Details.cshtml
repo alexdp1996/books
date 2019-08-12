@@ -28,6 +28,19 @@
             @Html.DisplayFor(model => model.CountOfBooks)
         </dd>
 
+        @if (Model.Books.Any())
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Books)
+            </dt>
+
+            <dd>
+                    @foreach (var book in Model.Books)
+                    {
+                        <a href="/Book/Details?id=@book.Id">@book.Name</a>
+                    }
+            </dd>
+        }
     </dl>
 </div>
 

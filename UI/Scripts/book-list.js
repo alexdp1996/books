@@ -45,9 +45,9 @@ $(document).ready(function () {
                     } else {
                         let result = [];
                         for (let i = 0; i < authors.length; ++i) {
-                            result.push('<li><a href="/Author/Details?id=' + authors[i].Id + '" >' +authors[i].Name + ' ' + authors[i].Surname + '</a></li>');
+                            result.push('<a href="/Author/Details?id=' + authors[i].Id + '" >' +authors[i].Name + ' ' + authors[i].Surname + '</a>');
                         }
-                        return '<ul>' + result.join() + '</ul>';
+                        return result.join(', ');
                     }
                 }
             },

@@ -3,7 +3,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>AuthorVM</h4>
         <hr />
@@ -29,7 +29,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CountOfBooks, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input class="form-control text-box single-line" value="@Model.CountOfBooks" disabled >
+                <input class="form-control text-box single-line" value="@Model.CountOfBooks" disabled>
             </div>
         </div>
 
@@ -39,4 +39,8 @@
             </div>
         </div>
     </div>
+}
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
 }

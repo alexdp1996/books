@@ -8,6 +8,8 @@ namespace ViewModels
     {
         public long Id { get; set; }
         [Required]
+        [MinLength(4)]
+        [RegularExpression(@"[^\s]+(.*[^\s]+)*", ErrorMessage = "String must be trimmed")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Value beetween 1 and 10 is required")]
         [Range(1, 10, ErrorMessage = "Value beetween 1 and 10 is required")]

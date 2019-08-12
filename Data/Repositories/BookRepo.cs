@@ -3,42 +3,19 @@ using Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.Repositories
 {
-    public class BookRepo
+    public class BookRepo : BaseRepo<BookEM>
     {
-        private DataContext DataContext { get; }
 
-        public BookRepo(DataContext context)
+        public BookRepo(DataContext context) : base(context)
         {
-            DataContext = context;
         }
 
-        public BookEM Get(long id)
+        public override BookEM Get(long id)
         {
             return DataContext.Books.Include("Authors").FirstOrDefault(b => b.Id == id);
-        }
-
-        public void Add(BookEM book)
-        {
-            DataContext.Books.Add(book);
-            DataContext.SaveChanges();
-        }
-
-        public void Delete(long id)
-        {
-            var book = Get(id);
-            DataContext.Books.Remove(book);
-            DataContext.SaveChanges();
-        }
-
-        public void Update(BookEM book)
-        {
-            DataContext.Entry(Get(book.Id)).CurrentValues.SetValues(book);
-            DataContext.SaveChanges();
         }
 
         public void UpdateAuthors(long bookId, IEnumerable<long> authorIds)
@@ -58,7 +35,7 @@ namespace Data.Repositories
             var books = DataContext.Books.Include("Authors").AsQueryable();
             recordsTotal = books.Count();
 
-            var asc = model.Order[0].Dir == "asc";
+            var asc = model.Order[0].Asc;
 
             switch ((BookColumn)model.Order[0].Column)
             {

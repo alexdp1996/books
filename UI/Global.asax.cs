@@ -1,4 +1,5 @@
 ﻿using Logic;
+using Logic.AppMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace UI
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            Automapper.Init();
+            MapperInit.Init();
         }
     }
 }

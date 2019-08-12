@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public class BookEM
+    public class BookEM : BaseEM
     {
-        public long Id { get; set; }
         public string Name { get; set; }
         public int Rate { get; set; }
         public int Pages { get; set; }

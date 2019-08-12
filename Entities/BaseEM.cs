@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logic
+namespace Entities
 {
-    public class Automapper
+    public class BaseEM
     {
-        static public void Init()
-        {
 
-        }
+        public long Id { get; set; }
     }
 }

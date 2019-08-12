@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public class AuthorEM
+    public class AuthorEM : BaseEM
     {
-        public long Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public virtual List<BookEM> Books { get; set; }

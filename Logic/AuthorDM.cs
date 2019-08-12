@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using AutoMapper;
+using Data;
 using Data.Repositories;
 using Entities;
 using Entities.Enums;
@@ -37,84 +38,33 @@ namespace Logic
 
         public IEnumerable<AuthorBaseVM> Get(IEnumerable<long> ids)
         {
-            var result = new List<AuthorBaseVM>();
-            foreach (var author in AuthorRepo.Get(ids))
-            {
-                result.Add(MapAuthor(author));
-            }
-            return result;
-        }
-
-        internal static AuthorVM MapAuthor(AuthorEM model, bool booksNeeded = false)
-        {
-            var author = new AuthorVM
-            {
-                Id = model.Id,
-                Surname = model.Surname,
-                Name = model.Name
-            };
-
-            if (booksNeeded)
-            {
-                foreach (var book in model.Books)
-                {
-                    author.Books.Add(BookDM.MapBook(book));
-                }
-            }
-
-            author.CountOfBooks = model.Books.Count;
-
-            return author;
-        }
-
-        private void MapAuthor(AuthorEM target, AuthorVM model)
-        {
-            target.Surname = model.Surname;
-            target.Name = model.Name;
+            return Mapper.Map<IEnumerable<AuthorBaseVM>>(AuthorRepo.Get(ids));
         }
 
         public DataTableDataVM Get(DataTableVM model)
         {
             var result = new DataTableDataVM();
 
-            var authors = AuthorRepo.Get(new DataTableEM
-            {
-                Start = model.start,
-                Length = model.length,
-                Order = new List<OrderEM>
-                {
-                    new OrderEM
-                    {
-                        Column = model.order[0].column,
-                        Dir = model.order[0].dir
-                    }
-                }
-            }, out int recordsTotal, out int recordsFiltered);
+            var dataTableEM = Mapper.Map<DataTableEM>(model);
 
-            var list = new List<AuthorBaseVM>();
-            foreach (var author in authors)
-            {
-                list.Add(MapAuthor(author));
-            }
+            var authors = AuthorRepo.Get(dataTableEM, out int recordsTotal, out int recordsFiltered);
 
-            result.data = list;
-
+            result.data = Mapper.Map<IEnumerable<AuthorBaseVM>>(authors);            
             result.recordsFiltered = recordsFiltered;
             result.recordsTotal = recordsTotal;
-            result.draw = model.draw;
+            result.draw = model.Draw;
 
             return result;
         }
 
-        public AuthorVM Get(long authorId, bool booksNeeded = false)
+        public AuthorVM Get(long authorId)
         {
-            return MapAuthor(AuthorRepo.Get(authorId), booksNeeded);
+            return Mapper.Map<AuthorVM>(AuthorRepo.Get(authorId));
         }
 
         public void Add(AuthorVM model)
         {
-            var author = new AuthorEM();
-            MapAuthor(author, model);
+            var author = Mapper.Map<AuthorEM>(model);
             AuthorRepo.Add(author);
         }
 
@@ -125,8 +75,7 @@ namespace Logic
 
         public void Update(AuthorVM model)
         {
-            var author = AuthorRepo.Get(model.Id);
-            MapAuthor(author, model);
+            var author = Mapper.Map<AuthorEM>(model);
             AuthorRepo.Update(author);
         }
     }

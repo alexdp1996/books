@@ -33,7 +33,7 @@ namespace UI.Controllers
         [HttpGet]
         public ActionResult Details(long id)
         {
-            var model = AuthorDM.Get(id, true);
+            var model = AuthorDM.Get(id);
             return View(model);
         }
 

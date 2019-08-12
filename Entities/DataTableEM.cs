@@ -33,6 +33,6 @@ namespace Entities
     public class OrderEM
     {
         public int Column { get; set; }
-        public string Dir { get; set; }
+        public bool Asc { get; set; }
     }
 }

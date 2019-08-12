@@ -45,6 +45,7 @@
     <Compile Include="DataContextInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AuthorRepo.cs" />
+    <Compile Include="Repositories\BaseRepo.cs" />
     <Compile Include="Repositories\BookRepo.cs" />
   </ItemGroup>
   <ItemGroup>

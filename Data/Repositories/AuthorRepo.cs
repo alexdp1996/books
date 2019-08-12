@@ -3,21 +3,17 @@ using Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.Repositories
 {
-    public class AuthorRepo
+    public class AuthorRepo : BaseRepo<AuthorEM>
     {
-        private DataContext DataContext { get; }
 
-        public AuthorRepo(DataContext context)
+        public AuthorRepo(DataContext context) : base(context)
         {
-            DataContext = context;
         }
 
-        public AuthorEM Get(long id)
+        public override AuthorEM Get(long id)
         {
             return DataContext.Authors.Include("Books").FirstOrDefault(b => b.Id == id);
         }
@@ -37,7 +33,7 @@ namespace Data.Repositories
             var authors = DataContext.Authors.Include("Books").AsQueryable();
             recordsTotal = authors.Count();
 
-            var asc = model.Order[0].Dir == "asc";
+            var asc = model.Order[0].Asc;
 
             switch ((AuthorColumn)model.Order[0].Column)
             {
@@ -84,25 +80,6 @@ namespace Data.Repositories
             recordsFiltered = authors.Count();
 
             return authors;
-        }
-
-        public void Update(AuthorEM author)
-        {
-            DataContext.Entry(Get(author.Id)).CurrentValues.SetValues(author);
-            DataContext.SaveChanges();
-        }
-
-        public void Add(AuthorEM author)
-        {
-            DataContext.Authors.Add(author);
-            DataContext.SaveChanges();
-        }
-
-        public void Delete(long id)
-        {
-            var author = Get(id);
-            DataContext.Authors.Remove(author);
-            DataContext.SaveChanges();
         }
     }
 }

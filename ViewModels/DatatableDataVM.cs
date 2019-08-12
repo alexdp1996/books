@@ -1,5 +1,8 @@
-﻿namespace ViewModels
+﻿using System.Collections.Generic;
+
+namespace ViewModels
 {
+#pragma warning disable IDE1006 // Naming Styles
     public class DataTableDataVM
     {
         public object data { get; set; }
@@ -8,4 +11,5 @@
         public int recordsTotal { get; set; }
         public int draw { get; set; }
     }
+#pragma warning restore IDE1006 // Naming Styles
 }

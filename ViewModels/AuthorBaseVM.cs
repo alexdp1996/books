@@ -10,5 +10,7 @@ namespace ViewModels
         public string Name { get; set; }
         [Required]
         public string Surname { get; set; }
+        [Display(Name = "Amount of books")]
+        public int CountOfBooks { get; set; }
     }
 }

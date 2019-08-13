@@ -1,8 +1,5 @@
 ﻿using Logic;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using ViewModels;
 
@@ -77,7 +74,7 @@ namespace UI.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetAuthorsByTerm(string term)
+        public ActionResult GetByTerm(string term)
         {
             var dm = new AuthorDM();
             var res = dm.Get(term);

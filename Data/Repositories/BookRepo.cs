@@ -1,6 +1,5 @@
 ﻿using Entities;
 using Entities.Enums;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,7 +22,8 @@ namespace Data.Repositories
             var book = Get(bookId);
             book.Authors.Clear();
             var authorRepo = new AuthorRepo(DataContext);
-            book.Authors.AddRange(authorRepo.Get(authorIds));
+            var authors = authorRepo.Get(authorIds);
+            book.Authors.AddRange(authors);
             DataContext.SaveChanges();
         }
 

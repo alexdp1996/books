@@ -2,9 +2,7 @@
 using Data;
 using Data.Repositories;
 using Entities;
-using Entities.Enums;
 using System.Collections.Generic;
-using System.Linq;
 using ViewModels;
 
 namespace Logic
@@ -12,35 +10,47 @@ namespace Logic
     public class BookDM
     {
         private DataContext DataContext { get; } 
-        private BookRepo BookRepo { get; }
 
         public BookDM()
         {
             DataContext = new DataContext();
-            BookRepo = new BookRepo(DataContext);
         }
 
         public void Add(BookVM model)
         {
             var book = Mapper.Map<BookEM>(model);
-            BookRepo.Add(book);
+            using (var bookRepo = new BookRepo(DataContext))
+            {
+                bookRepo.Add(book);
+            }
         }
 
         public void Delete(long bookId)
         {
-            BookRepo.Delete(bookId);
+            using (var bookRepo = new BookRepo(DataContext))
+            {
+                bookRepo.Delete(bookId);
+            }
         }
 
         public void Update(BookEditVM model)
         {
             var book = Mapper.Map<BookEM>(model);
-            BookRepo.Update(book);
-            BookRepo.UpdateAuthors(model.Id, model.AuthorIds);
+            using (var bookRepo = new BookRepo(DataContext))
+            {
+                bookRepo.Update(book);
+                bookRepo.UpdateAuthors(model.Id, model.AuthorIds);
+            }
         }
 
-        public BookVM Get(long bookId)
+        public BookVM Get(long id)
         {
-            return Mapper.Map<BookVM>(BookRepo.Get(bookId));
+            using (var bookRepo = new BookRepo(DataContext))
+            {
+                var bookEM = bookRepo.Get(id);
+                var bookVM = Mapper.Map<BookVM>(bookEM);
+                return bookVM;
+            }
         }
 
         public DataTableDataVM Get(DataTableVM model)
@@ -49,11 +59,15 @@ namespace Logic
 
             var dataTableEM = Mapper.Map<DataTableEM>(model);
 
-            var books = BookRepo.Get(dataTableEM, out int recordsTotal, out int recordsFiltered);
+            using (var bookRepo = new BookRepo(DataContext))
+            {
+                var booksEM = bookRepo.Get(dataTableEM, out int recordsTotal, out int recordsFiltered);
+                var booksVM = Mapper.Map<IEnumerable<BookVM>>(booksEM);
 
-            result.data = Mapper.Map<IEnumerable<BookVM>>(books);
-            result.recordsFiltered = recordsFiltered;
-            result.recordsTotal = recordsTotal;
+                result.data = booksVM;
+                result.recordsFiltered = recordsFiltered;
+                result.recordsTotal = recordsTotal;
+            }
             result.draw = model.Draw;
 
             return result;

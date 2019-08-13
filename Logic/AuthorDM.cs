@@ -2,9 +2,7 @@
 using Data;
 using Data.Repositories;
 using Entities;
-using Entities.Enums;
 using System.Collections.Generic;
-using System.Linq;
 using ViewModels;
 
 namespace Logic
@@ -12,33 +10,30 @@ namespace Logic
     public class AuthorDM
     {
         private DataContext DataContext { get; }
-        private AuthorRepo AuthorRepo { get; }
 
         public AuthorDM()
         {
             DataContext = new DataContext();
-            AuthorRepo  = new AuthorRepo(DataContext);
         }
 
         public IEnumerable<AuthorBaseVM> Get(string term)
         {
-            var authors = AuthorRepo.Get(term);
-            var result = new List<AuthorBaseVM>();
-            foreach (var author in authors)
+            using (var authorRepo = new AuthorRepo(DataContext))
             {
-                result.Add(new AuthorBaseVM
-                {
-                    Id = author.Id,
-                    Name = author.Name,
-                    Surname = author.Surname
-                });
+                var authorsEM = authorRepo.Get(term);
+                var authorsVM = Mapper.Map<IEnumerable<AuthorBaseVM>>(authorsEM);
+                return authorsVM;
             }
-            return result;
         }
 
         public IEnumerable<AuthorBaseVM> Get(IEnumerable<long> ids)
         {
-            return Mapper.Map<IEnumerable<AuthorBaseVM>>(AuthorRepo.Get(ids));
+            using (var authorRepo = new AuthorRepo(DataContext))
+            {
+                var authorsEM = authorRepo.Get(ids);
+                var authorsVM = Mapper.Map<IEnumerable<AuthorBaseVM>>(authorsEM);
+                return authorsVM;
+            }
         }
 
         public DataTableDataVM Get(DataTableVM model)
@@ -47,11 +42,14 @@ namespace Logic
 
             var dataTableEM = Mapper.Map<DataTableEM>(model);
 
-            var authors = AuthorRepo.Get(dataTableEM, out int recordsTotal, out int recordsFiltered);
-
-            result.data = Mapper.Map<IEnumerable<AuthorBaseVM>>(authors);            
-            result.recordsFiltered = recordsFiltered;
-            result.recordsTotal = recordsTotal;
+            using (var authorRepo = new AuthorRepo(DataContext))
+            {
+                var authorsEM = authorRepo.Get(dataTableEM, out int recordsTotal, out int recordsFiltered);
+                var authorsVM = Mapper.Map<IEnumerable<AuthorBaseVM>>(authorsEM);
+                result.data = authorsVM;
+                result.recordsFiltered = recordsFiltered;
+                result.recordsTotal = recordsTotal;
+            }
             result.draw = model.Draw;
 
             return result;
@@ -59,24 +57,38 @@ namespace Logic
 
         public AuthorVM Get(long authorId)
         {
-            return Mapper.Map<AuthorVM>(AuthorRepo.Get(authorId));
+            using (var authorRepo = new AuthorRepo(DataContext))
+            {
+                var authorEM = authorRepo.Get(authorId);
+                var authorVM = Mapper.Map<AuthorVM>(authorEM);
+                return authorVM;
+            }
         }
 
         public void Add(AuthorVM model)
         {
             var author = Mapper.Map<AuthorEM>(model);
-            AuthorRepo.Add(author);
+            using (var authorRepo = new AuthorRepo(DataContext))
+            {
+                authorRepo.Add(author);
+            }
         }
 
-        public void Delete(long authorId)
+        public void Delete(long id)
         {
-            AuthorRepo.Delete(authorId);
+            using (var authorRepo = new AuthorRepo(DataContext))
+            {
+                authorRepo.Delete(id);
+            }
         }
 
         public void Update(AuthorVM model)
         {
             var author = Mapper.Map<AuthorEM>(model);
-            AuthorRepo.Update(author);
+            using (var authorRepo = new AuthorRepo(DataContext))
+            {
+                authorRepo.Update(author);
+            }
         }
     }
 }

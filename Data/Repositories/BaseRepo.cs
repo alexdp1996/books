@@ -1,8 +1,9 @@
 ﻿using Entities;
+using System;
 
 namespace Data.Repositories
 {
-    public abstract class BaseRepo<Entity> where Entity : BaseEM
+    public abstract class BaseRepo<Entity> : IDisposable where Entity : BaseEM
     {
         protected DataContext DataContext { get; }
 
@@ -15,7 +16,8 @@ namespace Data.Repositories
 
         public void Update(Entity entity)
         {
-            DataContext.Entry(Get(entity.Id)).CurrentValues.SetValues(entity);
+            var entry = Get(entity.Id);
+            DataContext.Entry(entry).CurrentValues.SetValues(entity);
             DataContext.SaveChanges();
         }
 
@@ -29,6 +31,11 @@ namespace Data.Repositories
         {
             DataContext.Set<Entity>().Add(entity);
             DataContext.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -76,5 +76,12 @@ namespace UI.Controllers
             AuthorDM.Delete(id);
             return new EmptyResult();
         }
+
+        [HttpGet]
+        public ActionResult GetByTerm(string term)
+        {
+            var res = AuthorDM.Get(term);
+            return new JsonResult { Data = res, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
     }
 }

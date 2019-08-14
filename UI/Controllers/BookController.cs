@@ -73,14 +73,6 @@ namespace UI.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        public ActionResult GetByTerm(string term)
-        {
-            var dm = new AuthorDM();
-            var res = dm.Get(term);
-            return new JsonResult { Data = res, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
-
         [HttpPost]
         public ActionResult Delete(long id)
         {

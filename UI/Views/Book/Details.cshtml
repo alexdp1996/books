@@ -45,7 +45,7 @@
             <dd>
                 @foreach (var author in Model.Authors)
                 {
-                        <a href="/Author/Details?id=@author.Id">@(author.Name + " " + author.Surname)</a>
+                        <a href="@Url.Action("Details","Author")?id=@author.Id">@(author.Name + " " + author.Surname)</a>
                 }
             </dd>
         }

@@ -25,11 +25,11 @@ namespace Logic
             }
         }
 
-        public void Delete(long bookId)
+        public void Delete(long id)
         {
             using (var bookRepo = new BookRepo(DataContext))
             {
-                bookRepo.Delete(bookId);
+                bookRepo.Delete(id);
             }
         }
 

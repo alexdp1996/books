@@ -9,17 +9,11 @@ namespace Logic
 {
     public class BookDM
     {
-        private DataContext DataContext { get; } 
-
-        public BookDM()
-        {
-            DataContext = new DataContext();
-        }
-
         public void Add(BookVM model)
         {
             var book = Mapper.Map<BookEM>(model);
-            using (var bookRepo = new BookRepo(DataContext))
+            using (var сontext = new DataContext())
+            using (var bookRepo = new BookRepo(сontext))
             {
                 bookRepo.Add(book);
             }
@@ -27,7 +21,8 @@ namespace Logic
 
         public void Delete(long id)
         {
-            using (var bookRepo = new BookRepo(DataContext))
+            using (var сontext = new DataContext())
+            using (var bookRepo = new BookRepo(сontext))
             {
                 bookRepo.Delete(id);
             }
@@ -36,7 +31,8 @@ namespace Logic
         public void Update(BookEditVM model)
         {
             var book = Mapper.Map<BookEM>(model);
-            using (var bookRepo = new BookRepo(DataContext))
+            using (var сontext = new DataContext())
+            using (var bookRepo = new BookRepo(сontext))
             {
                 bookRepo.Update(book);
                 bookRepo.UpdateAuthors(model.Id, model.AuthorIds);
@@ -45,7 +41,8 @@ namespace Logic
 
         public BookVM Get(long id)
         {
-            using (var bookRepo = new BookRepo(DataContext))
+            using (var сontext = new DataContext())
+            using (var bookRepo = new BookRepo(сontext))
             {
                 var bookEM = bookRepo.Get(id);
                 var bookVM = Mapper.Map<BookVM>(bookEM);
@@ -59,7 +56,8 @@ namespace Logic
 
             var dataTableEM = Mapper.Map<DataTableEM>(model);
 
-            using (var bookRepo = new BookRepo(DataContext))
+            using (var сontext = new DataContext())
+            using (var bookRepo = new BookRepo(сontext))
             {
                 var booksEM = bookRepo.Get(dataTableEM, out int recordsTotal, out int recordsFiltered);
                 var booksVM = Mapper.Map<IEnumerable<BookVM>>(booksEM);

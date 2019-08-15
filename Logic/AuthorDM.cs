@@ -9,16 +9,10 @@ namespace Logic
 {
     public class AuthorDM
     {
-        private DataContext DataContext { get; }
-
-        public AuthorDM()
-        {
-            DataContext = new DataContext();
-        }
-
         public IEnumerable<AuthorBaseVM> Get(string term)
         {
-            using (var authorRepo = new AuthorRepo(DataContext))
+            using (var сontext = new DataContext())
+            using (var authorRepo = new AuthorRepo(сontext))
             {
                 var authorsEM = authorRepo.Get(term);
                 var authorsVM = Mapper.Map<IEnumerable<AuthorBaseVM>>(authorsEM);
@@ -28,7 +22,8 @@ namespace Logic
 
         public IEnumerable<AuthorBaseVM> Get(IEnumerable<long> ids)
         {
-            using (var authorRepo = new AuthorRepo(DataContext))
+            using (var сontext = new DataContext())
+            using (var authorRepo = new AuthorRepo(сontext))
             {
                 var authorsEM = authorRepo.Get(ids);
                 var authorsVM = Mapper.Map<IEnumerable<AuthorBaseVM>>(authorsEM);
@@ -42,7 +37,8 @@ namespace Logic
 
             var dataTableEM = Mapper.Map<DataTableEM>(model);
 
-            using (var authorRepo = new AuthorRepo(DataContext))
+            using (var context = new DataContext())
+            using (var authorRepo = new AuthorRepo(context))
             {
                 var authorsEM = authorRepo.Get(dataTableEM, out int recordsTotal, out int recordsFiltered);
                 var authorsVM = Mapper.Map<IEnumerable<AuthorBaseVM>>(authorsEM);
@@ -57,7 +53,8 @@ namespace Logic
 
         public AuthorVM Get(long authorId)
         {
-            using (var authorRepo = new AuthorRepo(DataContext))
+            using (var context = new DataContext())
+            using (var authorRepo = new AuthorRepo(context))
             {
                 var authorEM = authorRepo.Get(authorId);
                 var authorVM = Mapper.Map<AuthorVM>(authorEM);
@@ -68,7 +65,8 @@ namespace Logic
         public void Add(AuthorVM model)
         {
             var author = Mapper.Map<AuthorEM>(model);
-            using (var authorRepo = new AuthorRepo(DataContext))
+            using (var context = new DataContext())
+            using (var authorRepo = new AuthorRepo(context))
             {
                 authorRepo.Add(author);
             }
@@ -76,7 +74,8 @@ namespace Logic
 
         public void Delete(long id)
         {
-            using (var authorRepo = new AuthorRepo(DataContext))
+            using (var context = new DataContext())
+            using (var authorRepo = new AuthorRepo(context))
             {
                 authorRepo.Delete(id);
             }
@@ -85,7 +84,9 @@ namespace Logic
         public void Update(AuthorVM model)
         {
             var author = Mapper.Map<AuthorEM>(model);
-            using (var authorRepo = new AuthorRepo(DataContext))
+
+            using (var context = new DataContext())
+            using (var authorRepo = new AuthorRepo(context))
             {
                 authorRepo.Update(author);
             }

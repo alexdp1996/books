@@ -23,7 +23,7 @@
                 Authors
             </th>
             <th>
-                <a class="btn btn-default" href="@Url.Action("Create")"><i class="glyphicon glyphicon-plus"></i></a>
+                <a class="btn btn-default" href="@Url.Action("Get")"><i class="glyphicon glyphicon-plus"></i></a>
             </th>
     </thead>
     <tbody></tbody>
@@ -35,9 +35,8 @@
     <script>
         $(document).ready(function () {
             BookList.getBooksUrl = "@Url.Action("GetBooks")";
-            BookList.detailsUrl = "@Url.Action("Details")";
-            BookList.editUrl = "@Url.Action("Edit")";
-            BookList.authorDetailsUrl = "@Url.Action("Details", "Author")";
+            BookList.getUrl = "@Url.Action("Get")";
+            BookList.authorGetUrl = "@Url.Action("Get", "Author")";
             BookList.Init();
             DeleteModal.url = "@Url.Action("Delete")";
             DeleteModal.grid = BookList.grid;

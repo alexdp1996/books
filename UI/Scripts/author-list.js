@@ -5,11 +5,10 @@
     var self = this;
     self.gridSelector = "#authors";
     self.getAuthorsUrl = "";
-    self.detailsUrl = "";
-    self.editUrl = "";
+    self.getUrl = "";
 
     self.Init = function () {
-        self.grid = $(gridSelector).DataTable({
+        self.grid = $(self.gridSelector).DataTable({
             serverSide: true,
             "searching": false,
             "scrollX": true,
@@ -25,12 +24,12 @@
             columns: [
                 {
                     "data": function (data) {
-                        return '<a href="' + self.detailsUrl + '?id=' + data.Id + '">' + data.Name + '</a>';
+                        return '<a href="' + self.getUrl + '?id=' + data.Id + '">' + data.Name + '</a>';
                     }
                 },
                 {
                     "data": function (data) {
-                        return '<a href="' + self.detailsUrl + '?id=' + data.Id + '">' + data.Surname + '</a>';
+                        return '<a href="' + self.getUrl + '?id=' + data.Id + '">' + data.Surname + '</a>';
                     }
                 },
                 {
@@ -40,8 +39,7 @@
                 },
                 {
                     "data": function (data) {
-                        return '<a class="btn btn-default" href="' + self.editUrl + '?id=' + data.Id + '&surname=' + data.Surname + '">Edit</a>' +
-                            '<button class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" data-id="' + data.Id + '">Delete</button>';
+                        return '<button class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" data-id="' + data.Id + '">Delete</button>';
                     }
                 }
             ],

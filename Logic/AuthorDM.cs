@@ -51,24 +51,14 @@ namespace Logic
             return result;
         }
 
-        public AuthorVM Get(long authorId)
+        public AuthorVM Get(long id)
         {
             using (var context = new DataContext())
             using (var authorRepo = new AuthorRepo(context))
             {
-                var authorEM = authorRepo.Get(authorId);
+                var authorEM = authorRepo.Get(id);
                 var authorVM = Mapper.Map<AuthorVM>(authorEM);
                 return authorVM;
-            }
-        }
-
-        public void Add(AuthorVM model)
-        {
-            var author = Mapper.Map<AuthorEM>(model);
-            using (var context = new DataContext())
-            using (var authorRepo = new AuthorRepo(context))
-            {
-                authorRepo.Add(author);
             }
         }
 
@@ -81,14 +71,14 @@ namespace Logic
             }
         }
 
-        public void Update(AuthorVM model)
+        public void Save(AuthorVM model)
         {
             var author = Mapper.Map<AuthorEM>(model);
 
             using (var context = new DataContext())
             using (var authorRepo = new AuthorRepo(context))
             {
-                authorRepo.Update(author);
+                authorRepo.Save(author);
             }
         }
     }

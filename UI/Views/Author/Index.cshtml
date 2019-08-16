@@ -4,7 +4,7 @@
 
 @Html.Partial("~/Views/Shared/_Delete.cshtml")
 
-<table class="table table-striped table-bordered dataTable" id="books">
+<table class="table table-striped table-bordered dataTable" id="authors">
     <thead>
         <tr>
             <th>
@@ -17,7 +17,7 @@
                 Amount of books
             </th>
             <th>
-                <a class="btn btn-default" href="@Url.Action("Create")"><i class="glyphicon glyphicon-plus"></i></a>
+                <a class="btn btn-default" href="@Url.Action("Get")"><i class="glyphicon glyphicon-plus"></i></a>
             </th>
     </thead>
     <tbody></tbody>
@@ -28,12 +28,11 @@
     @Scripts.Render("~/Scripts/delete-modal.js")
 <script>
         $(document).ready(function () {
-            AuthorList.geAuthorsUrl = "@Url.Action("GetAuthors")";
-            AuthorList.detailsUrl = "@Url.Action("Details")";
-            AuthorList.editUrl = "@Url.Action("Edit")";
+            AuthorList.getAuthorsUrl = "@Url.Action("GetAuthors")";
+            AuthorList.getUrl = "@Url.Action("Get")";
             AuthorList.Init();
             DeleteModal.url = "@Url.Action("Delete")";
-            DeleteModal.grid = grid;
+            DeleteModal.grid = AuthorList.grid;
             DeleteModal.Init();
         });
 </script>

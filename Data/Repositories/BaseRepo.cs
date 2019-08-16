@@ -14,22 +14,24 @@ namespace Data.Repositories
 
         public abstract Entity Get(long id);
 
-        public void Update(Entity entity)
+        public void Save(Entity entity)
         {
             var entry = Get(entity.Id);
-            DataContext.Entry(entry).CurrentValues.SetValues(entity);
+            if (entry == null)
+            {
+                DataContext.Set<Entity>().Add(entity);
+                DataContext.SaveChanges();
+            }
+            else
+            {
+                DataContext.Entry(entry).CurrentValues.SetValues(entity);
+            }
             DataContext.SaveChanges();
         }
 
         public void Delete(long id)
         {
             DataContext.Set<Entity>().Remove(Get(id));
-            DataContext.SaveChanges();
-        }
-
-        public void Add(Entity entity)
-        {
-            DataContext.Set<Entity>().Add(entity);
             DataContext.SaveChanges();
         }
 

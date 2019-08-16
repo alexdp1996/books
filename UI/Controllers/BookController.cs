@@ -28,46 +28,21 @@ namespace UI.Controllers
         }
 
         [HttpGet]
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Create(BookVM model)
-        {
-            if (ModelState.IsValid)
-            {
-                BookDM.Add(model);
-                return RedirectToAction("Index", new { alert = "Book was created" });
-            }
-            ViewBag.Alert = "Failed to create book";
-            return View(model);
-        }
-
-        [HttpGet]
-        public ActionResult Details(long id)
-        {
-            var model = BookDM.Get(id);
-            return View(model);
-        }
-
-        [HttpGet]
-        public ActionResult Edit(long id)
+        public ActionResult Get(long id = 0)
         {
             var model = BookDM.Get(id);
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Edit(BookEditVM model)
+        public ActionResult Save(BookEditVM model)
         {
             if (ModelState.IsValid)
             {
-                BookDM.Update(model);
-                return RedirectToAction("Index", new { alert = "Book was edited" });
+                BookDM.Save(model);
+                return RedirectToAction("Index", new { alert = "Book was saved" });
             }
-            ViewBag.Alert = "Failed to edit book";
+            ViewBag.Alert = "Failed to save book";
             var dm = new AuthorDM();
             model.Authors = dm.Get(model.AuthorIds).ToList();
             return View(model);

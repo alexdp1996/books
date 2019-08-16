@@ -9,16 +9,6 @@ namespace Logic
 {
     public class BookDM
     {
-        public void Add(BookVM model)
-        {
-            var book = Mapper.Map<BookEM>(model);
-            using (var сontext = new DataContext())
-            using (var bookRepo = new BookRepo(сontext))
-            {
-                bookRepo.Add(book);
-            }
-        }
-
         public void Delete(long id)
         {
             using (var сontext = new DataContext())
@@ -28,13 +18,13 @@ namespace Logic
             }
         }
 
-        public void Update(BookEditVM model)
+        public void Save(BookEditVM model)
         {
             var book = Mapper.Map<BookEM>(model);
             using (var сontext = new DataContext())
             using (var bookRepo = new BookRepo(сontext))
             {
-                bookRepo.Update(book);
+                bookRepo.Save(book);
                 bookRepo.UpdateAuthors(model.Id, model.AuthorIds);
             }
         }

@@ -4,10 +4,8 @@ namespace ViewModels
 {
     ///Start - JSon class sent from Datatables
     
-    public class DataTableVM
+    public class DataTableRequestVM
     {
-        // properties are not capital due to json mapping
-
         public int Draw { get; set; }
         public int Start { get; set; }
         public int Length { get; set; }

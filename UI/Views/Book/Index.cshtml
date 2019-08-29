@@ -4,7 +4,11 @@
 
 @Html.Partial("~/Views/Shared/_Delete.cshtml")
 
-<table class="table table-striped table-bordered dataTable" id="books">
+<div id="add-template" class="hidden">
+    <a class="btn btn-default" href="@Url.Action("Get")"><i class="glyphicon glyphicon-plus"></i></a>
+</div>
+
+<table class="table table-striped table-bordered dataTable" style="width: 100%;" id="books">
     <thead>
         <tr>
             <th>
@@ -23,24 +27,22 @@
                 Authors
             </th>
             <th>
-                <a class="btn btn-default" href="@Url.Action("Get")"><i class="glyphicon glyphicon-plus"></i></a>
             </th>
     </thead>
     <tbody></tbody>
 </table>
 
 @section scripts{
-    @Scripts.Render("~/Scripts/book-list.js")
-    @Scripts.Render("~/Scripts/delete-modal.js")
+    @Styles.Render("~/datatables/css")
+    @Scripts.Render("~/bundles/datatables")
+    @Scripts.Render("~/bundles/books")
     <script>
         $(document).ready(function () {
-            BookList.getBooksUrl = "@Url.Action("GetBooks")";
+            BookList.getDataUrl = "@Url.Action("GetBooks")";
             BookList.getUrl = "@Url.Action("Get")";
-            BookList.authorGetUrl = "@Url.Action("Get", "Author")";
+            BookList.authorGetUrl = "@Url.Action("Get", "Author")";       
+            BookList.deleteUrl = "@Url.Action("Delete")";
             BookList.Init();
-            DeleteModal.url = "@Url.Action("Delete")";
-            DeleteModal.grid = BookList.grid;
-            DeleteModal.Init();
         });
     </script>
 }

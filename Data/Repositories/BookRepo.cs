@@ -27,7 +27,7 @@ namespace Data.Repositories
             DataContext.SaveChanges();
         }
 
-        public IEnumerable<BookEM> Get(DataTableEM model, out int recordsTotal, out int recordsFiltered)
+        public IEnumerable<BookEM> Get(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
         {
             var books = DataContext.Books.Include("Authors").AsQueryable();
             recordsTotal = books.Count();

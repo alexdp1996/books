@@ -1,6 +1,7 @@
 ﻿using Logic;
 using System.Web.Mvc;
 using ViewModels;
+using ViewModels.Enums;
 
 namespace UI.Controllers
 {
@@ -11,12 +12,15 @@ namespace UI.Controllers
         [HttpGet]
         public ActionResult Index(string alert = null)
         {
-            ViewBag.Alert = alert;
+            if (alert != null)
+            {
+                ViewBag.Alert = new AlertVM { Message = alert, Type = AlertType.Success };
+            }
             return View();
         }
 
         [HttpPost]
-        public ActionResult GetAuthors(DataTableVM model)
+        public ActionResult GetAuthors(DataTableRequestVM model)
         {
             var tableVM = AuthorDM.Get(model);
             return new JsonResult
@@ -41,8 +45,9 @@ namespace UI.Controllers
                 AuthorDM.Save(model);
                 return RedirectToAction("Index", new { alert = "Author was saved" });
             }
-            ViewBag.Alert = "Failed to save author";
-            return View(model);
+
+            ViewBag.Alert = new AlertVM { Message = "Failed to save author", Type = AlertType.Danger };
+            return View("~/Views/Author/Get.cshtml",model);
         }
 
         [HttpPost]

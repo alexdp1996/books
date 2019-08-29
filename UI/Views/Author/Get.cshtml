@@ -1,8 +1,8 @@
-﻿@model ViewModels.AuthorVM
+﻿@model AuthorVM
 
 @using (Html.BeginForm("Save", "Author"))
 {
-    @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken() // почитай
 
 <div class="form-horizontal">
     <h4>@(Model == null ? "Create Author" : "Edit Author")</h4>
@@ -12,7 +12,7 @@
 
     <div class="form-group">
         @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-4">
             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
         </div>
@@ -20,40 +20,16 @@
 
     <div class="form-group">
         @Html.LabelFor(model => model.Surname, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-4">
             @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    @if (Model != null)
-    {
-        <div class="form-group">
-            @Html.LabelFor(model => model.CountOfBooks, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input class="form-control text-box single-line" value="@Model.CountOfBooks" disabled>
-            </div>
-        </div>
-
-        <dl class="dl-horizontal">
-            @if (Model.Books.Any())
-            {
-                <dt>
-                    @Html.DisplayNameFor(model => model.Books)
-                </dt>
-
-                <dd>
-                    @foreach (var book in Model.Books)
-                    {
-                        <a href="/Book/Details?id=@book.Id">@book.Name</a>
-                    }
-                </dd>
-            }
-        </dl>
-    }
+    @Html.Partial("~/Views/Author/_Books.cshtml", Model)
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
+        <div class="col-md-offset-2">
             <input type="submit" value="Save" class="btn btn-default" />
         </div>
     </div>

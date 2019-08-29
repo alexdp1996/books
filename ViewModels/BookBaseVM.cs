@@ -1,12 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using ViewModels.DataAttributes;
 
 namespace ViewModels
 {
     public class BookBaseVM
     {
-        public long Id { get; set; }
+        public long? Id { get; set; }
         [Required]
         [MinLength(4)]
         [RegularExpression(@"[^\s]+(.*[^\s]+)*", ErrorMessage = "String must be trimmed")]
@@ -18,7 +17,6 @@ namespace ViewModels
         [Range(25, 10000, ErrorMessage = "Value beetween 25 and 10000 is required")]
         public int Pages { get; set; }
         [Required]
-        [DateRange(ErrorMessage = "Invalid date")]
         public DateTime Date { get; set; }
     }
 }

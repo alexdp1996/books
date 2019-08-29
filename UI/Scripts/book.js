@@ -1,4 +1,4 @@
-﻿var ChooseAuthor = ChooseAuthor || {};
+﻿var Book = Book || {};
 
 (function () {
     var self = this;
@@ -28,4 +28,4 @@
         });
         $(".datepicker").datepicker();
     };
-}).apply(ChooseAuthor);
+}).apply(Book);

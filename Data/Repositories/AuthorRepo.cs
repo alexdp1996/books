@@ -28,7 +28,7 @@ namespace Data.Repositories
             return DataContext.Authors.Where(a => (a.Name + " " + a.Surname).ToLower().Contains(term.ToLower()));
         }
 
-        public IEnumerable<AuthorEM> Get(DataTableEM model, out int recordsTotal, out int recordsFiltered)
+        public IEnumerable<AuthorEM> Get(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
         {
             var authors = DataContext.Authors.Include("Books").AsQueryable();
             recordsTotal = authors.Count();

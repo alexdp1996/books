@@ -5,17 +5,21 @@
     var self = this;
     self.gridSelector = "#books";
     self.getUrl = "";
-    self.getBooksUrl = "";
+    self.getDataUrl = "";
     self.authorGetUrl = "";
+    self.deleteUrl = "";
 
     self.Init = function () {
         self.grid = $(self.gridSelector).DataTable({
+            dom: `<'row'<'col-md-12'<'pull-left'l><'#add.pull-right'>>>
+                  <'row'<'col-md-12'tr>>
+                  <'row'<'col-md-12'<'pull-left'i><'pull-right'p>>>`,
             serverSide: true,
             "searching": false,
             "scrollX": true,
             responsive: true,
             ajax: {
-                url: self.getBooksUrl,
+                url: self.getDataUrl,
                 type: "POST",
                 datatype: "json",
                 "dataSrc": function (json) {
@@ -67,6 +71,15 @@
             columnDefs: [{ orderable: false, targets: [4, 5] }],
             "orderMulti": false
         });
+
+        let addTemplate = $("#add-template");
+        let addContainer = $("#add");
+        addContainer.html(addTemplate.html());
+        addTemplate.remove();
+
+        DeleteModal.url = self.deleteUrl;
+        DeleteModal.grid = self.grid;
+        DeleteModal.Init();
     };
 
 }).apply(BookList);

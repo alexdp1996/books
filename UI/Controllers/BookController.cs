@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using ViewModels;
+using ViewModels.Enums;
 
 namespace UI.Controllers
 {
@@ -12,12 +13,15 @@ namespace UI.Controllers
         [HttpGet]
         public ActionResult Index(string alert = null)
         {
-            ViewBag.Alert = alert;
+            if (alert != null)
+            {
+                ViewBag.Alert = new AlertVM { Message = alert, Type = AlertType.Success };
+            }
             return View();
         }
 
         [HttpPost]
-        public ActionResult GetBooks(DataTableVM model)
+        public ActionResult GetBooks(DataTableRequestVM model)
         {
             var tableVM = BookDM.Get(model);
             return new JsonResult
@@ -42,10 +46,11 @@ namespace UI.Controllers
                 BookDM.Save(model);
                 return RedirectToAction("Index", new { alert = "Book was saved" });
             }
-            ViewBag.Alert = "Failed to save book";
+
+            ViewBag.Alert = new AlertVM { Message = "Failed to save book", Type = AlertType.Danger };
             var dm = new AuthorDM();
             model.Authors = dm.Get(model.AuthorIds).ToList();
-            return View(model);
+            return View("~/Views/Book/Get.cshtml", model);
         }
 
         [HttpPost]

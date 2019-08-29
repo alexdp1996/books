@@ -1,0 +1,13 @@
+﻿<div id="alert-box">
+    @{
+        var vm = ViewBag.Alert;
+        if (vm != null)
+        {
+            <div class="alert @UI.Extensions.EnumExtension.GetDisplay(vm.Type) alert-dismissible fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>@vm.Type!</strong> @vm.Message
+            </div>
+        }
+    }
+</div>
+@Scripts.Render("~/Scripts/alert.js")

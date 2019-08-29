@@ -42,15 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlertVM.cs" />
     <Compile Include="AuthorBaseVM.cs" />
     <Compile Include="AuthorVM.cs" />
     <Compile Include="BookBaseVM.cs" />
     <Compile Include="BookEditVM.cs" />
     <Compile Include="BookVM.cs" />
-    <Compile Include="DataAttributes\DateRange.cs" />
-    <Compile Include="DataTableDataVM.cs" />
-    <Compile Include="DataTableVM.cs" />
+    <Compile Include="DataTableResponseVM.cs" />
+    <Compile Include="DataTableRequestVM.cs" />
+    <Compile Include="Enums\AlertType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

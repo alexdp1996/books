@@ -17,9 +17,9 @@
             url: self.url + '?id=' + self.id
         }).done(function () {
             self.grid && self.grid.ajax.reload();
-            showInfo('Successfuly deleted');
+            Alert.show('Successfuly deleted item with id ' + self.id, Alert.Type.Success);
         }).fail(function () {
-            showInfo('Failed to delete');
+            Alert.show('Failed to delete item with ' + self.id, Alert.Type.Danger);
         });
     };
 }).apply(DeleteModal);

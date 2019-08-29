@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace ViewModels
+﻿namespace ViewModels
 {
 #pragma warning disable IDE1006 // Naming Styles
-    public class DataTableDataVM
+    public class DataTableResponseVM
     {
         public object data { get; set; }
         public string error { get; set; }

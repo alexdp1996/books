@@ -24,8 +24,8 @@ namespace Logic
             using (var сontext = new DataContext())
             using (var bookRepo = new BookRepo(сontext))
             {
-                bookRepo.Save(book);
-                bookRepo.UpdateAuthors(model.Id, model.AuthorIds);
+                var id = bookRepo.Save(book);
+                bookRepo.UpdateAuthors(id, model.AuthorIds);
             }
         }
 
@@ -40,11 +40,11 @@ namespace Logic
             }
         }
 
-        public DataTableDataVM Get(DataTableVM model)
+        public DataTableResponseVM Get(DataTableRequestVM model)
         {
-            var result = new DataTableDataVM();
+            var result = new DataTableResponseVM();
 
-            var dataTableEM = Mapper.Map<DataTableEM>(model);
+            var dataTableEM = Mapper.Map<DataTableRequestEM>(model);
 
             using (var сontext = new DataContext())
             using (var bookRepo = new BookRepo(сontext))

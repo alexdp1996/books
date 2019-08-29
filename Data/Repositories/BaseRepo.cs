@@ -14,7 +14,7 @@ namespace Data.Repositories
 
         public abstract Entity Get(long id);
 
-        public void Save(Entity entity)
+        public long Save(Entity entity)
         {
             var entry = Get(entity.Id);
             if (entry == null)
@@ -27,6 +27,7 @@ namespace Data.Repositories
                 DataContext.Entry(entry).CurrentValues.SetValues(entity);
             }
             DataContext.SaveChanges();
+            return entity.Id;
         }
 
         public void Delete(long id)

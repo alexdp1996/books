@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ViewModels
 {
     public class AuthorBaseVM
     {
-        public long Id { get; set; }
+        public long? Id { get; set; }
         [Required]
         [MinLength(4)]
         [RegularExpression(@"[A-Za-z]*", ErrorMessage = "Only letters are allowed")]

@@ -21,7 +21,7 @@ namespace Logic.AppMapper
                 mapper.CreateMap<ColumnVM, ColumnEM>();
                 mapper.CreateMap<OrderVM, OrderEM>().ForMember(d => d.Asc, o => o.MapFrom(s => s.Dir == "asc"));
                 mapper.CreateMap<SearchVM, SearchEM>();
-                mapper.CreateMap<DataTableVM, DataTableEM>();
+                mapper.CreateMap<DataTableRequestVM, DataTableRequestEM>();
             });
 #pragma warning restore CS0618 // Type or member is obsolete
         }

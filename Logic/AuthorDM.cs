@@ -31,11 +31,11 @@ namespace Logic
             }
         }
 
-        public DataTableDataVM Get(DataTableVM model)
+        public DataTableResponseVM Get(DataTableRequestVM model)
         {
-            var result = new DataTableDataVM();
+            var result = new DataTableResponseVM();
 
-            var dataTableEM = Mapper.Map<DataTableEM>(model);
+            var dataTableEM = Mapper.Map<DataTableRequestEM>(model);
 
             using (var context = new DataContext())
             using (var authorRepo = new AuthorRepo(context))

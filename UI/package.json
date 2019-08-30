@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "name": "asp.net",
+  "private": true,
+  "devDependencies": {},
+  "dependencies": {
+    "bootstrap-datepicker": "^1.9.0",
+    "datatables.net-bs": "^1.10.19",
+    "moment": "^2.24.0",
+    "select2": "^4.0.9"
+  }
+}

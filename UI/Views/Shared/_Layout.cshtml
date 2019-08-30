@@ -8,35 +8,34 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-info bg-info navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a class="navbar-brand" href="#">Book catalog</a>
+                <button type="button" class="navbar-toggle glyphicon glyphicon-chevron-down" data-toggle="collapse" data-target="#menu" />
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="nav navbar-nav ">
+                    <li>@Html.ActionLink("Books", "Index", "Book") </li>
+                    <li>@Html.ActionLink("Authors", "Index", "Author") </li>
                 </ul>
             </div>
         </div>
     </div>
     <div class="container body-content">
+        @Html.Partial("~/Views/Shared/_Alert.cshtml")
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/general-config.js")
     @RenderSection("scripts", required: false)
+
+    <script>
+        $(document).ready(function () {
+            GeneralConfig.Init();
+        });
+    </script>
 </body>
 </html>

@@ -24,7 +24,33 @@ namespace UI
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/Site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/book").Include(
+                      "~/node_modules/select2/dist/js/select2.min.js",
+                      "~/node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
+                      "~/Scripts/book.js"));
+
+            bundles.Add(new StyleBundle("~/book/css").Include(
+                      "~/node_modules/select2/dist/css/select2.min.css",
+                      "~/node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
+                      "~/node_modules/datatables.net/js/jquery.dataTables.min.js",
+                      "~/node_modules/datatables.net-bs/js/dataTables.bootstrap.min.js"));
+
+            bundles.Add(new StyleBundle("~/datatables/css").Include(
+                      "~/node_modules/datatables.net-bs/css/dataTables.bootstrap.min.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/books").Include(
+                      "~/node_modules/moment/min/moment.min.js",
+                      "~/Scripts/book-list.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/authors").Include(
+                      "~/Scripts/author-list.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/delete").Include(
+                      "~/Scripts/delete-modal.js"));
         }
     }
 }

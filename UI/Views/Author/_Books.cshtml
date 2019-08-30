@@ -1,0 +1,31 @@
+﻿@model AuthorVM
+
+@if (Model != null)
+{
+    <div class="form-group">
+        @Html.LabelFor(model => model.CountOfBooks, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            <input class="form-control text-box single-line" value="@Model.CountOfBooks" disabled>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @if (Model.Books.Any())
+        {
+            <label class="control-label col-md-2">Books</label>
+            <div class="col-md-4">
+                <dl class="dl-horizontal">
+                    @foreach (var book in Model.Books)
+                    {
+                        <dt class="text-md-left">
+                            @Html.ActionLink(book.Name, "Get", "Book", new { id = book.Id })
+                        </dt>
+                        <dd>
+                            @book.Date.ToString()
+                        </dd>
+                    }
+                </dl>
+            </div>
+        }
+    </div>
+}

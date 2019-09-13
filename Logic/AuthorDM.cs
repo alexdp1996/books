@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Data;
 using Data.Repositories;
-using Entities;
+using DataInfrastructure.Entities;
 using System.Collections.Generic;
 using ViewModels;
 
@@ -11,10 +11,9 @@ namespace Logic
     {
         public IEnumerable<AuthorBaseVM> Get(string term)
         {
-            using (var сontext = new DataContext())
-            using (var authorRepo = new AuthorRepo(сontext))
+            using (var unit = new UnitOfWork())
             {
-                var authorsEM = authorRepo.Get(term);
+                var authorsEM = unit.Author.Get(term);
                 var authorsVM = Mapper.Map<IEnumerable<AuthorBaseVM>>(authorsEM);
                 return authorsVM;
             }
@@ -22,10 +21,9 @@ namespace Logic
 
         public IEnumerable<AuthorBaseVM> Get(IEnumerable<long> ids)
         {
-            using (var сontext = new DataContext())
-            using (var authorRepo = new AuthorRepo(сontext))
+            using (var unit = new UnitOfWork())
             {
-                var authorsEM = authorRepo.Get(ids);
+                var authorsEM = unit.Author.Get(ids);
                 var authorsVM = Mapper.Map<IEnumerable<AuthorBaseVM>>(authorsEM);
                 return authorsVM;
             }
@@ -37,10 +35,9 @@ namespace Logic
 
             var dataTableEM = Mapper.Map<DataTableRequestEM>(model);
 
-            using (var context = new DataContext())
-            using (var authorRepo = new AuthorRepo(context))
+            using (var unit = new UnitOfWork())
             {
-                var authorsEM = authorRepo.Get(dataTableEM, out int recordsTotal, out int recordsFiltered);
+                var authorsEM = unit.Author.Get(dataTableEM, out int recordsTotal, out int recordsFiltered);
                 var authorsVM = Mapper.Map<IEnumerable<AuthorBaseVM>>(authorsEM);
                 result.data = authorsVM;
                 result.recordsFiltered = recordsFiltered;
@@ -53,10 +50,9 @@ namespace Logic
 
         public AuthorVM Get(long id)
         {
-            using (var context = new DataContext())
-            using (var authorRepo = new AuthorRepo(context))
+            using (var unit = new UnitOfWork())
             {
-                var authorEM = authorRepo.Get(id);
+                var authorEM = unit.Author.Get(id);
                 var authorVM = Mapper.Map<AuthorVM>(authorEM);
                 return authorVM;
             }
@@ -64,10 +60,9 @@ namespace Logic
 
         public void Delete(long id)
         {
-            using (var context = new DataContext())
-            using (var authorRepo = new AuthorRepo(context))
+            using (var unit = new UnitOfWork())
             {
-                authorRepo.Delete(id);
+                unit.Author.Delete(id);
             }
         }
 
@@ -75,10 +70,9 @@ namespace Logic
         {
             var author = Mapper.Map<AuthorEM>(model);
 
-            using (var context = new DataContext())
-            using (var authorRepo = new AuthorRepo(context))
+            using (var unit = new UnitOfWork())
             {
-                authorRepo.Save(author);
+                unit.Author.Save(author);
             }
         }
     }

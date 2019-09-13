@@ -1,11 +1,12 @@
-﻿using Entities;
-using Entities.Enums;
+﻿using DataInfrastructure.Entities;
+using DataInfrastructure.Enums;
+using DataInfrastructure.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Data.Repositories
 {
-    public class BookRepo : BaseRepo<BookEM>
+    public class BookRepo : BaseRepo<BookEM>, IBookRepo
     {
 
         public BookRepo(DataContext context) : base(context)
@@ -17,14 +18,13 @@ namespace Data.Repositories
             return DataContext.Books.Include("Authors").FirstOrDefault(b => b.Id == id);
         }
 
-        public void UpdateAuthors(long bookId, IEnumerable<long> authorIds)
+        public long Save(UpdatableBookEM book)
         {
-            var book = Get(bookId);
             book.Authors.Clear();
             var authorRepo = new AuthorRepo(DataContext);
-            var authors = authorRepo.Get(authorIds);
+            var authors = authorRepo.Get(book.AuthorIds);
             book.Authors.AddRange(authors);
-            DataContext.SaveChanges();
+            return base.Save(book);
         }
 
         public IEnumerable<BookEM> Get(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)

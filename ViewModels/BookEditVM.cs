@@ -2,7 +2,7 @@
 
 namespace ViewModels
 {
-    public class BookEditVM: BookVM
+    public class BookEditVM: BookBaseVM
     {
         public List<long> AuthorIds { get; set; }
 

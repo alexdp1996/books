@@ -1,9 +1,10 @@
-﻿using Entities;
+﻿using DataInfrastructure.Entities;
+using DataInfrastructure.Interfaces;
 using System;
 
 namespace Data.Repositories
 {
-    public abstract class BaseRepo<Entity> : IDisposable where Entity : BaseEM
+    public abstract class BaseRepo<Entity> : IBaseRepo<Entity> where Entity : BaseEM
     {
         protected DataContext DataContext { get; }
 

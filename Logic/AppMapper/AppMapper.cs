@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿
+using DataInfrastructure.Entities;
 using System.Linq;
 using ViewModels;
 
@@ -11,9 +12,9 @@ namespace Logic.AppMapper
 #pragma warning disable CS0618 // Type or member is obsolete
             AutoMapper.Mapper.Initialize(mapper =>
             {
-                mapper.CreateMap<BookBaseVM, BookEM>().ReverseMap();
+                mapper.CreateMap<BookEditVM, UpdatableBookEM>().ReverseMap();
+                mapper.CreateMap<BookEditVM, BookVM>();
                 mapper.CreateMap<BookEM, BookVM>();
-                mapper.CreateMap<BookEM, BookEditVM>().ForMember(d => d.AuthorIds, o => o.MapFrom(s => s.Authors.Select(a => a.Id)));
                 mapper.CreateMap<AuthorEM, AuthorBaseVM>().ForMember(d => d.CountOfBooks, o => o.MapFrom(s => s.Books.Count)).ReverseMap();
                 mapper.CreateMap<AuthorEM, AuthorVM>().ForMember(d => d.CountOfBooks, o => o.MapFrom(s => s.Books.Count));
 

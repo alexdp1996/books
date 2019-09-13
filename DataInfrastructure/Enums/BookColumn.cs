@@ -1,4 +1,4 @@
-﻿namespace Entities.Enums
+﻿namespace DataInfrastructure.Enums
 {
     public enum BookColumn
     {

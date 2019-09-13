@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Entities
+namespace DataInfrastructure.Entities
 {
     public class BookEM : BaseEM
     {

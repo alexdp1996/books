@@ -1,4 +1,4 @@
-﻿using Entities;
+﻿using DataInfrastructure.Entities;
 using System.Data.Entity;
 
 namespace Data
@@ -20,9 +20,12 @@ namespace Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<BookEM>().HasKey(k => k.Id);
-            modelBuilder.Entity<AuthorEM>().HasKey(k => k.Id);
-            modelBuilder.Entity<AuthorEM>().HasMany(a => a.Books).WithMany(b => b.Authors);
+            modelBuilder.Entity<BookEM>().HasKey(k => k.Id).ToTable("Book");
+            modelBuilder.Entity<AuthorEM>().HasKey(k => k.Id).ToTable("Author");
+            modelBuilder.Entity<AuthorEM>().HasMany(a => a.Books).WithMany(b => b.Authors).Map(m =>
+            {
+                m.ToTable("BookAuthor");
+            }); ;
         }
     }
 }

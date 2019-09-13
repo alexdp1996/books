@@ -1,12 +1,13 @@
-﻿using Entities;
-using Entities.Enums;
+﻿using DataInfrastructure.Entities;
+using DataInfrastructure.Enums;
+using DataInfrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Data.Repositories
 {
-    public class AuthorRepo : BaseRepo<AuthorEM>
+    public class AuthorRepo : BaseRepo<AuthorEM>, IAuthorRepo
     {
 
         public AuthorRepo(DataContext context) : base(context)

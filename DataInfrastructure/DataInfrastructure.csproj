@@ -46,8 +46,6 @@
     <Compile Include="Entities\BookEM.cs" />
     <Compile Include="Entities\DataTableRequestEM.cs" />
     <Compile Include="Entities\UpdatableBookEM.cs" />
-    <Compile Include="Enums\AuthorColumn.cs" />
-    <Compile Include="Enums\BookColumn.cs" />
     <Compile Include="Interfaces\IAuthorRepo.cs" />
     <Compile Include="Interfaces\IBaseRepo.cs" />
     <Compile Include="Interfaces\IBookRepo.cs" />

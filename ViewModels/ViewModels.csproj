@@ -51,6 +51,8 @@
     <Compile Include="DataTableResponseVM.cs" />
     <Compile Include="DataTableRequestVM.cs" />
     <Compile Include="Enums\AlertType.cs" />
+    <Compile Include="Enums\AuthorColumn.cs" />
+    <Compile Include="Enums\BookColumn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

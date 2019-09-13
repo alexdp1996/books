@@ -20,7 +20,6 @@ namespace Logic.AppMapper
 
                 //DataTable
                 mapper.CreateMap<ColumnVM, ColumnEM>();
-                mapper.CreateMap<OrderVM, OrderEM>().ForMember(d => d.Asc, o => o.MapFrom(s => s.Dir == "asc"));
                 mapper.CreateMap<SearchVM, SearchEM>();
                 mapper.CreateMap<DataTableRequestVM, DataTableRequestEM>();
             });

@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
-using Data;
-using Data.Repositories;
 using DataInfrastructure.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using ViewModels;
+using ViewModels.Enums;
 
 namespace Logic
 {
@@ -53,9 +52,65 @@ namespace Logic
 
             var dataTableEM = Mapper.Map<DataTableRequestEM>(model);
 
+            var asc = model.Order[0].Dir == "asc";
+            var column = (BookColumn) model.Order[0].Column;
             using (var unit = new UnitOfWork())
             {
-                var booksEM = unit.Book.Get(dataTableEM, out int recordsTotal, out int recordsFiltered);
+                IEnumerable<BookEM> booksEM;
+                int recordsTotal;
+                int recordsFiltered;
+                switch (column)
+                {
+                    default:
+                    case BookColumn.Name:
+                        {
+                            if (asc)
+                            {
+                                booksEM = unit.Book.GetByNameAsc(dataTableEM, out recordsTotal, out recordsFiltered);
+                            }
+                            else
+                            {
+                                booksEM = unit.Book.GetByNameDesc(dataTableEM, out recordsTotal, out recordsFiltered);
+                            }
+                            break;
+                        }
+                    case BookColumn.Pages:
+                        {
+                            if (asc)
+                            {
+                                booksEM = unit.Book.GetByPagesAsc(dataTableEM, out recordsTotal, out recordsFiltered);
+                            }
+                            else
+                            {
+                                booksEM = unit.Book.GetByPagesDesc(dataTableEM, out recordsTotal, out recordsFiltered);
+                            }
+                            break;
+                        }
+                    case BookColumn.Rate:
+                        {
+                            if (asc)
+                            {
+                                booksEM = unit.Book.GetByRateAsc(dataTableEM, out recordsTotal, out recordsFiltered);
+                            }
+                            else
+                            {
+                                booksEM = unit.Book.GetByRateDesc(dataTableEM, out recordsTotal, out recordsFiltered);
+                            }
+                            break;
+                        }
+                    case BookColumn.Date:
+                        {
+                            if (asc)
+                            {
+                                booksEM = unit.Book.GetByDateAsc(dataTableEM, out recordsTotal, out recordsFiltered);
+                            }
+                            else
+                            {
+                                booksEM = unit.Book.GetByDateDesc(dataTableEM, out recordsTotal, out recordsFiltered);
+                            }
+                            break;
+                        }
+                }
                 var booksVM = Mapper.Map<IEnumerable<BookVM>>(booksEM);
 
                 result.data = booksVM;

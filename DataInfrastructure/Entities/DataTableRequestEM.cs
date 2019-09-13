@@ -8,7 +8,6 @@ namespace DataInfrastructure.Entities
         public int Length { get; set; }
         public List<ColumnEM> Columns { get; set; }
         public SearchEM Search { get; set; }
-        public List<OrderEM> Order { get; set; }
     }
 
     public class ColumnEM
@@ -24,11 +23,5 @@ namespace DataInfrastructure.Entities
     {
         public string Value { get; set; }
         public string Regex { get; set; }
-    }
-
-    public class OrderEM
-    {
-        public int Column { get; set; }
-        public bool Asc { get; set; }
     }
 }

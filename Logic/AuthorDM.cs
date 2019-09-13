@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
-using Data;
-using Data.Repositories;
 using DataInfrastructure.Entities;
 using System.Collections.Generic;
 using ViewModels;
+using ViewModels.Enums;
 
 namespace Logic
 {
@@ -35,9 +34,54 @@ namespace Logic
 
             var dataTableEM = Mapper.Map<DataTableRequestEM>(model);
 
+            var asc = model.Order[0].Dir == "asc";
+            var column = (AuthorColumn)model.Order[0].Column;
             using (var unit = new UnitOfWork())
             {
-                var authorsEM = unit.Author.Get(dataTableEM, out int recordsTotal, out int recordsFiltered);
+                IEnumerable<AuthorEM> authorsEM;
+                int recordsTotal;
+                int recordsFiltered;
+                switch (column)
+                {
+                    default:
+                    case AuthorColumn.Name:
+                        {
+                            if (asc)
+                            {
+                                authorsEM = unit.Author.GetByNameAsc(dataTableEM, out recordsTotal, out recordsFiltered);
+                            }
+                            else
+                            {
+                                authorsEM = unit.Author.GetByNameDesc(dataTableEM, out recordsTotal, out recordsFiltered);
+                            }
+                            break;
+                        }
+                    case AuthorColumn.Surname:
+                        {
+                            if (asc)
+                            {
+                                authorsEM = unit.Author.GetBySurnameAsc(dataTableEM, out recordsTotal, out recordsFiltered);
+                            }
+                            else
+                            {
+                                authorsEM = unit.Author.GetBySurnameDesc(dataTableEM, out recordsTotal, out recordsFiltered);
+                            }
+                            break;
+                        }
+                    case AuthorColumn.AmountOfBooks:
+                        {
+                            if (asc)
+                            {
+                                authorsEM = unit.Author.GetByAmountOfBooksAsc(dataTableEM, out recordsTotal, out recordsFiltered);
+                            }
+                            else
+                            {
+                                authorsEM = unit.Author.GetByAmountOfBooksDesc(dataTableEM, out recordsTotal, out recordsFiltered);
+                            }
+                            break;
+                        }
+
+                }
                 var authorsVM = Mapper.Map<IEnumerable<AuthorBaseVM>>(authorsEM);
                 result.data = authorsVM;
                 result.recordsFiltered = recordsFiltered;

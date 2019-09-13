@@ -1,5 +1,4 @@
 ﻿using DataInfrastructure.Entities;
-using DataInfrastructure.Enums;
 using DataInfrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -29,58 +28,48 @@ namespace Data.Repositories
             return DataContext.Authors.Where(a => (a.Name + " " + a.Surname).ToLower().Contains(term.ToLower()));
         }
 
-        public IEnumerable<AuthorEM> Get(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
+        private IEnumerable<AuthorEM> Get(DataTableRequestEM model, Func<IQueryable<AuthorEM>, IOrderedQueryable<AuthorEM>> orderFunc, out int recordsTotal, out int recordsFiltered)
         {
             var authors = DataContext.Authors.Include("Books").AsQueryable();
             recordsTotal = authors.Count();
 
-            var asc = model.Order[0].Asc;
-
-            switch ((AuthorColumn)model.Order[0].Column)
-            {
-                case AuthorColumn.Name:
-                    {
-                        if (asc)
-                        {
-                            authors = authors.OrderBy(b => b.Name);
-                        }
-                        else
-                        {
-                            authors = authors.OrderByDescending(b => b.Name);
-                        }
-                        break;
-                    }
-                case AuthorColumn.AmountOfBooks:
-                    {
-                        if (asc)
-                        {
-                            authors = authors.OrderBy(b => b.Books.Count);
-                        }
-                        else
-                        {
-                            authors = authors.OrderByDescending(b => b.Books.Count);
-                        }
-                        break;
-                    }
-                case AuthorColumn.Surname:
-                    {
-                        if (asc)
-                        {
-                            authors = authors.OrderBy(b => b.Surname);
-                        }
-                        else
-                        {
-                            authors = authors.OrderByDescending(b => b.Surname);
-                        }
-                        break;
-                    }
-            }
+            authors = orderFunc(authors);
 
             authors = authors.Skip(model.Start * model.Length).Take(model.Length);
 
             recordsFiltered = authors.Count();
 
             return authors;
+        }
+
+        public IEnumerable<AuthorEM> GetByAmountOfBooksAsc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
+        {
+            return Get(model, authors => authors.OrderBy(a => a.Books.Count), out recordsTotal, out recordsFiltered);
+        }
+
+        public IEnumerable<AuthorEM> GetByAmountOfBooksDesc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
+        {
+            return Get(model, authors => authors.OrderByDescending(a => a.Books.Count), out recordsTotal, out recordsFiltered);
+        }
+
+        public IEnumerable<AuthorEM> GetByNameAsc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
+        {
+            return Get(model, authors => authors.OrderBy(a => a.Name), out recordsTotal, out recordsFiltered);
+        }
+
+        public IEnumerable<AuthorEM> GetByNameDesc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
+        {
+            return Get(model, authors => authors.OrderByDescending(a => a.Name), out recordsTotal, out recordsFiltered);
+        }
+
+        public IEnumerable<AuthorEM> GetBySurnameAsc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
+        {
+            return Get(model, authors => authors.OrderBy(a => a.Surname), out recordsTotal, out recordsFiltered);
+        }
+
+        public IEnumerable<AuthorEM> GetBySurnameDesc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
+        {
+            return Get(model, authors => authors.OrderByDescending(b => b.Surname), out recordsTotal, out recordsFiltered);
         }
     }
 }

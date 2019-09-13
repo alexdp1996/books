@@ -1,4 +1,4 @@
-﻿namespace DataInfrastructure.Enums
+﻿namespace ViewModels.Enums
 {
     public enum BookColumn
     {

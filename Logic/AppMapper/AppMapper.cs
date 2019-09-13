@@ -14,6 +14,7 @@ namespace Logic.AppMapper
             {
                 mapper.CreateMap<BookEditVM, UpdatableBookEM>().ReverseMap();
                 mapper.CreateMap<BookEditVM, BookVM>();
+                mapper.CreateMap<BookEM, BookBaseVM>();
                 mapper.CreateMap<BookEM, BookVM>();
                 mapper.CreateMap<AuthorEM, AuthorBaseVM>().ForMember(d => d.CountOfBooks, o => o.MapFrom(s => s.Books.Count)).ReverseMap();
                 mapper.CreateMap<AuthorEM, AuthorVM>().ForMember(d => d.CountOfBooks, o => o.MapFrom(s => s.Books.Count));

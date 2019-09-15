@@ -7,11 +7,11 @@ namespace DataInfrastructure.Interfaces
     {
         IEnumerable<AuthorEM> Get(IEnumerable<long> Ids);
         IEnumerable<AuthorEM> Get(string term);
-        IEnumerable<AuthorEM> GetByNameAsc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered);
-        IEnumerable<AuthorEM> GetByNameDesc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered);
-        IEnumerable<AuthorEM> GetBySurnameAsc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered);
-        IEnumerable<AuthorEM> GetBySurnameDesc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered);
-        IEnumerable<AuthorEM> GetByAmountOfBooksAsc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered);
-        IEnumerable<AuthorEM> GetByAmountOfBooksDesc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered);
+        DataTableResponseEM<AuthorEM> GetByNameAsc(DataTableRequestEM model);
+        DataTableResponseEM<AuthorEM> GetByNameDesc(DataTableRequestEM model);
+        DataTableResponseEM<AuthorEM> GetBySurnameAsc(DataTableRequestEM model);
+        DataTableResponseEM<AuthorEM> GetBySurnameDesc(DataTableRequestEM model);
+        DataTableResponseEM<AuthorEM> GetByAmountOfBooksAsc(DataTableRequestEM model);
+        DataTableResponseEM<AuthorEM> GetByAmountOfBooksDesc(DataTableRequestEM model);
     }
 }

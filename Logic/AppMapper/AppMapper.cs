@@ -1,5 +1,6 @@
 ﻿
 using DataInfrastructure.Entities;
+using System;
 using System.Linq;
 using ViewModels;
 
@@ -23,6 +24,8 @@ namespace Logic.AppMapper
                 mapper.CreateMap<ColumnVM, ColumnEM>();
                 mapper.CreateMap<SearchVM, SearchEM>();
                 mapper.CreateMap<DataTableRequestVM, DataTableRequestEM>();
+                mapper.CreateMap<DataTableResponseEM<BookEM>, DataTableResponseVM<BookVM>>();
+                mapper.CreateMap<DataTableResponseEM<AuthorEM>, DataTableResponseVM<AuthorBaseVM>>();
             });
 #pragma warning restore CS0618 // Type or member is obsolete
         }

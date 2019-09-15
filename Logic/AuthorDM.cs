@@ -28,19 +28,15 @@ namespace Logic
             }
         }
 
-        public DataTableResponseVM Get(DataTableRequestVM model)
+        public DataTableResponseVM<AuthorBaseVM> Get(DataTableRequestVM model)
         {
-            var result = new DataTableResponseVM();
-
             var dataTableEM = Mapper.Map<DataTableRequestEM>(model);
 
             var asc = model.Order[0].Dir == "asc";
             var column = (AuthorColumn)model.Order[0].Column;
             using (var unit = new UnitOfWork())
             {
-                IEnumerable<AuthorEM> authorsEM;
-                int recordsTotal;
-                int recordsFiltered;
+                DataTableResponseEM<AuthorEM> responseEM;
                 switch (column)
                 {
                     default:
@@ -48,11 +44,11 @@ namespace Logic
                         {
                             if (asc)
                             {
-                                authorsEM = unit.Author.GetByNameAsc(dataTableEM, out recordsTotal, out recordsFiltered);
+                                responseEM = unit.Author.GetByNameAsc(dataTableEM);
                             }
                             else
                             {
-                                authorsEM = unit.Author.GetByNameDesc(dataTableEM, out recordsTotal, out recordsFiltered);
+                                responseEM = unit.Author.GetByNameDesc(dataTableEM);
                             }
                             break;
                         }
@@ -60,11 +56,11 @@ namespace Logic
                         {
                             if (asc)
                             {
-                                authorsEM = unit.Author.GetBySurnameAsc(dataTableEM, out recordsTotal, out recordsFiltered);
+                                responseEM = unit.Author.GetBySurnameAsc(dataTableEM);
                             }
                             else
                             {
-                                authorsEM = unit.Author.GetBySurnameDesc(dataTableEM, out recordsTotal, out recordsFiltered);
+                                responseEM = unit.Author.GetBySurnameDesc(dataTableEM);
                             }
                             break;
                         }
@@ -72,24 +68,21 @@ namespace Logic
                         {
                             if (asc)
                             {
-                                authorsEM = unit.Author.GetByAmountOfBooksAsc(dataTableEM, out recordsTotal, out recordsFiltered);
+                                responseEM = unit.Author.GetByAmountOfBooksAsc(dataTableEM);
                             }
                             else
                             {
-                                authorsEM = unit.Author.GetByAmountOfBooksDesc(dataTableEM, out recordsTotal, out recordsFiltered);
+                                responseEM = unit.Author.GetByAmountOfBooksDesc(dataTableEM);
                             }
                             break;
                         }
 
                 }
-                var authorsVM = Mapper.Map<IEnumerable<AuthorBaseVM>>(authorsEM);
-                result.data = authorsVM;
-                result.recordsFiltered = recordsFiltered;
-                result.recordsTotal = recordsTotal;
-            }
-            result.draw = model.Draw;
+                var responseVM = Mapper.Map<DataTableResponseVM<AuthorBaseVM>>(responseEM);
+                responseVM.draw = model.Draw;
 
-            return result;
+                return responseVM;
+            }           
         }
 
         public AuthorVM Get(long id)

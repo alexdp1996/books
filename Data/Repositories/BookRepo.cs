@@ -27,58 +27,60 @@ namespace Data.Repositories
             return base.Save(book);
         }
 
-        private IEnumerable<BookEM> Get(DataTableRequestEM model, Func<IQueryable<BookEM>, IOrderedQueryable<BookEM>> orderFunc, out int recordsTotal, out int recordsFiltered)
+        private DataTableResponseEM<BookEM> Get(DataTableRequestEM model, Func<IQueryable<BookEM>, IOrderedQueryable<BookEM>> orderFunc)
         {
+            var response = new DataTableResponseEM<BookEM>();
+
             var books = DataContext.Books.Include("Authors").AsQueryable();
-            recordsTotal = books.Count();
+            response.RecordsTotal = books.Count();
 
             books = orderFunc(books);
-
             books = books.Skip(model.Start * model.Length).Take(model.Length);
 
-            recordsFiltered = books.Count();
+            response.RecordsFiltered = books.Count();
+            response.Data = books;
 
-            return books;
+            return response;
         }
 
-        public IEnumerable<BookEM> GetByNameAsc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
+        public DataTableResponseEM<BookEM> GetByNameAsc(DataTableRequestEM model)
         {
-            return Get(model, books => books.OrderBy(b => b.Name), out recordsTotal, out recordsFiltered);
+            return Get(model, books => books.OrderBy(b => b.Name));
         }
 
-        public IEnumerable<BookEM> GetByNameDesc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
+        public DataTableResponseEM<BookEM> GetByNameDesc(DataTableRequestEM model)
         {
-            return Get(model, books => books.OrderByDescending(b => b.Name), out recordsTotal, out recordsFiltered);
+            return Get(model, books => books.OrderByDescending(b => b.Name));
         }
 
-        public IEnumerable<BookEM> GetByPagesAsc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
+        public DataTableResponseEM<BookEM> GetByPagesAsc(DataTableRequestEM model)
         {
-            return Get(model, books => books.OrderBy(b => b.Pages), out recordsTotal, out recordsFiltered);
+            return Get(model, books => books.OrderBy(b => b.Pages));
         }
 
-        public IEnumerable<BookEM> GetByPagesDesc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
+        public DataTableResponseEM<BookEM> GetByPagesDesc(DataTableRequestEM model)
         {
-            return Get(model, books => books.OrderByDescending(b => b.Pages), out recordsTotal, out recordsFiltered);
+            return Get(model, books => books.OrderByDescending(b => b.Pages));
         }
 
-        public IEnumerable<BookEM> GetByRateAsc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
+        public DataTableResponseEM<BookEM> GetByRateAsc(DataTableRequestEM model)
         {
-            return Get(model, books => books.OrderBy(b => b.Rate), out recordsTotal, out recordsFiltered);
+            return Get(model, books => books.OrderBy(b => b.Rate));
         }
 
-        public IEnumerable<BookEM> GetByRateDesc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
+        public DataTableResponseEM<BookEM> GetByRateDesc(DataTableRequestEM model)
         {
-            return Get(model, books => books.OrderByDescending(b => b.Rate), out recordsTotal, out recordsFiltered);
+            return Get(model, books => books.OrderByDescending(b => b.Rate));
         }
 
-        public IEnumerable<BookEM> GetByDateAsc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
+        public DataTableResponseEM<BookEM> GetByDateAsc(DataTableRequestEM model)
         {
-            return Get(model, books => books.OrderBy(b => b.Date), out recordsTotal, out recordsFiltered);
+            return Get(model, books => books.OrderBy(b => b.Date));
         }
 
-        public IEnumerable<BookEM> GetByDateDesc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
+        public DataTableResponseEM<BookEM> GetByDateDesc(DataTableRequestEM model)
         {
-            return Get(model, books => books.OrderByDescending(b => b.Date), out recordsTotal, out recordsFiltered);
+            return Get(model, books => books.OrderByDescending(b => b.Date));
         }
     }
 }

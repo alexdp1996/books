@@ -28,48 +28,51 @@ namespace Data.Repositories
             return DataContext.Authors.Where(a => (a.Name + " " + a.Surname).ToLower().Contains(term.ToLower()));
         }
 
-        private IEnumerable<AuthorEM> Get(DataTableRequestEM model, Func<IQueryable<AuthorEM>, IOrderedQueryable<AuthorEM>> orderFunc, out int recordsTotal, out int recordsFiltered)
+        private DataTableResponseEM<AuthorEM> Get(DataTableRequestEM model, Func<IQueryable<AuthorEM>, IOrderedQueryable<AuthorEM>> orderFunc)
         {
+            var response = new DataTableResponseEM<AuthorEM>();
+
             var authors = DataContext.Authors.Include("Books").AsQueryable();
-            recordsTotal = authors.Count();
+            response.RecordsTotal = authors.Count();
 
             authors = orderFunc(authors);
 
             authors = authors.Skip(model.Start * model.Length).Take(model.Length);
 
-            recordsFiltered = authors.Count();
+            response.RecordsFiltered = authors.Count();
+            response.Data = authors;
 
-            return authors;
+            return response;
         }
 
-        public IEnumerable<AuthorEM> GetByAmountOfBooksAsc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
+        public DataTableResponseEM<AuthorEM> GetByAmountOfBooksAsc(DataTableRequestEM model)
         {
-            return Get(model, authors => authors.OrderBy(a => a.Books.Count), out recordsTotal, out recordsFiltered);
+            return Get(model, authors => authors.OrderBy(a => a.Books.Count));
         }
 
-        public IEnumerable<AuthorEM> GetByAmountOfBooksDesc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
+        public DataTableResponseEM<AuthorEM> GetByAmountOfBooksDesc(DataTableRequestEM model)
         {
-            return Get(model, authors => authors.OrderByDescending(a => a.Books.Count), out recordsTotal, out recordsFiltered);
+            return Get(model, authors => authors.OrderByDescending(a => a.Books.Count));
         }
 
-        public IEnumerable<AuthorEM> GetByNameAsc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
+        public DataTableResponseEM<AuthorEM> GetByNameAsc(DataTableRequestEM model)
         {
-            return Get(model, authors => authors.OrderBy(a => a.Name), out recordsTotal, out recordsFiltered);
+            return Get(model, authors => authors.OrderBy(a => a.Name));
         }
 
-        public IEnumerable<AuthorEM> GetByNameDesc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
+        public DataTableResponseEM<AuthorEM> GetByNameDesc(DataTableRequestEM model)
         {
-            return Get(model, authors => authors.OrderByDescending(a => a.Name), out recordsTotal, out recordsFiltered);
+            return Get(model, authors => authors.OrderByDescending(a => a.Name));
         }
 
-        public IEnumerable<AuthorEM> GetBySurnameAsc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
+        public DataTableResponseEM<AuthorEM> GetBySurnameAsc(DataTableRequestEM model)
         {
-            return Get(model, authors => authors.OrderBy(a => a.Surname), out recordsTotal, out recordsFiltered);
+            return Get(model, authors => authors.OrderBy(a => a.Surname));
         }
 
-        public IEnumerable<AuthorEM> GetBySurnameDesc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
+        public DataTableResponseEM<AuthorEM> GetBySurnameDesc(DataTableRequestEM model)
         {
-            return Get(model, authors => authors.OrderByDescending(b => b.Surname), out recordsTotal, out recordsFiltered);
+            return Get(model, authors => authors.OrderByDescending(b => b.Surname));
         }
     }
 }

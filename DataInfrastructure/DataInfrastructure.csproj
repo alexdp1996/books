@@ -45,6 +45,7 @@
     <Compile Include="Entities\BaseEM.cs" />
     <Compile Include="Entities\BookEM.cs" />
     <Compile Include="Entities\DataTableRequestEM.cs" />
+    <Compile Include="Entities\DataTableResponseEM.cs" />
     <Compile Include="Entities\UpdatableBookEM.cs" />
     <Compile Include="Interfaces\IAuthorRepo.cs" />
     <Compile Include="Interfaces\IBaseRepo.cs" />

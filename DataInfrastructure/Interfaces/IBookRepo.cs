@@ -6,13 +6,13 @@ namespace DataInfrastructure.Interfaces
     public interface IBookRepo : IBaseRepo<BookEM>
     {
         long Save(UpdatableBookEM book);
-        IEnumerable<BookEM> GetByNameAsc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered);
-        IEnumerable<BookEM> GetByNameDesc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered);
-        IEnumerable<BookEM> GetByPagesAsc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered);
-        IEnumerable<BookEM> GetByPagesDesc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered);
-        IEnumerable<BookEM> GetByRateAsc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered);
-        IEnumerable<BookEM> GetByRateDesc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered);
-        IEnumerable<BookEM> GetByDateAsc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered);
-        IEnumerable<BookEM> GetByDateDesc(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered);
+        DataTableResponseEM<BookEM> GetByNameAsc(DataTableRequestEM model);
+        DataTableResponseEM<BookEM> GetByNameDesc(DataTableRequestEM model);
+        DataTableResponseEM<BookEM> GetByPagesAsc(DataTableRequestEM model);
+        DataTableResponseEM<BookEM> GetByPagesDesc(DataTableRequestEM model);
+        DataTableResponseEM<BookEM> GetByRateAsc(DataTableRequestEM model);
+        DataTableResponseEM<BookEM> GetByRateDesc(DataTableRequestEM model);
+        DataTableResponseEM<BookEM> GetByDateAsc(DataTableRequestEM model);
+        DataTableResponseEM<BookEM> GetByDateDesc(DataTableRequestEM model);
     }
 }

@@ -46,19 +46,15 @@ namespace Logic
             return result;
         }
 
-        public DataTableResponseVM Get(DataTableRequestVM model)
+        public DataTableResponseVM<BookVM> Get(DataTableRequestVM model)
         {
-            var result = new DataTableResponseVM();
-
             var dataTableEM = Mapper.Map<DataTableRequestEM>(model);
 
             var asc = model.Order[0].Dir == "asc";
             var column = (BookColumn) model.Order[0].Column;
             using (var unit = new UnitOfWork())
             {
-                IEnumerable<BookEM> booksEM;
-                int recordsTotal;
-                int recordsFiltered;
+                DataTableResponseEM<BookEM> responseEM;
                 switch (column)
                 {
                     default:
@@ -66,11 +62,11 @@ namespace Logic
                         {
                             if (asc)
                             {
-                                booksEM = unit.Book.GetByNameAsc(dataTableEM, out recordsTotal, out recordsFiltered);
+                                responseEM = unit.Book.GetByNameAsc(dataTableEM);
                             }
                             else
                             {
-                                booksEM = unit.Book.GetByNameDesc(dataTableEM, out recordsTotal, out recordsFiltered);
+                                responseEM = unit.Book.GetByNameDesc(dataTableEM);
                             }
                             break;
                         }
@@ -78,11 +74,11 @@ namespace Logic
                         {
                             if (asc)
                             {
-                                booksEM = unit.Book.GetByPagesAsc(dataTableEM, out recordsTotal, out recordsFiltered);
+                                responseEM = unit.Book.GetByPagesAsc(dataTableEM);
                             }
                             else
                             {
-                                booksEM = unit.Book.GetByPagesDesc(dataTableEM, out recordsTotal, out recordsFiltered);
+                                responseEM = unit.Book.GetByPagesDesc(dataTableEM);
                             }
                             break;
                         }
@@ -90,11 +86,11 @@ namespace Logic
                         {
                             if (asc)
                             {
-                                booksEM = unit.Book.GetByRateAsc(dataTableEM, out recordsTotal, out recordsFiltered);
+                                responseEM = unit.Book.GetByRateAsc(dataTableEM);
                             }
                             else
                             {
-                                booksEM = unit.Book.GetByRateDesc(dataTableEM, out recordsTotal, out recordsFiltered);
+                                responseEM = unit.Book.GetByRateDesc(dataTableEM);
                             }
                             break;
                         }
@@ -102,24 +98,21 @@ namespace Logic
                         {
                             if (asc)
                             {
-                                booksEM = unit.Book.GetByDateAsc(dataTableEM, out recordsTotal, out recordsFiltered);
+                                responseEM = unit.Book.GetByDateAsc(dataTableEM);
                             }
                             else
                             {
-                                booksEM = unit.Book.GetByDateDesc(dataTableEM, out recordsTotal, out recordsFiltered);
+                                responseEM = unit.Book.GetByDateDesc(dataTableEM);
                             }
                             break;
                         }
                 }
-                var booksVM = Mapper.Map<IEnumerable<BookVM>>(booksEM);
+                var responseVM = Mapper.Map<DataTableResponseVM<BookVM>>(responseEM);
+                responseVM.draw = model.Draw;
 
-                result.data = booksVM;
-                result.recordsFiltered = recordsFiltered;
-                result.recordsTotal = recordsTotal;
+                return responseVM;
             }
-            result.draw = model.Draw;
-
-            return result;
+            
         }
     }
 }

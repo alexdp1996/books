@@ -24,7 +24,9 @@ namespace Data
             modelBuilder.Entity<AuthorEM>().HasKey(k => k.Id).ToTable("Author");
             modelBuilder.Entity<AuthorEM>().HasMany(a => a.Books).WithMany(b => b.Authors).Map(m =>
             {
-                m.ToTable("BookAuthor");
+                m.ToTable("AuthorBook");
+                m.MapLeftKey("BookId");
+                m.MapRightKey("AuthorId");
             }); ;
         }
     }

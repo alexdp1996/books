@@ -21,7 +21,6 @@ namespace Data.Repositories
             if (entry == null)
             {
                 DataContext.Set<Entity>().Add(entity);
-                DataContext.SaveChanges();
             }
             else
             {

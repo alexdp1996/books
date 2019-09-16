@@ -21,10 +21,13 @@ namespace Data.Repositories
         public long Save(UpdatableBookEM book)
         {
             book.Authors.Clear();
+            var id = base.Save(book);
+            var returnedBook = Get(id);
             var authorRepo = new AuthorRepo(DataContext);
             var authors = authorRepo.Get(book.AuthorIds);
-            book.Authors.AddRange(authors);
-            return base.Save(book);
+            returnedBook.Authors.AddRange(authors);
+            DataContext.SaveChanges();
+            return returnedBook.Id;
         }
 
         private DataTableResponseEM<BookEM> Get(DataTableRequestEM model, Func<IQueryable<BookEM>, IOrderedQueryable<BookEM>> orderFunc)

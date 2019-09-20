@@ -14,12 +14,16 @@ namespace Logic
         private DataContext DataContext { get; }
         public IAuthorRepo Author { get; }
         public IBookRepo Book { get; }
+        public IBookRepo BookDapper { get; }
+        public IAuthorRepo AuthorDapper { get; }
 
         public UnitOfWork()
         {
             DataContext = new DataContext();
             Author = new AuthorRepo(DataContext);
             Book = new BookRepo(DataContext);
+            BookDapper = new DataDapper.Repositories.BookRepo();
+            AuthorDapper = new DataDapper.Repositories.AuthorRepo();
         }
 
 

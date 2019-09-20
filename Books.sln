@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataInfrastructure", "DataInfrastructure\DataInfrastructure.csproj", "{89FF6359-6770-4DEB-BBEF-72E2DD3B0651}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database", "Database\Database.sqlproj", "{1184380C-6B2D-4B9C-A7B1-C44946BDEC0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataDapper", "DataDapper\DataDapper.csproj", "{AA623D21-AF7F-4E95-B511-5E026743CD91}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,16 @@ Global
 		{89FF6359-6770-4DEB-BBEF-72E2DD3B0651}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89FF6359-6770-4DEB-BBEF-72E2DD3B0651}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89FF6359-6770-4DEB-BBEF-72E2DD3B0651}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1184380C-6B2D-4B9C-A7B1-C44946BDEC0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1184380C-6B2D-4B9C-A7B1-C44946BDEC0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1184380C-6B2D-4B9C-A7B1-C44946BDEC0D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1184380C-6B2D-4B9C-A7B1-C44946BDEC0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1184380C-6B2D-4B9C-A7B1-C44946BDEC0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1184380C-6B2D-4B9C-A7B1-C44946BDEC0D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{AA623D21-AF7F-4E95-B511-5E026743CD91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA623D21-AF7F-4E95-B511-5E026743CD91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA623D21-AF7F-4E95-B511-5E026743CD91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA623D21-AF7F-4E95-B511-5E026743CD91}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

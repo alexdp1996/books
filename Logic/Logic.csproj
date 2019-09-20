@@ -49,6 +49,10 @@
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataDapper\DataDapper.csproj">
+      <Project>{aa623d21-af7f-4e95-b511-5e026743cd91}</Project>
+      <Name>DataDapper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataInfrastructure\DataInfrastructure.csproj">
       <Project>{89ff6359-6770-4deb-bbef-72e2dd3b0651}</Project>
       <Name>DataInfrastructure</Name>

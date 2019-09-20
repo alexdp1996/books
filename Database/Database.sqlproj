@@ -79,5 +79,10 @@
     <Build Include="dbo\Stored Procedures\USP_Book_Get_By_Pages_ASC.sql" />
     <Build Include="dbo\Stored Procedures\USP_Book_Get_By_Rate_ASC.sql" />
     <Build Include="dbo\Stored Procedures\USP_Book_Get_By_Rate_DESC.sql" />
+    <Build Include="dbo\Stored Procedures\USP_Author_Get_By_Name_DESC.sql" />
+    <Build Include="dbo\Stored Procedures\USP_Author_Get_By_Surname_DESC.sql" />
+    <Build Include="dbo\Stored Procedures\USP_Author_Get_By_Surname_ASC.sql" />
+    <Build Include="dbo\Stored Procedures\USP_Author_Get_By_AmountOfBooks_ASC.sql" />
+    <Build Include="dbo\Stored Procedures\USP_Author_Get_By_AmountOfBooks_DESC.sql" />
   </ItemGroup>
 </Project>

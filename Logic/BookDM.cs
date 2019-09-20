@@ -30,7 +30,7 @@ namespace Logic
         {
             using (var unit = new UnitOfWork())
             {
-                var bookEM = unit.Book.Get(id);
+                var bookEM = unit.BookDapper.Get(id);
                 var bookVM = Mapper.Map<BookVM>(bookEM);
                 return bookVM;
             }

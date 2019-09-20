@@ -19,7 +19,7 @@ AS
 	INSERT INTO #AuthorBook ([BookId], [AuthorId])
 	SELECT AB.BookId, AB.AuthorId
 	FROM #Books B
-	JOIN AuthorBook AB ON AB.AuthorId = B.Id
+	JOIN AuthorBook AB ON AB.BookId = B.Id
 
 	SELECT * FROM #Books
 
@@ -27,7 +27,7 @@ AS
 
 	SELECT DISTINCT A.*
 	FROM #AuthorBook AB
-	JOIN Author A ON AB.BookId = A.Id
+	JOIN Author A ON AB.AuthorId = A.Id
 
 	DROP TABLE #Books;
 	DROP TABLE #AuthorBook;

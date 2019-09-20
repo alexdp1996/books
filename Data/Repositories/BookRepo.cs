@@ -20,11 +20,11 @@ namespace Data.Repositories
 
         public long Save(UpdatableBookEM book)
         {
-            book.Authors.Clear();
             var id = base.Save(book);
             var returnedBook = Get(id);
             var authorRepo = new AuthorRepo(DataContext);
             var authors = authorRepo.Get(book.AuthorIds);
+            returnedBook.Authors.Clear();
             returnedBook.Authors.AddRange(authors);
             DataContext.SaveChanges();
             return returnedBook.Id;

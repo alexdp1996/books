@@ -65,9 +65,19 @@
     <Build Include="dbo\Tables\AuthorBook.sql" />
     <Build Include="dbo\Tables\Author.sql" />
     <Build Include="dbo\Tables\__MigrationHistory.sql" />
-    <Build Include="dbo\Stored Procedures\USP_Authors_Get_By_Name_ASC.sql" />
-    <Build Include="dbo\Stored Procedures\USP_Author_Get_List.sql" />
-    <Build Include="dbo\Stored Procedures\USP_Delete_Book.sql" />
-    <Build Include="dbo\Stored Procedures\USP_Get_Book.sql" />
+    <Build Include="dbo\Stored Procedures\USP_Author_Get_By_Name_ASC.sql" />
+    <Build Include="dbo\Stored Procedures\USP_Author_Get_DataTable.sql" />
+    <Build Include="dbo\Stored Procedures\USP_Book_Delete.sql" />
+    <Build Include="dbo\Stored Procedures\USP_Book_Get.sql" />
+    <Build Include="dbo\Stored Procedures\USP_Book_Save.sql" />
+    <Build Include="dbo\Stored Procedures\USP_Book_Get_DataTable.sql" />
+    <Build Include="dbo\Stored Procedures\USP_Book_Get_By_Name_ASC.sql" />
+    <Build Include="dbo\Stored Procedures\USP_Book_Get_By_Name_DESC.sql" />
+    <Build Include="dbo\Stored Procedures\USP_Book_Get_By_Date_DESC.sql" />
+    <Build Include="dbo\Stored Procedures\USP_Book_Get_By_Date_ASC.sql" />
+    <Build Include="dbo\Stored Procedures\USP_Book_Get_By_Pages_DESC.sql" />
+    <Build Include="dbo\Stored Procedures\USP_Book_Get_By_Pages_ASC.sql" />
+    <Build Include="dbo\Stored Procedures\USP_Book_Get_By_Rate_ASC.sql" />
+    <Build Include="dbo\Stored Procedures\USP_Book_Get_By_Rate_DESC.sql" />
   </ItemGroup>
 </Project>

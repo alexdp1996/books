@@ -30,7 +30,7 @@ namespace Logic
         {
             using (var unit = new UnitOfWork())
             {
-                var bookEM = unit.BookDapper.Get(id);
+                var bookEM = unit.Book.Get(id);
                 var bookVM = Mapper.Map<BookVM>(bookEM);
                 return bookVM;
             }
@@ -62,11 +62,11 @@ namespace Logic
                         {
                             if (asc)
                             {
-                                responseEM = unit.Book.GetByNameAsc(dataTableEM);
+                                responseEM = unit.BookDapper.GetByNameAsc(dataTableEM);
                             }
                             else
                             {
-                                responseEM = unit.Book.GetByNameDesc(dataTableEM);
+                                responseEM = unit.BookDapper.GetByNameDesc(dataTableEM);
                             }
                             break;
                         }
@@ -74,11 +74,11 @@ namespace Logic
                         {
                             if (asc)
                             {
-                                responseEM = unit.Book.GetByPagesAsc(dataTableEM);
+                                responseEM = unit.BookDapper.GetByPagesAsc(dataTableEM);
                             }
                             else
                             {
-                                responseEM = unit.Book.GetByPagesDesc(dataTableEM);
+                                responseEM = unit.BookDapper.GetByPagesDesc(dataTableEM);
                             }
                             break;
                         }
@@ -86,11 +86,11 @@ namespace Logic
                         {
                             if (asc)
                             {
-                                responseEM = unit.Book.GetByRateAsc(dataTableEM);
+                                responseEM = unit.BookDapper.GetByRateAsc(dataTableEM);
                             }
                             else
                             {
-                                responseEM = unit.Book.GetByRateDesc(dataTableEM);
+                                responseEM = unit.BookDapper.GetByRateDesc(dataTableEM);
                             }
                             break;
                         }
@@ -98,11 +98,11 @@ namespace Logic
                         {
                             if (asc)
                             {
-                                responseEM = unit.Book.GetByDateAsc(dataTableEM);
+                                responseEM = unit.BookDapper.GetByDateAsc(dataTableEM);
                             }
                             else
                             {
-                                responseEM = unit.Book.GetByDateDesc(dataTableEM);
+                                responseEM = unit.BookDapper.GetByDateDesc(dataTableEM);
                             }
                             break;
                         }

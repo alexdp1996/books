@@ -2,10 +2,9 @@
 
 namespace DataInfrastructure.Entities
 {
-    public class DataTableResponseEM<T>
+    public class DataTableResponseEM<T> : DataTableResponseGeneralEM
     {
         public IEnumerable<T> Data { get; set; }
-        public int RecordsFiltered { get; set; }
-        public int RecordsTotal { get; set; }
+        
     }
 }

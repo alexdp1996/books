@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[USP_Authors_Get_By_Name_ASC]
+﻿CREATE PROCEDURE [dbo].[USP_Author_Get_By_Name_ASC]
 	@Start INT,
 	@Lenght INT
 AS
@@ -21,6 +21,6 @@ AS
 	OFFSET @Skip ROWS
 	FETCH NEXT @Lenght ROWS ONLY;
 
-	EXEC [dbo].[USP_Author_Get_List] @Skip = @Skip;
+	EXEC [dbo].[USP_Author_Get_DataTable] @Skip = @Skip;
 
 RETURN 0

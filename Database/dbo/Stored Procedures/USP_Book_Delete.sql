@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[USP_Delete_Book]
+﻿CREATE PROCEDURE [dbo].[USP_Book_Delete]
 	@id int
 AS
 	DELETE FROM AuthorBook WHERE BookId = @id;

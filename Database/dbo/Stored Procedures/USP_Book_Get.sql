@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[USP_Get_Book]
+﻿CREATE PROCEDURE [dbo].[USP_Book_Get]
 	@id int
 AS
 	SELECT B.*, A.* FROM Book B

@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[USP_Author_Get_By_AmountOfBooks_DESC]
+﻿CREATE PROCEDURE [dbo].[USP_Author_Get_DataTable_By_AmountOfBooks_ASC]
 	@Start INT,
 	@Lenght INT
 AS
@@ -19,7 +19,7 @@ AS
 	SELECT [Id], [Name], [Surname] FROM Author A
 	LEFT JOIN AuthorBook AB on A.Id = AB.AuthorId
 	GROUP BY A.Id, A.Name, A.Surname
-	ORDER BY COUNT(AB.BookId) DESC
+	ORDER BY COUNT(AB.BookId) ASC
 	OFFSET @Skip ROWS
 	FETCH NEXT @Lenght ROWS ONLY;
 

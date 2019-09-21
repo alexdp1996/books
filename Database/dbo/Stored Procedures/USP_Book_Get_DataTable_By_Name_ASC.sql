@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[USP_Book_Get_By_Date_ASC]
+﻿CREATE PROCEDURE [dbo].[USP_Book_Get_DataTable_By_Name_ASC]
 	@Start INT,
 	@Lenght INT
 AS
@@ -20,7 +20,7 @@ AS
 
 	INSERT INTO #Books
 	SELECT * FROM Book
-	ORDER BY [Date] ASC
+	ORDER BY [Name] ASC
 	OFFSET @Skip ROWS
 	FETCH NEXT @Lenght ROWS ONLY;
 

@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[USP_Author_Get_By_Surname_ASC]
+﻿CREATE PROCEDURE [dbo].[USP_Author_Get_DataTable_By_Name_ASC]
 	@Start INT,
 	@Lenght INT
 AS

@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[USP_Book_Get_By_Name_DESC]
+﻿CREATE PROCEDURE [dbo].[USP_Book_Get_DataTable_By_Pages_ASC]
 	@Start INT,
 	@Lenght INT
 AS
@@ -20,7 +20,7 @@ AS
 
 	INSERT INTO #Books
 	SELECT * FROM Book
-	ORDER BY [Name] DESC
+	ORDER BY [Pages] ASC
 	OFFSET @Skip ROWS
 	FETCH NEXT @Lenght ROWS ONLY;
 

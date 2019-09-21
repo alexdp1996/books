@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[USP_Book_Get_By_Pages_DESC]
+﻿CREATE PROCEDURE [dbo].[USP_Book_Get_DataTable_By_Pages_DESC]
 	@Start INT,
 	@Lenght INT
 AS

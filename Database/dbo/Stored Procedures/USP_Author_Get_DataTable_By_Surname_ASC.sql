@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[USP_Author_Get_By_Name_DESC]
+﻿CREATE PROCEDURE [dbo].[USP_Author_Get_DataTable_By_Surname_ASC]
 	@Start INT,
 	@Lenght INT
 AS
@@ -17,7 +17,7 @@ AS
 
 	INSERT INTO #Authors
 	SELECT * FROM Author
-	ORDER BY [Name] DESC
+	ORDER BY [Name] ASC
 	OFFSET @Skip ROWS
 	FETCH NEXT @Lenght ROWS ONLY;
 

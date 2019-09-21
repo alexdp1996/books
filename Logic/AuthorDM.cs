@@ -44,11 +44,11 @@ namespace Logic
                         {
                             if (asc)
                             {
-                                responseEM = unit.AuthorDapper.GetByNameAsc(dataTableEM);
+                                responseEM = unit.Author.GetByNameAsc(dataTableEM);
                             }
                             else
                             {
-                                responseEM = unit.AuthorDapper.GetByNameDesc(dataTableEM);
+                                responseEM = unit.Author.GetByNameDesc(dataTableEM);
                             }
                             break;
                         }
@@ -56,11 +56,11 @@ namespace Logic
                         {
                             if (asc)
                             {
-                                responseEM = unit.AuthorDapper.GetBySurnameAsc(dataTableEM);
+                                responseEM = unit.Author.GetBySurnameAsc(dataTableEM);
                             }
                             else
                             {
-                                responseEM = unit.AuthorDapper.GetBySurnameDesc(dataTableEM);
+                                responseEM = unit.Author.GetBySurnameDesc(dataTableEM);
                             }
                             break;
                         }
@@ -68,11 +68,11 @@ namespace Logic
                         {
                             if (asc)
                             {
-                                responseEM = unit.AuthorDapper.GetByAmountOfBooksAsc(dataTableEM);
+                                responseEM = unit.Author.GetByAmountOfBooksAsc(dataTableEM);
                             }
                             else
                             {
-                                responseEM = unit.AuthorDapper.GetByAmountOfBooksDesc(dataTableEM);
+                                responseEM = unit.Author.GetByAmountOfBooksDesc(dataTableEM);
                             }
                             break;
                         }

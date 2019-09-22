@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[USP_Book_DataTable_Get_DataTable]
+﻿CREATE PROCEDURE [dbo].[USP_Book_Get_DataTable]
 	@Skip INT
 AS
 	DECLARE @RecordsFiltered INT,

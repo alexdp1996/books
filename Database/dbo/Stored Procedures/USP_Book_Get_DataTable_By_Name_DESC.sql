@@ -14,8 +14,7 @@ AS
 		[Name]          NVARCHAR (50),
 		[Rate]          INT,
 		[Pages]         INT,
-		[Date]          DATETIME,
-		[Discriminator] NVARCHAR (128)
+		[Date]          DATETIME
 	);
 
 	INSERT INTO #Books

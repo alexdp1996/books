@@ -9,8 +9,8 @@ AS
 	
 	IF @Id = 0
 	BEGIN
-		INSERT INTO Book ([Name],[Rate],[Pages],[Date],[Discriminator])
-		VALUES (@Name, @Rate, @Pages, @Date, 'UpdatableBookEM');
+		INSERT INTO Book ([Name],[Rate],[Pages],[Date])
+		VALUES (@Name, @Rate, @Pages, @Date);
 
 		SET @Id = SCOPE_IDENTITY();
 	END

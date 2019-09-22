@@ -67,11 +67,11 @@
     <Build Include="dbo\Tables\Author.sql" />
     <Build Include="dbo\Tables\__MigrationHistory.sql" />
     <Build Include="dbo\Stored Procedures\USP_Author_Get_DataTable_By_Name_ASC.sql" />
-    <Build Include="dbo\Stored Procedures\USP_Author_Get_DataTable_DataTable.sql" />
+    <Build Include="dbo\Stored Procedures\USP_Author_Get_DataTable.sql" />
     <Build Include="dbo\Stored Procedures\USP_Book_Delete.sql" />
     <Build Include="dbo\Stored Procedures\USP_Book_Get.sql" />
     <Build Include="dbo\Stored Procedures\USP_Book_Save.sql" />
-    <Build Include="dbo\Stored Procedures\USP_Book_Get_DataTable_DataTable.sql" />
+    <Build Include="dbo\Stored Procedures\USP_Book_Get_DataTable.sql" />
     <Build Include="dbo\Stored Procedures\USP_Book_Get_DataTable_By_Name_ASC.sql" />
     <Build Include="dbo\Stored Procedures\USP_Book_Get_DataTable_By_Name_DESC.sql" />
     <Build Include="dbo\Stored Procedures\USP_Book_Get_DataTable_By_Date_DESC.sql" />

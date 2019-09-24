@@ -6,30 +6,48 @@
     @Date          DATETIME,
 	@AuthorIds	   BigIntList READONLY
 AS
+	BEGIN TRY
+		BEGIN TRANSACTION
+
+			IF @Id = 0
+			BEGIN
+				INSERT INTO Book ([Name],[Rate],[Pages],[Date])
+				VALUES (@Name, @Rate, @Pages, @Date);
+
+				SET @Id = SCOPE_IDENTITY();
+			END
+			ELSE
+			BEGIN
+				UPDATE Book SET 
+							[Name] = @Name,
+							[Rate] = @Rate,
+							[Pages] = @Pages,
+							[Date] = @Date
+				WHERE Id = @Id
+			END
+
+			DELETE FROM AuthorBook WHERE BookId = @Id;
+
+			INSERT INTO AuthorBook (BookId, AuthorId)
+			SELECT @Id, Element
+			FROM @AuthorIds;
+
+			SELECT @Id
+
+		COMMIT TRANSACTION
 	
-	IF @Id = 0
-	BEGIN
-		INSERT INTO Book ([Name],[Rate],[Pages],[Date])
-		VALUES (@Name, @Rate, @Pages, @Date);
+	END TRY
+	BEGIN CATCH
 
-		SET @Id = SCOPE_IDENTITY();
-	END
-	ELSE
-	BEGIN
-		UPDATE Book SET 
-					[Name] = @Name,
-					[Rate] = @Rate,
-					[Pages] = @Pages,
-					[Date] = @Date
-		WHERE Id = @Id
-	END
+		IF @@TRANCOUNT > 0
+			ROLLBACK TRANSACTION
 
-	DELETE FROM AuthorBook WHERE BookId = @Id;
+		DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE()
+        DECLARE @ErrorSeverity INT = ERROR_SEVERITY()
+        DECLARE @ErrorState INT = ERROR_STATE()
 
-	INSERT INTO AuthorBook (BookId, AuthorId)
-	SELECT @Id, Element
-	FROM @AuthorIds;
+		RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
 
-	SELECT @Id
+	END CATCH
 
 RETURN 0

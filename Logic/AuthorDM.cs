@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
-using Data;
-using Data.Repositories;
-using Entities;
+using DataInfrastructure.Entities;
 using System.Collections.Generic;
 using ViewModels;
+using ViewModels.Enums;
 
 namespace Logic
 {
@@ -11,10 +10,9 @@ namespace Logic
     {
         public IEnumerable<AuthorBaseVM> Get(string term)
         {
-            using (var сontext = new DataContext())
-            using (var authorRepo = new AuthorRepo(сontext))
+            using (var unit = new UnitOfWork())
             {
-                var authorsEM = authorRepo.Get(term);
+                var authorsEM = unit.Author.Get(term);
                 var authorsVM = Mapper.Map<IEnumerable<AuthorBaseVM>>(authorsEM);
                 return authorsVM;
             }
@@ -22,41 +20,76 @@ namespace Logic
 
         public IEnumerable<AuthorBaseVM> Get(IEnumerable<long> ids)
         {
-            using (var сontext = new DataContext())
-            using (var authorRepo = new AuthorRepo(сontext))
+            using (var unit = new UnitOfWork())
             {
-                var authorsEM = authorRepo.Get(ids);
+                var authorsEM = unit.Author.Get(ids);
                 var authorsVM = Mapper.Map<IEnumerable<AuthorBaseVM>>(authorsEM);
                 return authorsVM;
             }
         }
 
-        public DataTableResponseVM Get(DataTableRequestVM model)
+        public DataTableResponseVM<AuthorBaseVM> Get(DataTableRequestVM model)
         {
-            var result = new DataTableResponseVM();
-
             var dataTableEM = Mapper.Map<DataTableRequestEM>(model);
 
-            using (var context = new DataContext())
-            using (var authorRepo = new AuthorRepo(context))
+            var asc = model.Order[0].Dir == "asc";
+            var column = (AuthorColumn)model.Order[0].Column;
+            using (var unit = new UnitOfWork())
             {
-                var authorsEM = authorRepo.Get(dataTableEM, out int recordsTotal, out int recordsFiltered);
-                var authorsVM = Mapper.Map<IEnumerable<AuthorBaseVM>>(authorsEM);
-                result.data = authorsVM;
-                result.recordsFiltered = recordsFiltered;
-                result.recordsTotal = recordsTotal;
-            }
-            result.draw = model.Draw;
+                DataTableResponseEM<AuthorEM> responseEM;
+                switch (column)
+                {
+                    default:
+                    case AuthorColumn.Name:
+                        {
+                            if (asc)
+                            {
+                                responseEM = unit.Author.GetByNameAsc(dataTableEM);
+                            }
+                            else
+                            {
+                                responseEM = unit.Author.GetByNameDesc(dataTableEM);
+                            }
+                            break;
+                        }
+                    case AuthorColumn.Surname:
+                        {
+                            if (asc)
+                            {
+                                responseEM = unit.Author.GetBySurnameAsc(dataTableEM);
+                            }
+                            else
+                            {
+                                responseEM = unit.Author.GetBySurnameDesc(dataTableEM);
+                            }
+                            break;
+                        }
+                    case AuthorColumn.AmountOfBooks:
+                        {
+                            if (asc)
+                            {
+                                responseEM = unit.Author.GetByAmountOfBooksAsc(dataTableEM);
+                            }
+                            else
+                            {
+                                responseEM = unit.Author.GetByAmountOfBooksDesc(dataTableEM);
+                            }
+                            break;
+                        }
 
-            return result;
+                }
+                var responseVM = Mapper.Map<DataTableResponseVM<AuthorBaseVM>>(responseEM);
+                responseVM.draw = model.Draw;
+
+                return responseVM;
+            }           
         }
 
         public AuthorVM Get(long id)
         {
-            using (var context = new DataContext())
-            using (var authorRepo = new AuthorRepo(context))
+            using (var unit = new UnitOfWork())
             {
-                var authorEM = authorRepo.Get(id);
+                var authorEM = unit.Author.Get(id);
                 var authorVM = Mapper.Map<AuthorVM>(authorEM);
                 return authorVM;
             }
@@ -64,10 +97,9 @@ namespace Logic
 
         public void Delete(long id)
         {
-            using (var context = new DataContext())
-            using (var authorRepo = new AuthorRepo(context))
+            using (var unit = new UnitOfWork())
             {
-                authorRepo.Delete(id);
+                unit.Author.Delete(id);
             }
         }
 
@@ -75,10 +107,9 @@ namespace Logic
         {
             var author = Mapper.Map<AuthorEM>(model);
 
-            using (var context = new DataContext())
-            using (var authorRepo = new AuthorRepo(context))
+            using (var unit = new UnitOfWork())
             {
-                authorRepo.Save(author);
+                unit.Author.Save(author);
             }
         }
     }

@@ -48,9 +48,8 @@ namespace UI.Controllers
             }
 
             ViewBag.Alert = new AlertVM { Message = "Failed to save book", Type = AlertType.Danger };
-            var dm = new AuthorDM();
-            model.Authors = dm.Get(model.AuthorIds).ToList();
-            return View("~/Views/Book/Get.cshtml", model);
+            var modelToRender = BookDM.Get(model);
+            return View("~/Views/Book/Get.cshtml", modelToRender);
         }
 
         [HttpPost]

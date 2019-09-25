@@ -1,12 +1,12 @@
-﻿using Entities;
-using Entities.Enums;
+﻿using DataInfrastructure.Entities;
+using DataInfrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Data.Repositories
 {
-    public class AuthorRepo : BaseRepo<AuthorEM>
+    public class AuthorRepo : BaseRepo<AuthorEM>, IAuthorRepo
     {
 
         public AuthorRepo(DataContext context) : base(context)
@@ -28,58 +28,51 @@ namespace Data.Repositories
             return DataContext.Authors.Where(a => (a.Name + " " + a.Surname).ToLower().Contains(term.ToLower()));
         }
 
-        public IEnumerable<AuthorEM> Get(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
+        private DataTableResponseEM<AuthorEM> Get(DataTableRequestEM model, Func<IQueryable<AuthorEM>, IOrderedQueryable<AuthorEM>> orderFunc)
         {
+            var response = new DataTableResponseEM<AuthorEM>();
+
             var authors = DataContext.Authors.Include("Books").AsQueryable();
-            recordsTotal = authors.Count();
+            response.RecordsTotal = authors.Count();
 
-            var asc = model.Order[0].Asc;
-
-            switch ((AuthorColumn)model.Order[0].Column)
-            {
-                case AuthorColumn.Name:
-                    {
-                        if (asc)
-                        {
-                            authors = authors.OrderBy(b => b.Name);
-                        }
-                        else
-                        {
-                            authors = authors.OrderByDescending(b => b.Name);
-                        }
-                        break;
-                    }
-                case AuthorColumn.AmountOfBooks:
-                    {
-                        if (asc)
-                        {
-                            authors = authors.OrderBy(b => b.Books.Count);
-                        }
-                        else
-                        {
-                            authors = authors.OrderByDescending(b => b.Books.Count);
-                        }
-                        break;
-                    }
-                case AuthorColumn.Surname:
-                    {
-                        if (asc)
-                        {
-                            authors = authors.OrderBy(b => b.Surname);
-                        }
-                        else
-                        {
-                            authors = authors.OrderByDescending(b => b.Surname);
-                        }
-                        break;
-                    }
-            }
+            authors = orderFunc(authors);
 
             authors = authors.Skip(model.Start * model.Length).Take(model.Length);
 
-            recordsFiltered = authors.Count();
+            response.RecordsFiltered = authors.Count();
+            response.Data = authors;
 
-            return authors;
+            return response;
+        }
+
+        public DataTableResponseEM<AuthorEM> GetByAmountOfBooksAsc(DataTableRequestEM model)
+        {
+            return Get(model, authors => authors.OrderBy(a => a.Books.Count));
+        }
+
+        public DataTableResponseEM<AuthorEM> GetByAmountOfBooksDesc(DataTableRequestEM model)
+        {
+            return Get(model, authors => authors.OrderByDescending(a => a.Books.Count));
+        }
+
+        public DataTableResponseEM<AuthorEM> GetByNameAsc(DataTableRequestEM model)
+        {
+            return Get(model, authors => authors.OrderBy(a => a.Name));
+        }
+
+        public DataTableResponseEM<AuthorEM> GetByNameDesc(DataTableRequestEM model)
+        {
+            return Get(model, authors => authors.OrderByDescending(a => a.Name));
+        }
+
+        public DataTableResponseEM<AuthorEM> GetBySurnameAsc(DataTableRequestEM model)
+        {
+            return Get(model, authors => authors.OrderBy(a => a.Surname));
+        }
+
+        public DataTableResponseEM<AuthorEM> GetBySurnameDesc(DataTableRequestEM model)
+        {
+            return Get(model, authors => authors.OrderByDescending(b => b.Surname));
         }
     }
 }

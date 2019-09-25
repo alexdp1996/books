@@ -1,4 +1,6 @@
-﻿using Entities;
+﻿
+using DataInfrastructure.Entities;
+using System;
 using System.Linq;
 using ViewModels;
 
@@ -11,17 +13,19 @@ namespace Logic.AppMapper
 #pragma warning disable CS0618 // Type or member is obsolete
             AutoMapper.Mapper.Initialize(mapper =>
             {
-                mapper.CreateMap<BookBaseVM, BookEM>().ReverseMap();
+                mapper.CreateMap<BookEditVM, UpdatableBookEM>().ReverseMap();
+                mapper.CreateMap<BookEditVM, BookVM>();
+                mapper.CreateMap<BookEM, BookBaseVM>();
                 mapper.CreateMap<BookEM, BookVM>();
-                mapper.CreateMap<BookEM, BookEditVM>().ForMember(d => d.AuthorIds, o => o.MapFrom(s => s.Authors.Select(a => a.Id)));
                 mapper.CreateMap<AuthorEM, AuthorBaseVM>().ForMember(d => d.CountOfBooks, o => o.MapFrom(s => s.Books.Count)).ReverseMap();
                 mapper.CreateMap<AuthorEM, AuthorVM>().ForMember(d => d.CountOfBooks, o => o.MapFrom(s => s.Books.Count));
 
                 //DataTable
                 mapper.CreateMap<ColumnVM, ColumnEM>();
-                mapper.CreateMap<OrderVM, OrderEM>().ForMember(d => d.Asc, o => o.MapFrom(s => s.Dir == "asc"));
                 mapper.CreateMap<SearchVM, SearchEM>();
                 mapper.CreateMap<DataTableRequestVM, DataTableRequestEM>();
+                mapper.CreateMap<DataTableResponseEM<BookEM>, DataTableResponseVM<BookVM>>();
+                mapper.CreateMap<DataTableResponseEM<AuthorEM>, DataTableResponseVM<AuthorBaseVM>>();
             });
 #pragma warning restore CS0618 // Type or member is obsolete
         }

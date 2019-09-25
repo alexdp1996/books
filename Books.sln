@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.757
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29230.47
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{C3838885-2249-4560-825D-B25E05D923AD}"
 EndProject
@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModels", "ViewModels\Vi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{ED002C37-E9E9-4FB3-A7B1-9653E53BEC5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{C896C2B5-3051-4B81-A031-DBA263C87E0D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataInfrastructure", "DataInfrastructure\DataInfrastructure.csproj", "{89FF6359-6770-4DEB-BBEF-72E2DD3B0651}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{ED002C37-E9E9-4FB3-A7B1-9653E53BEC5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED002C37-E9E9-4FB3-A7B1-9653E53BEC5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED002C37-E9E9-4FB3-A7B1-9653E53BEC5A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C896C2B5-3051-4B81-A031-DBA263C87E0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C896C2B5-3051-4B81-A031-DBA263C87E0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C896C2B5-3051-4B81-A031-DBA263C87E0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C896C2B5-3051-4B81-A031-DBA263C87E0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89FF6359-6770-4DEB-BBEF-72E2DD3B0651}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89FF6359-6770-4DEB-BBEF-72E2DD3B0651}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89FF6359-6770-4DEB-BBEF-72E2DD3B0651}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89FF6359-6770-4DEB-BBEF-72E2DD3B0651}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

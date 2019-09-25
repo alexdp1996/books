@@ -24,9 +24,9 @@ AS
 							[Pages] = @Pages,
 							[Date] = @Date
 				WHERE Id = @Id
-			END
 
-			DELETE FROM AuthorBook WHERE BookId = @Id;
+				DELETE FROM AuthorBook WHERE BookId = @Id;
+			END
 
 			INSERT INTO AuthorBook (BookId, AuthorId)
 			SELECT @Id, Element

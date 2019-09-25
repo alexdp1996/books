@@ -21,12 +21,13 @@ namespace Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<BookEM>().HasKey(k => k.Id).ToTable("Book");
+            modelBuilder.Ignore<UpdatableBookEM>();
             modelBuilder.Entity<AuthorEM>().HasKey(k => k.Id).ToTable("Author");
             modelBuilder.Entity<AuthorEM>().HasMany(a => a.Books).WithMany(b => b.Authors).Map(m =>
             {
                 m.ToTable("AuthorBook");
-                m.MapLeftKey("BookId");
-                m.MapRightKey("AuthorId");
+                m.MapLeftKey("AuthorId");
+                m.MapRightKey("BookId");
             }); ;
         }
     }

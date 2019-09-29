@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Dapper;
@@ -15,7 +14,7 @@ namespace DataDapper.Repositories
         {
             using (var con = Connection)
             {
-                var SP = "USP_Author_Delete";
+                var SP = "USPAuthorDelete";
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@Id", id);
 
@@ -27,7 +26,7 @@ namespace DataDapper.Repositories
         {
             using (var con = Connection)
             {
-                var SP = "USP_Author_Get_By_Ids";
+                var SP = "USPAuthorGetByIds";
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@Ids", Ids.AsParameter());
 
@@ -41,7 +40,7 @@ namespace DataDapper.Repositories
         {
             using (var con = Connection)
             {
-                var SP = "USP_Author_Get_By_Term";
+                var SP = "USPAuthorGetByTerm";
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@Term", term);
 
@@ -55,7 +54,7 @@ namespace DataDapper.Repositories
         {
             using (var con = Connection)
             {
-                var SP = "USP_Author_Get";
+                var SP = "USPAuthorGet";
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@Id", id);
 
@@ -76,32 +75,32 @@ namespace DataDapper.Repositories
         #region DataTable
         public DataTableResponseEM<AuthorEM> GetByAmountOfBooksAsc(DataTableRequestEM model)
         {
-            return GetDataTable(model, "USP_Author_Get_DataTable_By_AmountOfBooks_ASC");
+            return GetDataTable(model, "USPAuthorGetDataTableByAmountOfBooksASC");
         }
 
         public DataTableResponseEM<AuthorEM> GetByAmountOfBooksDesc(DataTableRequestEM model)
         {
-            return GetDataTable(model, "USP_Author_Get_DataTable_By_AmountOfBooks_DESC");
+            return GetDataTable(model, "USPAuthorGetDataTableByAmountOfBooksDESC");
         }
 
         public DataTableResponseEM<AuthorEM> GetByNameAsc(DataTableRequestEM model)
         {
-            return GetDataTable(model, "USP_Author_Get_DataTable_By_Name_ASC");
+            return GetDataTable(model, "USPAuthorGetDataTableByNameASC");
         }
 
         public DataTableResponseEM<AuthorEM> GetByNameDesc(DataTableRequestEM model)
         {
-            return GetDataTable(model, "USP_Author_Get_DataTable_By_Name_DESC");
+            return GetDataTable(model, "USPAuthorGetDataTableByNameDESC");
         }
 
         public DataTableResponseEM<AuthorEM> GetBySurnameAsc(DataTableRequestEM model)
         {
-            return GetDataTable(model, "USP_Author_Get_DataTable_By_Surname_ASC");
+            return GetDataTable(model, "USPAuthorGetDataTableBySurnameASC");
         }
 
         public DataTableResponseEM<AuthorEM> GetBySurnameDesc(DataTableRequestEM model)
         {
-            return GetDataTable(model, "USP_Author_Get_DataTable_By_Surname_DESC");
+            return GetDataTable(model, "USPAuthorGetDataTableBySurnameDESC");
         }
 
         private DataTableResponseEM<AuthorEM> GetDataTable(DataTableRequestEM model, string SPname)
@@ -143,7 +142,7 @@ namespace DataDapper.Repositories
         {
             using (var con = Connection)
             {
-                var SP = "USP_Author_Save";
+                var SP = "USPAuthorSave";
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@Id", entity.Id);
                 queryParameters.Add("@Name", entity.Name);

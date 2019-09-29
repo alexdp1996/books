@@ -26,7 +26,7 @@ namespace DataDapper.Repositories
         {
             using (var con = Connection)
             {
-                var SP = "USP_Book_Get";
+                var SP = "USPBookGet";
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@id", id);
 
@@ -47,42 +47,42 @@ namespace DataDapper.Repositories
         #region DataTable
         public DataTableResponseEM<BookEM> GetByDateAsc(DataTableRequestEM model)
         {
-            return GetDataTable(model, "USP_Book_Get_DataTable_By_Date_ASC");
+            return GetDataTable(model, "USPBookGetDataTableByDateASC");
         }
 
         public DataTableResponseEM<BookEM> GetByDateDesc(DataTableRequestEM model)
         {
-            return GetDataTable(model, "USP_Book_Get_DataTable_By_Date_DESC");
+            return GetDataTable(model, "USPBookGetDataTableByDateDESC");
         }
 
         public DataTableResponseEM<BookEM> GetByNameAsc(DataTableRequestEM model)
         {
-            return GetDataTable(model, "USP_Book_Get_DataTable_By_Name_ASC");
+            return GetDataTable(model, "USPBookGetDataTableByNameASC");
         }
 
         public DataTableResponseEM<BookEM> GetByNameDesc(DataTableRequestEM model)
         {
-            return GetDataTable(model, "USP_Book_Get_DataTable_By_Name_DESC");
+            return GetDataTable(model, "USPBookGetDataTableByNameDESC");
         }
 
         public DataTableResponseEM<BookEM> GetByPagesAsc(DataTableRequestEM model)
         {
-            return GetDataTable(model, "USP_Book_Get_DataTable_By_Pages_ASC");
+            return GetDataTable(model, "USPBookGetDataTableByPagesASC");
         }
 
         public DataTableResponseEM<BookEM> GetByPagesDesc(DataTableRequestEM model)
         {
-            return GetDataTable(model, "USP_Book_Get_DataTable_By_Name_DESC");
+            return GetDataTable(model, "USPBookGetDataTableByNameDESC");
         }
 
         public DataTableResponseEM<BookEM> GetByRateAsc(DataTableRequestEM model)
         {
-            return GetDataTable(model, "USP_Book_Get_DataTable_By_Rate_ASC");
+            return GetDataTable(model, "USPBookGetDataTableByRateASC");
         }
 
         public DataTableResponseEM<BookEM> GetByRateDesc(DataTableRequestEM model)
         {
-            return GetDataTable(model, "USP_Book_Get_DataTable_By_Rate_DESC");
+            return GetDataTable(model, "USPBookGetDataTableByRateDESC");
         }
 
         private DataTableResponseEM<BookEM> GetDataTable(DataTableRequestEM model, string SPname)
@@ -133,7 +133,7 @@ namespace DataDapper.Repositories
                 queryParameters.Add("@Date", book.Date);
                 queryParameters.Add("@AuthorIds", book.AuthorIds.AsParameter());
 
-                var id = con.QuerySingle<long>("USP_Book_Save", queryParameters, commandType: CommandType.StoredProcedure);
+                var id = con.QuerySingle<long>("USPBookSave", queryParameters, commandType: CommandType.StoredProcedure);
                 
                 return id;
             }

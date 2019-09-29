@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[USP_Book_Save]
+﻿CREATE PROCEDURE [dbo].[USPBookSave]
 	@Id            BIGINT,
     @Name          NVARCHAR (50),
     @Rate          INT,

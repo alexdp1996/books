@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[USP_Author_Get_DataTable_By_AmountOfBooks_DESC]
+﻿CREATE PROCEDURE [dbo].[USPAuthorGetDataTableBySurnameDESC]
 	@Start INT,
 	@Lenght INT
 AS
@@ -16,13 +16,11 @@ AS
 	);
 
 	INSERT INTO #Authors
-	SELECT [Id], [Name], [Surname] FROM Author A
-	LEFT JOIN AuthorBook AB on A.Id = AB.AuthorId
-	GROUP BY A.Id, A.Name, A.Surname
-	ORDER BY COUNT(AB.BookId) DESC
+	SELECT A.[Id], A.[Name], A.[Surname] FROM Author A
+	ORDER BY [Name] DESC
 	OFFSET @Skip ROWS
 	FETCH NEXT @Lenght ROWS ONLY;
 
-	EXEC [dbo].[USP_Author_Get_DataTable] @Skip = @Skip;
+	EXEC [dbo].[USPAuthorGetDataTable] @Skip = @Skip;
 
 RETURN 0

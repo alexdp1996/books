@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A90534E8-7D3C-4544-AC32-E1603A66641B}</ProjectGuid>
+    <ProjectGuid>{5D119CD3-A209-452E-A659-448FB0C4E1F0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Logic</RootNamespace>
-    <AssemblyName>Logic</AssemblyName>
+    <RootNamespace>Unity</RootNamespace>
+    <AssemblyName>Unity</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -32,7 +32,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,39 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthorDM.cs" />
-    <Compile Include="BaseDM.cs" />
-    <Compile Include="BookDM.cs" />
+    <Compile Include="Factory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DataDapper\DataDapper.csproj">
-      <Project>{aa623d21-af7f-4e95-b511-5e026743cd91}</Project>
-      <Name>DataDapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DataInfrastructure\DataInfrastructure.csproj">
-      <Project>{89ff6359-6770-4deb-bbef-72e2dd3b0651}</Project>
-      <Name>DataInfrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Data\Data.csproj">
-      <Project>{ed002c37-e9e9-4fb3-a7b1-9653e53bec5a}</Project>
-      <Name>Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LogicInfastructure\LogicInfastructure.csproj">
-      <Project>{62f425b7-1872-4e2d-bb31-28bbebdce777}</Project>
-      <Name>LogicInfastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Shared\Shared.csproj">
-      <Project>{838b39d1-3392-4700-8a72-6ec2af83b104}</Project>
-      <Name>Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ViewModels\ViewModels.csproj">
-      <Project>{46490fc5-aa61-44e6-8e0d-eb50e058c206}</Project>
-      <Name>ViewModels</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

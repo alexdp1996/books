@@ -1,40 +1,48 @@
-﻿using AutoMapper;
-using DataInfrastructure.Entities;
+﻿using DataInfrastructure.Entities;
+using DataInfrastructure.Interfaces;
+using LogicInfastructure.Interfaces;
+using Shared.Interfaces;
+using Shared.Services;
 using System.Collections.Generic;
 using ViewModels;
 using ViewModels.Enums;
 
 namespace Logic
 {
-    public class AuthorDM
+    public class AuthorDM : BaseDM, IAuthorDM
     {
+        public AuthorDM(IFactory factory) : base(factory)
+        {
+
+        }
+
         public IEnumerable<AuthorBaseVM> Get(string term)
         {
-            using (var unit = new UnitOfWork())
+            using (var authorRepo = Factory.GetService<IAuthorRepo>())
             {
-                var authorsEM = unit.Author.Get(term);
-                var authorsVM = Mapper.Map<IEnumerable<AuthorBaseVM>>(authorsEM);
+                var authorsEM = authorRepo.Get(term);
+                var authorsVM = MapperService.Map<IEnumerable<AuthorBaseVM>>(authorsEM);
                 return authorsVM;
             }
         }
 
         public IEnumerable<AuthorBaseVM> Get(IEnumerable<long> ids)
         {
-            using (var unit = new UnitOfWork())
+            using (var authorRepo = Factory.GetService<IAuthorRepo>())
             {
-                var authorsEM = unit.Author.Get(ids);
-                var authorsVM = Mapper.Map<IEnumerable<AuthorBaseVM>>(authorsEM);
+                var authorsEM = authorRepo.Get(ids);
+                var authorsVM = MapperService.Map<IEnumerable<AuthorBaseVM>>(authorsEM);
                 return authorsVM;
             }
         }
 
         public DataTableResponseVM<AuthorBaseVM> Get(DataTableRequestVM model)
         {
-            var dataTableEM = Mapper.Map<DataTableRequestEM>(model);
+            var dataTableEM = MapperService.Map<DataTableRequestEM>(model);
 
             var asc = model.Order[0].Dir == "asc";
             var column = (AuthorColumn)model.Order[0].Column;
-            using (var unit = new UnitOfWork())
+            using (var authorRepo = Factory.GetService<IAuthorRepo>())
             {
                 DataTableResponseEM<AuthorEM> responseEM;
                 switch (column)
@@ -44,11 +52,11 @@ namespace Logic
                         {
                             if (asc)
                             {
-                                responseEM = unit.Author.GetByNameAsc(dataTableEM);
+                                responseEM = authorRepo.GetByNameAsc(dataTableEM);
                             }
                             else
                             {
-                                responseEM = unit.Author.GetByNameDesc(dataTableEM);
+                                responseEM = authorRepo.GetByNameDesc(dataTableEM);
                             }
                             break;
                         }
@@ -56,11 +64,11 @@ namespace Logic
                         {
                             if (asc)
                             {
-                                responseEM = unit.Author.GetBySurnameAsc(dataTableEM);
+                                responseEM = authorRepo.GetBySurnameAsc(dataTableEM);
                             }
                             else
                             {
-                                responseEM = unit.Author.GetBySurnameDesc(dataTableEM);
+                                responseEM = authorRepo.GetBySurnameDesc(dataTableEM);
                             }
                             break;
                         }
@@ -68,17 +76,17 @@ namespace Logic
                         {
                             if (asc)
                             {
-                                responseEM = unit.Author.GetByAmountOfBooksAsc(dataTableEM);
+                                responseEM = authorRepo.GetByAmountOfBooksAsc(dataTableEM);
                             }
                             else
                             {
-                                responseEM = unit.Author.GetByAmountOfBooksDesc(dataTableEM);
+                                responseEM = authorRepo.GetByAmountOfBooksDesc(dataTableEM);
                             }
                             break;
                         }
 
                 }
-                var responseVM = Mapper.Map<DataTableResponseVM<AuthorBaseVM>>(responseEM);
+                var responseVM = MapperService.Map<DataTableResponseVM<AuthorBaseVM>>(responseEM);
                 responseVM.draw = model.Draw;
 
                 return responseVM;
@@ -87,29 +95,29 @@ namespace Logic
 
         public AuthorVM Get(long id)
         {
-            using (var unit = new UnitOfWork())
+            using (var authorRepo = Factory.GetService<IAuthorRepo>())
             {
-                var authorEM = unit.Author.Get(id);
-                var authorVM = Mapper.Map<AuthorVM>(authorEM);
+                var authorEM = authorRepo.Get(id);
+                var authorVM = MapperService.Map<AuthorVM>(authorEM);
                 return authorVM;
             }
         }
 
         public void Delete(long id)
         {
-            using (var unit = new UnitOfWork())
+            using (var authorRepo = Factory.GetService<IAuthorRepo>())
             {
-                unit.Author.Delete(id);
+                authorRepo.Delete(id);
             }
         }
 
         public void Save(AuthorVM model)
         {
-            var author = Mapper.Map<AuthorEM>(model);
+            var author = MapperService.Map<AuthorEM>(model);
 
-            using (var unit = new UnitOfWork())
+            using (var authorRepo = Factory.GetService<IAuthorRepo>())
             {
-                unit.Author.Save(author);
+                authorRepo.Save(author);
             }
         }
     }

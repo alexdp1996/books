@@ -8,9 +8,9 @@ namespace Data.Repositories
     {
         protected DataContext DataContext { get; }
 
-        public BaseRepo(DataContext context)
+        public BaseRepo()
         {
-            DataContext = context;
+            DataContext = new DataContext();
         }
 
         public abstract Entity Get(long id);

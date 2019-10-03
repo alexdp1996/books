@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace DataDapper.Repositories
 {
-    public class BookRepo : BaseRepo, IBookRepo
+    public class BookRepo : BaseEntityRepo<BookEM>, IBookRepo
     {
         public void Delete(long id)
         {
@@ -137,11 +137,6 @@ namespace DataDapper.Repositories
                 
                 return id;
             }
-        }
-
-        public long Save(BookEM entity)
-        {
-            throw new NotImplementedException();
         }
     }
 }

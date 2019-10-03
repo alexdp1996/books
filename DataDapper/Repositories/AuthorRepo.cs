@@ -8,7 +8,7 @@ using DataInfrastructure.Interfaces;
 
 namespace DataDapper.Repositories
 {
-    public class AuthorRepo : BaseRepo, IAuthorRepo
+    public class AuthorRepo : BaseEntityRepo<AuthorEM>, IAuthorRepo
     {
         public void Delete(long id)
         {
@@ -138,20 +138,20 @@ namespace DataDapper.Repositories
         }
         #endregion
 
-        public long Save(AuthorEM entity)
-        {
-            using (var con = Connection)
-            {
-                var SP = "USPAuthorSave";
-                var queryParameters = new DynamicParameters();
-                queryParameters.Add("@Id", entity.Id);
-                queryParameters.Add("@Name", entity.Name);
-                queryParameters.Add("@Surname", entity.Surname);
+        //public long Save(AuthorEM entity)
+        //{
+        //    using (var con = Connection)
+        //    {
+        //        var SP = "USPAuthorSave";
+        //        var queryParameters = new DynamicParameters();
+        //        queryParameters.Add("@Id", entity.Id);
+        //        queryParameters.Add("@Name", entity.Name);
+        //        queryParameters.Add("@Surname", entity.Surname);
 
-                var id = con.QuerySingle<long>(SP, queryParameters, commandType: CommandType.StoredProcedure);
+        //        var id = con.QuerySingle<long>(SP, queryParameters, commandType: CommandType.StoredProcedure);
 
-                return id;
-            }
-        }
+        //        return id;
+        //    }
+        //}
     }
 }

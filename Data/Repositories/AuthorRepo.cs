@@ -9,10 +9,6 @@ namespace Data.Repositories
     public class AuthorRepo : BaseRepo<AuthorEM>, IAuthorRepo
     {
 
-        public AuthorRepo(DataContext context) : base(context)
-        {
-        }
-
         public override AuthorEM Get(long id)
         {
             return DataContext.Authors.Include("Books").FirstOrDefault(b => b.Id == id);

@@ -9,10 +9,6 @@ namespace Data.Repositories
     public class BookRepo : BaseRepo<BookEM>, IBookRepo
     {
 
-        public BookRepo(DataContext context) : base(context)
-        {
-        }
-
         public override BookEM Get(long id)
         {
             return DataContext.Books.Include("Authors").FirstOrDefault(b => b.Id == id);
@@ -22,7 +18,7 @@ namespace Data.Repositories
         {
             var id = base.Save(book);
             var returnedBook = Get(id);
-            var authorRepo = new AuthorRepo(DataContext);
+            var authorRepo = new AuthorRepo();
             var authors = authorRepo.Get(book.AuthorIds);
             returnedBook.Authors.Clear();
             returnedBook.Authors.AddRange(authors);

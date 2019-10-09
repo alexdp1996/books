@@ -1,14 +1,11 @@
-﻿
-using DataInfrastructure.Entities;
-using System;
-using System.Linq;
+﻿using DataInfrastructure.Entities;
 using ViewModels;
 
-namespace Logic.AppMapper
+namespace Shared.Services
 {
-    public class MapperInit
+    public static class MapperService
     {
-        static public void Init()
+        static MapperService()
         {
 #pragma warning disable CS0618 // Type or member is obsolete
             AutoMapper.Mapper.Initialize(mapper =>
@@ -28,6 +25,11 @@ namespace Logic.AppMapper
                 mapper.CreateMap<DataTableResponseEM<AuthorEM>, DataTableResponseVM<AuthorBaseVM>>();
             });
 #pragma warning restore CS0618 // Type or member is obsolete
+        }
+
+        public static T Map<T>(object source)
+        {
+            return AutoMapper.Mapper.Map<T>(source);
         }
     }
 }

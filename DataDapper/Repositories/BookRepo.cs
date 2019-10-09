@@ -14,7 +14,7 @@ namespace DataDapper.Repositories
         {
             using (var con = Connection)
             {
-                var SP = "USP_Book_Delete";
+                var SP = "USPBookDelete";
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@Id", id);
 

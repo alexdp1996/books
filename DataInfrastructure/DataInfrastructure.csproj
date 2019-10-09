@@ -43,8 +43,10 @@
   <ItemGroup>
     <Compile Include="Entities\AuthorBookEM.cs" />
     <Compile Include="Entities\AuthorEM.cs" />
+    <Compile Include="Entities\AuthorMappingObjectEM.cs" />
     <Compile Include="Entities\BaseEM.cs" />
     <Compile Include="Entities\BookEM.cs" />
+    <Compile Include="Entities\BookMappingObjectEM.cs" />
     <Compile Include="Entities\DataTableRequestEM.cs" />
     <Compile Include="Entities\DataTableResponseEM.cs" />
     <Compile Include="Entities\DataTableResponseGeneralEM.cs" />

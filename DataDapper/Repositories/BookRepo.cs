@@ -2,6 +2,7 @@
 using DataDapper.Extensions;
 using DataInfrastructure.Entities;
 using DataInfrastructure.Interfaces;
+using Shared.Services;
 using System;
 using System.Data;
 using System.Linq;
@@ -32,13 +33,12 @@ namespace DataDapper.Repositories
 
                 var result = con.QueryMultiple(SP, queryParameters, commandType: CommandType.StoredProcedure);
 
-                var book = result.ReadSingleOrDefault<BookEM>();
-                var authors = result.Read<AuthorEM>().AsList();
+                var mappingObject = new BookMappingObjectEM();
 
-                if (book != null)
-                {
-                    book.Authors = authors;
-                }
+                mappingObject.Book = result.ReadSingleOrDefault<BookEM>();
+                mappingObject.Authors = result.Read<AuthorEM>().AsList();
+
+                var book = MapperService.Map<BookEM>(mappingObject);
 
                 return book;
             }

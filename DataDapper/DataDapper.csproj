@@ -72,6 +72,10 @@
       <Project>{89ff6359-6770-4deb-bbef-72e2dd3b0651}</Project>
       <Name>DataInfrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Shared\Shared.csproj">
+      <Project>{838b39d1-3392-4700-8a72-6ec2af83b104}</Project>
+      <Name>Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

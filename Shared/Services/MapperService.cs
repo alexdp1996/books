@@ -1,4 +1,5 @@
 ﻿using DataInfrastructure.Entities;
+using Shared.MapperResolvers;
 using ViewModels;
 
 namespace Shared.Services
@@ -23,6 +24,9 @@ namespace Shared.Services
                 mapper.CreateMap<DataTableRequestVM, DataTableRequestEM>();
                 mapper.CreateMap<DataTableResponseEM<BookEM>, DataTableResponseVM<BookVM>>();
                 mapper.CreateMap<DataTableResponseEM<AuthorEM>, DataTableResponseVM<AuthorBaseVM>>();
+
+                mapper.CreateMap<BookMappingObjectEM, BookEM>().ConvertUsing<BookResolver>();
+                mapper.CreateMap<AuthorMappingObjectEM, AuthorEM>().ConvertUsing<AuthorResolver>();
             });
 #pragma warning restore CS0618 // Type or member is obsolete
         }

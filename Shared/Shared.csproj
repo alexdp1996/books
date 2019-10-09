@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IFactory.cs" />
+    <Compile Include="MapperResolvers\AuthorResolver.cs" />
+    <Compile Include="MapperResolvers\BookResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MapperService.cs" />
   </ItemGroup>

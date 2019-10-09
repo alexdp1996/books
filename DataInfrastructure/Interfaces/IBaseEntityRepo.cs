@@ -3,10 +3,11 @@ using System;
 
 namespace DataInfrastructure.Interfaces
 {
-    public interface IBaseRepo<Entity> : IDisposable where Entity : BaseEM
+    public interface IBaseEntityRepo<Entity> : IDisposable where Entity : BaseEM
     {
         Entity Get(long id);
-        long Save(Entity entity);
+        long Add(Entity entity);
+        void Update(Entity entity);
         void Delete(long id);
     }
 }

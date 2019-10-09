@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Data.Repositories
 {
-    public class AuthorRepo : BaseRepo<AuthorEM>, IAuthorRepo
+    public class AuthorRepo : BaseEntityRepo<AuthorEM>, IAuthorRepo
     {
 
         public override AuthorEM Get(long id)

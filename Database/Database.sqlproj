@@ -70,7 +70,7 @@
     <Build Include="dbo\Stored Procedures\USPAuthorGetDataTable.sql" />
     <Build Include="dbo\Stored Procedures\USPBookDelete.sql" />
     <Build Include="dbo\Stored Procedures\USPBookGet.sql" />
-    <Build Include="dbo\Stored Procedures\USPBookSave.sql" />
+    <Build Include="dbo\Stored Procedures\USPBookUpdateAuthors.sql" />
     <Build Include="dbo\Stored Procedures\USPBookGetDataTable.sql" />
     <Build Include="dbo\Stored Procedures\USPBookGetDataTableByNameASC.sql" />
     <Build Include="dbo\Stored Procedures\USPBookGetDataTableByNameDESC.sql" />
@@ -90,6 +90,5 @@
     <Build Include="dbo\Stored Procedures\USPAuthorDelete.sql" />
     <Build Include="dbo\Stored Procedures\USPAuthorGetByTerm.sql" />
     <Build Include="dbo\Stored Procedures\USPAuthorGetByIds.sql" />
-    <Build Include="dbo\Stored Procedures\USPAuthorSave.sql" />
   </ItemGroup>
 </Project>

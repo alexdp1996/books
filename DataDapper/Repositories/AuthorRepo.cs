@@ -11,7 +11,7 @@ namespace DataDapper.Repositories
 {
     public class AuthorRepo : BaseEntityRepo<AuthorEM>, IAuthorRepo
     {
-        public void Delete(long id)
+        public override void Delete(long id)
         {
             using (var con = Connection)
             {
@@ -51,7 +51,7 @@ namespace DataDapper.Repositories
             }
         }
 
-        public AuthorEM Get(long id)
+        public override AuthorEM Get(long id)
         {
             using (var con = Connection)
             {
@@ -138,20 +138,5 @@ namespace DataDapper.Repositories
         }
         #endregion
 
-        //public long Save(AuthorEM entity)
-        //{
-        //    using (var con = Connection)
-        //    {
-        //        var SP = "USPAuthorSave";
-        //        var queryParameters = new DynamicParameters();
-        //        queryParameters.Add("@Id", entity.Id);
-        //        queryParameters.Add("@Name", entity.Name);
-        //        queryParameters.Add("@Surname", entity.Surname);
-
-        //        var id = con.QuerySingle<long>(SP, queryParameters, commandType: CommandType.StoredProcedure);
-
-        //        return id;
-        //    }
-        //}
     }
 }

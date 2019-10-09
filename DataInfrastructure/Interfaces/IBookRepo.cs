@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace DataInfrastructure.Interfaces
 {
-    public interface IBookRepo : IBaseRepo<BookEM>
+    public interface IBookRepo : IBaseEntityRepo<BookEM>
     {
-        long Save(UpdatableBookEM book);
+        void UpdateAuthors(long bookId, IEnumerable<long> authorIds);
         DataTableResponseEM<BookEM> GetByNameAsc(DataTableRequestEM model);
         DataTableResponseEM<BookEM> GetByNameDesc(DataTableRequestEM model);
         DataTableResponseEM<BookEM> GetByPagesAsc(DataTableRequestEM model);

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Data.Repositories
 {
-    public class BookRepo : BaseRepo<BookEM>, IBookRepo
+    public class BookRepo : BaseEntityRepo<BookEM>, IBookRepo
     {
 
         public override BookEM Get(long id)
@@ -14,16 +14,14 @@ namespace Data.Repositories
             return DataContext.Books.Include("Authors").FirstOrDefault(b => b.Id == id);
         }
 
-        public long Save(UpdatableBookEM book)
+        public void UpdateAuthors(long bookId, IEnumerable<long> authorIds)
         {
-            var id = base.Save(book);
-            var returnedBook = Get(id);
+            var book = Get(bookId);
             var authorRepo = new AuthorRepo();
-            var authors = authorRepo.Get(book.AuthorIds);
-            returnedBook.Authors.Clear();
-            returnedBook.Authors.AddRange(authors);
+            var authors = authorRepo.Get(authorIds);
+            book.Authors.Clear();
+            book.Authors.AddRange(authors);
             DataContext.SaveChanges();
-            return returnedBook.Id;
         }
 
         private DataTableResponseEM<BookEM> Get(DataTableRequestEM model, Func<IQueryable<BookEM>, IOrderedQueryable<BookEM>> orderFunc)

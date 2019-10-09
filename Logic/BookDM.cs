@@ -28,8 +28,23 @@ namespace Logic
         {
             var book = MapperService.Map<UpdatableBookEM>(model);
             using (var bookRepo = Factory.GetService<IBookRepo>())
+            using (var scope = new TransactionService())
             {
-                var id = bookRepo.Save(book);
+                long id;
+
+                if (book.Id == 0)
+                {
+                    id = bookRepo.Add(book);
+                }
+                else
+                {
+                    id = book.Id;
+                    bookRepo.Update(book);
+                }
+
+                bookRepo.UpdateAuthors(id, book.AuthorIds);
+
+                scope.Complete();
             }
         }
 

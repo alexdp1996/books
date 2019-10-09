@@ -1,11 +1,12 @@
 ﻿using DataInfrastructure.Entities;
+using DataInfrastructure.Interfaces;
 using Dommel;
 
 namespace DataDapper.Repositories
 {
-    public class BaseEntityRepo<TEntity> : BaseRepo where TEntity : BaseEM
+    public abstract class BaseEntityRepo<TEntity> : BaseRepo, IBaseEntityRepo<TEntity> where TEntity : BaseEM
     {
-        private long Insert(TEntity entity)
+        public long Add(TEntity entity)
         {
             using (var con = Connection)
             {
@@ -14,7 +15,7 @@ namespace DataDapper.Repositories
             }
         }
 
-        private void Update(TEntity entity)
+        public void Update(TEntity entity)
         {
             using (var con = Connection)
             {
@@ -22,18 +23,8 @@ namespace DataDapper.Repositories
             }
         }
 
-        public long Save(TEntity entity)
-        {
-            if (entity.Id != 0)
-            {
-                Update(entity);
-                return entity.Id;
-            }
-            else
-            {
-                var id = Insert(entity);
-                return id;
-            }
-        }
+        public abstract TEntity Get(long id);
+
+        public abstract void Delete(long id);
     }
 }

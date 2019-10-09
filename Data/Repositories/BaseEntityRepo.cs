@@ -4,30 +4,29 @@ using System;
 
 namespace Data.Repositories
 {
-    public abstract class BaseRepo<Entity> : IBaseRepo<Entity> where Entity : BaseEM
+    public abstract class BaseEntityRepo<Entity> : IBaseEntityRepo<Entity> where Entity : BaseEM
     {
         protected DataContext DataContext { get; }
 
-        public BaseRepo()
+        public BaseEntityRepo()
         {
             DataContext = new DataContext();
         }
 
         public abstract Entity Get(long id);
 
-        public long Save(Entity entity)
+        public long Add(Entity entity)
         {
-            var entry = Get(entity.Id);
-            if (entry == null)
-            {
-                DataContext.Set<Entity>().Add(entity);
-            }
-            else
-            {
-                DataContext.Entry(entry).CurrentValues.SetValues(entity);
-            }
+            DataContext.Set<Entity>().Add(entity);
             DataContext.SaveChanges();
             return entity.Id;
+        }
+
+        public void Update(Entity entity)
+        {
+            var entry = Get(entity.Id);
+            DataContext.Entry(entry).CurrentValues.SetValues(entity);
+            DataContext.SaveChanges();
         }
 
         public void Delete(long id)

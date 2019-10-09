@@ -3,7 +3,7 @@ using DataDapper.Extensions;
 using DataInfrastructure.Entities;
 using DataInfrastructure.Interfaces;
 using Shared.Services;
-using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
@@ -11,7 +11,20 @@ namespace DataDapper.Repositories
 {
     public class BookRepo : BaseEntityRepo<BookEM>, IBookRepo
     {
-        public void Delete(long id)
+        public void UpdateAuthors(long bookId, IEnumerable<long> authorIds)
+        {
+            using (var con = Connection)
+            {
+                var SP = "USPBookUpdateAuthors";
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@BookId", bookId);
+                queryParameters.Add("@AuthorIds", authorIds.AsParameter());
+
+                con.Query(SP, queryParameters, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public override void Delete(long id)
         {
             using (var con = Connection)
             {
@@ -23,7 +36,7 @@ namespace DataDapper.Repositories
             }
         }
 
-        public BookEM Get(long id)
+        public override BookEM Get(long id)
         {
             using (var con = Connection)
             {
@@ -120,23 +133,5 @@ namespace DataDapper.Repositories
             }
         }
         #endregion
-
-        public long Save(UpdatableBookEM book)
-        {
-            using (var con = Connection)
-            {
-                var queryParameters = new DynamicParameters();
-                queryParameters.Add("@Id", book.Id);
-                queryParameters.Add("@Name", book.Name);
-                queryParameters.Add("@Pages", book.Pages);
-                queryParameters.Add("@Rate", book.Rate);
-                queryParameters.Add("@Date", book.Date);
-                queryParameters.Add("@AuthorIds", book.AuthorIds.AsParameter());
-
-                var id = con.QuerySingle<long>("USPBookSave", queryParameters, commandType: CommandType.StoredProcedure);
-                
-                return id;
-            }
-        }
     }
 }

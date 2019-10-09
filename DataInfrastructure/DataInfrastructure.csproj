@@ -52,7 +52,7 @@
     <Compile Include="Entities\DataTableResponseGeneralEM.cs" />
     <Compile Include="Entities\UpdatableBookEM.cs" />
     <Compile Include="Interfaces\IAuthorRepo.cs" />
-    <Compile Include="Interfaces\IBaseRepo.cs" />
+    <Compile Include="Interfaces\IBaseEntityRepo.cs" />
     <Compile Include="Interfaces\IBookRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

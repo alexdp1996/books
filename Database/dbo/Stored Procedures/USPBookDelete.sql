@@ -1,11 +1,11 @@
-﻿CREATE PROCEDURE [dbo].[USP_Author_Delete]
+﻿CREATE PROCEDURE [dbo].[USPBookDelete]
 	@Id int
 AS
 	BEGIN TRY
 		BEGIN TRANSACTION
 
 			DELETE FROM AuthorBook WHERE BookId = @Id;
-			DELETE FROM Author WHERE Id = @Id;
+			DELETE FROM Book WHERE Id = @Id;
 
 		COMMIT TRANSACTION
 	

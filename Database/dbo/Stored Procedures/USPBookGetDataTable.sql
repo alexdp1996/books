@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[USP_Book_Get_DataTable]
+﻿CREATE PROCEDURE [dbo].[USPBookGetDataTable]
 	@Skip INT
 AS
 	DECLARE @RecordsFiltered INT,
@@ -21,11 +21,11 @@ AS
 	FROM #Books B
 	JOIN AuthorBook AB ON AB.BookId = B.Id
 
-	SELECT * FROM #Books
+	SELECT B.Id, B.[Name], B.[Date], B.Pages, B.Rate FROM #Books B
 
-	SELECT * FROM #AuthorBook
+	SELECT BookId, AuthorId FROM #AuthorBook
 
-	SELECT DISTINCT A.*
+	SELECT DISTINCT A.Id, A.[Name], A.Surname
 	FROM #AuthorBook AB
 	JOIN Author A ON AB.AuthorId = A.Id
 

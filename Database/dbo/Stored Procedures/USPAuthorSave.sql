@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[USP_Author_Save]
+﻿CREATE PROCEDURE [dbo].[USPAuthorSave]
 	@Id            BIGINT,
     @Name          NVARCHAR (50),
     @Surname       NVARCHAR (50)

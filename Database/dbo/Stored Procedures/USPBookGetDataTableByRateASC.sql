@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[USP_Book_Get_DataTable_By_Date_DESC]
+﻿CREATE PROCEDURE [dbo].[USPBookGetDataTableByRateASC]
 	@Start INT,
 	@Lenght INT
 AS
@@ -18,11 +18,11 @@ AS
 	);
 
 	INSERT INTO #Books
-	SELECT * FROM Book
-	ORDER BY [Date] DESC
+	SELECT B.Id, B.[Name], B.Rate, B.Pages, B.[Date] FROM Book B
+	ORDER BY [Rate] ASC
 	OFFSET @Skip ROWS
 	FETCH NEXT @Lenght ROWS ONLY;
 
-	EXEC [dbo].[USP_Book_Get_DataTable] @Skip = @Skip;
+	EXEC [dbo].[USPBookGetDataTable] @Skip = @Skip;
 
 RETURN 0

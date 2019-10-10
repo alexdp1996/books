@@ -32,14 +32,14 @@ namespace Logic
             {
                 long id;
 
-                if (book.Id == 0)
+                if (book.Id.HasValue)
                 {
-                    id = bookRepo.Add(book);
+                    id = book.Id.Value;
+                    bookRepo.Update(book);
                 }
                 else
                 {
-                    id = book.Id;
-                    bookRepo.Update(book);
+                    id = bookRepo.Add(book);
                 }
 
                 bookRepo.UpdateAuthors(id, book.AuthorIds);

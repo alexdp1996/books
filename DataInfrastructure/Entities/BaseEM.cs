@@ -3,6 +3,6 @@
     public class BaseEM
     {
 
-        public long Id { get; set; }
+        public long? Id { get; set; }
     }
 }

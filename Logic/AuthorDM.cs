@@ -117,13 +117,13 @@ namespace Logic
 
             using (var authorRepo = Factory.GetService<IAuthorRepo>())
             {
-                if (author.Id == 0)
+                if (author.Id.HasValue)
                 {
-                    authorRepo.Add(author);
+                    authorRepo.Update(author);
                 }
                 else
                 {
-                    authorRepo.Update(author);
+                    authorRepo.Add(author);
                 }  
             }
         }

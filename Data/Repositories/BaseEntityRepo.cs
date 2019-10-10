@@ -19,12 +19,12 @@ namespace Data.Repositories
         {
             DataContext.Set<Entity>().Add(entity);
             DataContext.SaveChanges();
-            return entity.Id;
+            return entity.Id.Value;
         }
 
         public void Update(Entity entity)
         {
-            var entry = Get(entity.Id);
+            var entry = Get(entity.Id.Value);
             DataContext.Entry(entry).CurrentValues.SetValues(entity);
             DataContext.SaveChanges();
         }

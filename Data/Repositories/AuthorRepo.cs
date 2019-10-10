@@ -16,7 +16,7 @@ namespace Data.Repositories
 
         public IEnumerable<AuthorEM> Get(IEnumerable<long> Ids)
         {
-            return DataContext.Authors.Where(a => Ids.Contains(a.Id));
+            return DataContext.Authors.Where(a => Ids.Contains(a.Id.Value));
         }
 
         public IEnumerable<AuthorEM> Get(string term)
@@ -33,9 +33,10 @@ namespace Data.Repositories
 
             authors = orderFunc(authors);
 
+            response.RecordsFiltered = authors.Count();
+
             authors = authors.Skip(model.Start * model.Length).Take(model.Length);
 
-            response.RecordsFiltered = authors.Count();
             response.Data = authors;
 
             return response;

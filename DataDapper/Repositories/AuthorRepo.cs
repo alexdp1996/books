@@ -126,8 +126,8 @@ namespace DataDapper.Repositories
 
                 foreach (var a in authors)
                 {
-                    var bookIds = authorBook.Where(ab => ab.AuthorId == a.Id).Select(s => s.BookId).ToList();
-                    var booksToAdd = books.Where(b => bookIds.Contains(b.Id));
+                    var bookIds = authorBook.Where(ab => ab.AuthorId == a.Id.Value).Select(s => s.BookId).ToList();
+                    var booksToAdd = books.Where(b => bookIds.Contains(b.Id.Value));
                     a.Books.AddRange(booksToAdd);
                 }
 

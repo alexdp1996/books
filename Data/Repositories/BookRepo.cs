@@ -32,9 +32,11 @@ namespace Data.Repositories
             response.RecordsTotal = books.Count();
 
             books = orderFunc(books);
-            books = books.Skip(model.Start * model.Length).Take(model.Length);
 
             response.RecordsFiltered = books.Count();
+
+            books = books.Skip(model.Start * model.Length).Take(model.Length);
+
             response.Data = books;
 
             return response;

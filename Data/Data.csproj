@@ -45,14 +45,8 @@
     <Compile Include="DataContextInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AuthorRepo.cs" />
-    <Compile Include="Repositories\BaseRepo.cs" />
+    <Compile Include="Repositories\BaseEntityRepo.cs" />
     <Compile Include="Repositories\BookRepo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Entities\Entities.csproj">
-      <Project>{c896c2b5-3051-4b81-a031-dba263c87e0d}</Project>
-      <Name>Entities</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EntityFramework">
@@ -62,6 +56,11 @@
       <Version>2.2.6</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\DataInfrastructure\DataInfrastructure.csproj">
+      <Project>{89ff6359-6770-4deb-bbef-72e2dd3b0651}</Project>
+      <Name>DataInfrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

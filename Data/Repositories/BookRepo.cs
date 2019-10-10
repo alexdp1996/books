@@ -1,16 +1,13 @@
-﻿using Entities;
-using Entities.Enums;
+﻿using DataInfrastructure.Entities;
+using DataInfrastructure.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Data.Repositories
 {
-    public class BookRepo : BaseRepo<BookEM>
+    public class BookRepo : BaseEntityRepo<BookEM>, IBookRepo
     {
-
-        public BookRepo(DataContext context) : base(context)
-        {
-        }
 
         public override BookEM Get(long id)
         {
@@ -20,78 +17,69 @@ namespace Data.Repositories
         public void UpdateAuthors(long bookId, IEnumerable<long> authorIds)
         {
             var book = Get(bookId);
-            book.Authors.Clear();
-            var authorRepo = new AuthorRepo(DataContext);
+            var authorRepo = new AuthorRepo();
             var authors = authorRepo.Get(authorIds);
+            book.Authors.Clear();
             book.Authors.AddRange(authors);
             DataContext.SaveChanges();
         }
 
-        public IEnumerable<BookEM> Get(DataTableRequestEM model, out int recordsTotal, out int recordsFiltered)
+        private DataTableResponseEM<BookEM> Get(DataTableRequestEM model, Func<IQueryable<BookEM>, IOrderedQueryable<BookEM>> orderFunc)
         {
+            var response = new DataTableResponseEM<BookEM>();
+
             var books = DataContext.Books.Include("Authors").AsQueryable();
-            recordsTotal = books.Count();
+            response.RecordsTotal = books.Count();
 
-            var asc = model.Order[0].Asc;
+            books = orderFunc(books);
 
-            switch ((BookColumn)model.Order[0].Column)
-            {
-                case BookColumn.Name:
-                    {
-                        if (asc)
-                        {
-                            books = books.OrderBy(b => b.Name);
-                        }
-                        else
-                        {
-                            books = books.OrderByDescending(b => b.Name);
-                        }
-                        break;
-                    }
-                case BookColumn.Pages:
-                    {
-                        if (asc)
-                        {
-                            books = books.OrderBy(b => b.Pages);
-                        }
-                        else
-                        {
-                            books = books.OrderByDescending(b => b.Pages);
-                        }
-                        break;
-                    }
-                case BookColumn.Rate:
-                    {
-                        if (asc)
-                        {
-                            books = books.OrderBy(b => b.Rate);
-                        }
-                        else
-                        {
-                            books = books.OrderByDescending(b => b.Rate);
-                        }
-                            
-                        break;
-                    }
-                case BookColumn.Date:
-                    {
-                        if (asc)
-                        {
-                            books = books.OrderBy(b => b.Date);
-                        }
-                        else
-                        {
-                            books = books.OrderByDescending(b => b.Date);
-                        }
-                        break;
-                    }
-            }
+            response.RecordsFiltered = books.Count();
 
             books = books.Skip(model.Start * model.Length).Take(model.Length);
 
-            recordsFiltered = books.Count();
+            response.Data = books;
 
-            return books;
+            return response;
+        }
+
+        public DataTableResponseEM<BookEM> GetByNameAsc(DataTableRequestEM model)
+        {
+            return Get(model, books => books.OrderBy(b => b.Name));
+        }
+
+        public DataTableResponseEM<BookEM> GetByNameDesc(DataTableRequestEM model)
+        {
+            return Get(model, books => books.OrderByDescending(b => b.Name));
+        }
+
+        public DataTableResponseEM<BookEM> GetByPagesAsc(DataTableRequestEM model)
+        {
+            return Get(model, books => books.OrderBy(b => b.Pages));
+        }
+
+        public DataTableResponseEM<BookEM> GetByPagesDesc(DataTableRequestEM model)
+        {
+            return Get(model, books => books.OrderByDescending(b => b.Pages));
+        }
+
+        public DataTableResponseEM<BookEM> GetByRateAsc(DataTableRequestEM model)
+        {
+            return Get(model, books => books.OrderBy(b => b.Rate));
+        }
+
+        public DataTableResponseEM<BookEM> GetByRateDesc(DataTableRequestEM model)
+        {
+            return Get(model, books => books.OrderByDescending(b => b.Rate));
+        }
+
+        public DataTableResponseEM<BookEM> GetByDateAsc(DataTableRequestEM model)
+        {
+            return Get(model, books => books.OrderBy(b => b.Date));
+        }
+
+        public DataTableResponseEM<BookEM> GetByDateDesc(DataTableRequestEM model)
+        {
+            return Get(model, books => books.OrderByDescending(b => b.Date));
         }
     }
 }

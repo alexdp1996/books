@@ -121,6 +121,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AuthorController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Extensions\EnumExtention.cs" />
     <Compile Include="Global.asax.cs">
@@ -195,9 +196,17 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Logic\Logic.csproj">
-      <Project>{a90534e8-7d3c-4544-ac32-e1603a66641b}</Project>
-      <Name>Logic</Name>
+    <ProjectReference Include="..\LogicInfastructure\LogicInfastructure.csproj">
+      <Project>{62f425b7-1872-4e2d-bb31-28bbebdce777}</Project>
+      <Name>LogicInfastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared\Shared.csproj">
+      <Project>{838b39d1-3392-4700-8a72-6ec2af83b104}</Project>
+      <Name>Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnityBootstrap\UnityBootstrap.csproj">
+      <Project>{04f572fe-3bb9-4181-9269-07d1199b1e16}</Project>
+      <Name>UnityBootstrap</Name>
     </ProjectReference>
     <ProjectReference Include="..\ViewModels\ViewModels.csproj">
       <Project>{46490fc5-aa61-44e6-8e0d-eb50e058c206}</Project>

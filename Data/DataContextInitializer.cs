@@ -2,7 +2,7 @@
 
 namespace Data
 {
-    public class DataContextInitializer : CreateDatabaseIfNotExists<DataContext>
+    internal class DataContextInitializer : CreateDatabaseIfNotExists<DataContext>
     {
     }
 }

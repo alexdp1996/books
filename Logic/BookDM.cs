@@ -1,18 +1,24 @@
-﻿using AutoMapper;
-using Data;
-using Data.Repositories;
-using Entities;
-using System.Collections.Generic;
+﻿using DataInfrastructure.Entities;
+using DataInfrastructure.Interfaces;
+using LogicInfastructure.Interfaces;
+using Shared.Interfaces;
+using Shared.Services;
+using System.Linq;
 using ViewModels;
+using ViewModels.Enums;
 
 namespace Logic
 {
-    public class BookDM
+    public class BookDM : BaseDM, IBookDM
     {
+        public BookDM(IFactory factory) : base(factory)
+        {
+
+        }
+
         public void Delete(long id)
         {
-            using (var сontext = new DataContext())
-            using (var bookRepo = new BookRepo(сontext))
+            using (var bookRepo = Factory.GetService<IBookRepo>())
             {
                 bookRepo.Delete(id);
             }
@@ -20,45 +26,116 @@ namespace Logic
 
         public void Save(BookEditVM model)
         {
-            var book = Mapper.Map<BookEM>(model);
-            using (var сontext = new DataContext())
-            using (var bookRepo = new BookRepo(сontext))
+            var book = MapperService.Map<UpdatableBookEM>(model);
+            using (var bookRepo = Factory.GetService<IBookRepo>())
+            using (var scope = new TransactionService())
             {
-                var id = bookRepo.Save(book);
-                bookRepo.UpdateAuthors(id, model.AuthorIds);
+                long id;
+
+                if (book.Id.HasValue)
+                {
+                    id = book.Id.Value;
+                    bookRepo.Update(book);
+                }
+                else
+                {
+                    id = bookRepo.Add(book);
+                }
+
+                bookRepo.UpdateAuthors(id, book.AuthorIds);
+
+                scope.Complete();
             }
         }
 
         public BookVM Get(long id)
         {
-            using (var сontext = new DataContext())
-            using (var bookRepo = new BookRepo(сontext))
+            using (var bookRepo = Factory.GetService<IBookRepo>())
             {
                 var bookEM = bookRepo.Get(id);
-                var bookVM = Mapper.Map<BookVM>(bookEM);
+                var bookVM = MapperService.Map<BookVM>(bookEM);
                 return bookVM;
             }
         }
 
-        public DataTableResponseVM Get(DataTableRequestVM model)
+        public BookVM Get(BookEditVM book)
         {
-            var result = new DataTableResponseVM();
+            var result = MapperService.Map<BookVM>(book);
 
-            var dataTableEM = Mapper.Map<DataTableRequestEM>(model);
-
-            using (var сontext = new DataContext())
-            using (var bookRepo = new BookRepo(сontext))
+            using (var authorDM = Factory.GetService<IAuthorDM>())
             {
-                var booksEM = bookRepo.Get(dataTableEM, out int recordsTotal, out int recordsFiltered);
-                var booksVM = Mapper.Map<IEnumerable<BookVM>>(booksEM);
-
-                result.data = booksVM;
-                result.recordsFiltered = recordsFiltered;
-                result.recordsTotal = recordsTotal;
+                result.Authors = authorDM.Get(book.AuthorIds).ToList();
+                return result;
             }
-            result.draw = model.Draw;
+        }
 
-            return result;
+        public DataTableResponseVM<BookVM> Get(DataTableRequestVM model)
+        {
+            var dataTableEM = MapperService.Map<DataTableRequestEM>(model);
+
+            var asc = model.Order[0].Dir == "asc";
+            var column = (BookColumn) model.Order[0].Column;
+            using (var bookRepo = Factory.GetService<IBookRepo>())
+            {
+                DataTableResponseEM<BookEM> responseEM;
+                switch (column)
+                {
+                    default:
+                    case BookColumn.Name:
+                        {
+                            if (asc)
+                            {
+                                responseEM = bookRepo.GetByNameAsc(dataTableEM);
+                            }
+                            else
+                            {
+                                responseEM = bookRepo.GetByNameDesc(dataTableEM);
+                            }
+                            break;
+                        }
+                    case BookColumn.Pages:
+                        {
+                            if (asc)
+                            {
+                                responseEM = bookRepo.GetByPagesAsc(dataTableEM);
+                            }
+                            else
+                            {
+                                responseEM = bookRepo.GetByPagesDesc(dataTableEM);
+                            }
+                            break;
+                        }
+                    case BookColumn.Rate:
+                        {
+                            if (asc)
+                            {
+                                responseEM = bookRepo.GetByRateAsc(dataTableEM);
+                            }
+                            else
+                            {
+                                responseEM = bookRepo.GetByRateDesc(dataTableEM);
+                            }
+                            break;
+                        }
+                    case BookColumn.Date:
+                        {
+                            if (asc)
+                            {
+                                responseEM = bookRepo.GetByDateAsc(dataTableEM);
+                            }
+                            else
+                            {
+                                responseEM = bookRepo.GetByDateDesc(dataTableEM);
+                            }
+                            break;
+                        }
+                }
+                var responseVM = MapperService.Map<DataTableResponseVM<BookVM>>(responseEM);
+                responseVM.draw = model.Draw;
+
+                return responseVM;
+            }
+            
         }
     }
 }

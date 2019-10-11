@@ -204,9 +204,9 @@
       <Project>{838b39d1-3392-4700-8a72-6ec2af83b104}</Project>
       <Name>Shared</Name>
     </ProjectReference>
-    <ProjectReference Include="..\UnityBootstrap\UnityBootstrap.csproj">
-      <Project>{04f572fe-3bb9-4181-9269-07d1199b1e16}</Project>
-      <Name>UnityBootstrap</Name>
+    <ProjectReference Include="..\Unity\Unity.csproj">
+      <Project>{5d119cd3-a209-452e-a659-448fb0c4e1f0}</Project>
+      <Name>Unity</Name>
     </ProjectReference>
     <ProjectReference Include="..\ViewModels\ViewModels.csproj">
       <Project>{46490fc5-aa61-44e6-8e0d-eb50e058c206}</Project>

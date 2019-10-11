@@ -1,6 +1,6 @@
 ﻿using Shared.Interfaces;
 using System.Web.Mvc;
-using UnityBootstrap;
+using Unity;
 
 namespace UI.Controllers
 {

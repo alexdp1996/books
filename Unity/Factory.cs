@@ -2,7 +2,7 @@
 using Logic;
 using LogicInfastructure.Interfaces;
 using Shared.Interfaces;
-using Unity;
+using Unity.Injection;
 
 namespace Unity
 {
@@ -17,8 +17,8 @@ namespace Unity
 
         private void Register()
         {
-            _unit.RegisterType<IBookDM, BookDM>();
-            _unit.RegisterType<IAuthorDM, AuthorDM>();
+            _unit.RegisterType<IBookDM, BookDM>(new InjectionConstructor(this));
+            _unit.RegisterType<IAuthorDM, AuthorDM>(new InjectionConstructor(this));
 
             _unit.RegisterType<IBookRepo, DataDapper.Repositories.BookRepo>();
             _unit.RegisterType<IAuthorRepo, DataDapper.Repositories.AuthorRepo>();

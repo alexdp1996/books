@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicInfastructure", "Logic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{838B39D1-3392-4700-8A72-6EC2AF83B104}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityBootstrap", "UnityBootstrap\UnityBootstrap.csproj", "{04F572FE-3BB9-4181-9269-07D1199B1E16}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity", "Unity\Unity.csproj", "{5D119CD3-A209-452E-A659-448FB0C4E1F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,10 +67,10 @@ Global
 		{838B39D1-3392-4700-8A72-6EC2AF83B104}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{838B39D1-3392-4700-8A72-6EC2AF83B104}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{838B39D1-3392-4700-8A72-6EC2AF83B104}.Release|Any CPU.Build.0 = Release|Any CPU
-		{04F572FE-3BB9-4181-9269-07D1199B1E16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{04F572FE-3BB9-4181-9269-07D1199B1E16}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{04F572FE-3BB9-4181-9269-07D1199B1E16}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{04F572FE-3BB9-4181-9269-07D1199B1E16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D119CD3-A209-452E-A659-448FB0C4E1F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D119CD3-A209-452E-A659-448FB0C4E1F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D119CD3-A209-452E-A659-448FB0C4E1F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D119CD3-A209-452E-A659-448FB0C4E1F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -32,7 +32,7 @@ namespace UI.Controllers
         }
 
         [HttpGet]
-        public ActionResult Get(long id = 0)
+        public ActionResult Get(long? id)
         {
             using (var bookDM = Factory.GetService<IBookDM>())
             {

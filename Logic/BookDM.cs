@@ -48,13 +48,17 @@ namespace Logic
             }
         }
 
-        public BookVM Get(long id)
+        public BookVM Get(long? id)
         {
             using (var bookRepo = Factory.GetService<IBookRepo>())
             {
-                var bookEM = bookRepo.Get(id);
-                var bookVM = MapperService.Map<BookVM>(bookEM);
-                return bookVM;
+                if (id.HasValue)
+                {
+                    var bookEM = bookRepo.Get(id.Value);
+                    var bookVM = MapperService.Map<BookVM>(bookEM);
+                    return bookVM;
+                }
+                return null;
             }
         }
 

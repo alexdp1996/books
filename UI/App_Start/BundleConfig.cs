@@ -43,11 +43,16 @@ namespace UI
                       "~/node_modules/datatables.net-bs/css/dataTables.bootstrap.min.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/books").Include(
+                      "~/Scripts/popup-binder.js",
                       "~/node_modules/moment/min/moment.min.js",
                       "~/Scripts/book-list.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/authors").Include(
+                      "~/Scripts/popup-binder.js",
                       "~/Scripts/author-list.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/author").Include(
+                      "~/Scripts/author.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/delete").Include(
                       "~/Scripts/delete-modal.js"));

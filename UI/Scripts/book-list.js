@@ -3,14 +3,26 @@
 (function () {
 
     var self = this;
+    self.popupContentSelector = "#popup > .modal-dialog > .modal-content";
+    self.popupSelector = "#popup";
     self.gridSelector = "#books";
     self.getUrl = "";
     self.getDataUrl = "";
     self.authorGetUrl = "";
     self.deleteUrl = "";
 
-    self.Init = function () {
+    self.rebindTriggers = function () {
+        PopupBinder.rebindTrigger(".book-popup", self.popupContentSelector, self.getUrl);
+        PopupBinder.rebindTrigger(".author-popup", self.popupContentSelector, self.authorGetUrl);
+    };
+
+    self.reload = function () {
+        self.grid.ajax.reload();
+    };
+
+    self.initDataTable = function () {
         self.grid = $(self.gridSelector).DataTable({
+            "drawCallback": self.rebindTriggers,
             dom: `<'row'<'col-md-12'<'pull-left'l><'#add.pull-right'>>>
                   <'row'<'col-md-12'tr>>
                   <'row'<'col-md-12'<'pull-left'i><'pull-right'p>>>`,
@@ -29,7 +41,7 @@
             columns: [
                 {
                     "data": function (data) {
-                        return '<a href="' + self.getUrl+'?id=' + data.Id + '">' + data.Name + '</a>';
+                        return '<a class="book-popup" data-toggle="modal" href="#" data-target="' + self.popupSelector + '" data-id="' + data.Id + '">' + data.Name + '</a>';
                     }
                 },
                 {
@@ -56,7 +68,7 @@
                         } else {
                             let result = [];
                             for (let i = 0; i < authors.length; ++i) {
-                                result.push('<a href="' + self.authorGetUrl + '?id=' + authors[i].Id + '" >' +authors[i].Name + ' ' + authors[i].Surname + '</a>');
+                                result.push('<a class="author-popup" data-toggle="modal" href="#" data-target="' + self.popupSelector + '" data-id="' + authors[i].Id + '" >' + authors[i].Name + ' ' + authors[i].Surname + '</a>');
                             }
                             return result.join(', ');
                         }
@@ -74,12 +86,19 @@
 
         let addTemplate = $("#add-template");
         let addContainer = $("#add");
+
         addContainer.html(addTemplate.html());
         addTemplate.remove();
 
-        DeleteModal.url = self.deleteUrl;
-        DeleteModal.grid = self.grid;
-        DeleteModal.Init();
+        self.rebindTriggers();
     };
 
+    self.Init = function () {
+        self.initDataTable();
+
+        DeleteModal.url = self.deleteUrl;
+        DeleteModal.Init(function () {
+            self.reload();
+        });
+    };
 }).apply(BookList);

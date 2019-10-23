@@ -4,7 +4,8 @@
     var self = this;
     self.url = "";
 
-    self.Init = function () {
+    self.Init = function (callback) {
+        self.callback = callback;
         $('#confirm-delete').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
             self.id = button.data('id');
@@ -15,11 +16,13 @@
         $.ajax({
             type: "POST",
             url: self.url + '?id=' + self.id
-        }).done(function () {
-            self.grid && self.grid.ajax.reload();
-            Alert.show('Successfuly deleted item with id ' + self.id, Alert.Type.Success);
-        }).fail(function () {
-            Alert.show('Failed to delete item with ' + self.id, Alert.Type.Danger);
+        }).done(function (data) {
+            self.callback && self.callback();
+            Alert.show("#alert-box", data);
         });
     };
+
+    $("#delete").click(function () {
+        DeleteModal.ConfirmDelete();
+    });
 }).apply(DeleteModal);

@@ -13,9 +13,9 @@
         body.css('padding-top', neededBodyHeight);
     };
 
-    $(document).ready(function () {
+    self.disableAutocomplete = function () {
         $("input:text,form").attr("autocomplete", "off");
-    });
+    };
 
     self.Init = function () {
         $(window).resize(function () {
@@ -23,6 +23,7 @@
         });
 
         self.setHeight();
+        self.disableAutocomplete();
     };
 
 }).apply(GeneralConfig);

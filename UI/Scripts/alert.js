@@ -3,7 +3,6 @@
 (function () {
 
     var self = this;
-    self.container = "#alert-box";
 
     self.Type = {
         Success: 0,
@@ -28,15 +27,16 @@
         }
     };
 
-    self.show = function (message, alertType) {
-        let options = self.getOptions(alertType);
+    self.show = function (selector, alert) {
+
+        let options = self.getOptions(alert.Type);
         let html = `
             <div class="alert ${options.alertClass} alert-dismissible fade in">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>${options.messageType}</strong> ${message}
+                <strong>${options.messageType}</strong> ${alert.Message}
                 </div>
         `;
-        $(self.container).html(html);
+        $(selector).html(html);
     };
 
 }).apply(Alert);

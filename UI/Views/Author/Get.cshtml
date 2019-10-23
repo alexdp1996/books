@@ -1,41 +1,49 @@
 ﻿@model AuthorVM
 
+<div id="popup-alert-box"></div>
 @using (Html.BeginForm("Save", "Author"))
 {
-    @Html.AntiForgeryToken() // почитай
-
-<div class="form-horizontal">
-    <h4>@(Model == null ? "Create Author" : "Edit Author")</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.Id)
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-4">
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        <div class="modal-header">
+            <h5 class="modal-title">@(Model == null ? "Create Author" : "Edit Author")</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
-    </div>
+        <div class="modal-body">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Surname, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-4">
-            @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Surname, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @Html.Partial("~/Views/Author/_Books.cshtml", Model)
         </div>
-    </div>
-
-    @Html.Partial("~/Views/Author/_Books.cshtml", Model)
-
-    <div class="form-group">
-        <div class="col-md-offset-2">
+        <div class="modal-footer">
             <input type="submit" value="Save" class="btn btn-default" />
+            <button class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
     </div>
-</div>
 }
 
-@section scripts{
-    @Scripts.Render("~/bundles/jqueryval")
-}
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/author")
+<script>
+    $(document).ready(function () {
+        Author.Init();
+    });
+</script>
+

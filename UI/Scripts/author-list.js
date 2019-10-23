@@ -4,12 +4,23 @@
 
     var self = this;
     self.gridSelector = "#authors";
+    self.popupContentSelector = "#popup > .modal-dialog > .modal-content";
+    self.popupSelector = "#popup";
     self.getDataUrl = "";
     self.getUrl = "";
     self.deleteUrl = "";
 
+    self.rebindTriggers = function () {
+        PopupBinder.rebindTrigger(".author-popup", self.popupContentSelector, self.getUrl);
+    };
+
+    self.reload = function () {
+        self.grid.ajax.reload();
+    };
+
     self.Init = function () {
         self.grid = $(self.gridSelector).DataTable({
+            "drawCallback": self.rebindTriggers,
             dom: `<'row'<'col-md-12'<'pull-left'l><'#add.pull-right'>>>
                   <'row'<'col-md-12'tr>>
                   <'row'<'col-md-12'<'pull-left'i><'pull-right'p>>>`,
@@ -28,7 +39,7 @@
             columns: [
                 {
                     "data": function (data) {
-                        return '<a href="' + self.getUrl + '?id=' + data.Id + '">' + data.Name + '</a>';
+                        return '<a class="author-popup" data-toggle="modal" href="#" data-target="' + self.popupSelector + '" data-id="' + data.Id+'">'+data.Name+'</a>';
                     }
                 },
                 {
@@ -55,10 +66,12 @@
         let addContainer = $("#add");
         addContainer.html(addTemplate.html());
         addTemplate.remove();
+        self.rebindTriggers();
 
         DeleteModal.url = self.deleteUrl;
-        DeleteModal.grid = self.grid;
-        DeleteModal.Init();
+        DeleteModal.Init(function () {
+            self.reload();
+        });
     };
 
 }).apply(AuthorList);

@@ -182,6 +182,8 @@
     <Content Include="Views\Author\Get.cshtml" />
     <Content Include="Views\Shared\_Popup.cshtml" />
     <Content Include="Views\Shared\_Delete.cshtml" />
+    <Content Include="Views\Book\Delete.cshtml" />
+    <Content Include="Views\Author\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

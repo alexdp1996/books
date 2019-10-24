@@ -4,14 +4,13 @@
 
     var self = this;
     self.gridSelector = "#authors";
-    self.popupContentSelector = "#popup > .modal-dialog > .modal-content";
-    self.popupSelector = "#popup";
     self.getDataUrl = "";
     self.getUrl = "";
     self.deleteUrl = "";
 
     self.rebindTriggers = function () {
-        PopupBinder.rebindTrigger(".author-popup", self.popupContentSelector, self.getUrl);
+        PopupBinder.rebindTrigger(".author-get", self.getUrl);
+        PopupBinder.rebindTrigger(".author-delete", self.deleteUrl);
     };
 
     self.reload = function () {
@@ -39,7 +38,7 @@
             columns: [
                 {
                     "data": function (data) {
-                        return '<a class="author-popup" data-toggle="modal" href="#" data-target="' + self.popupSelector + '" data-id="' + data.Id+'">'+data.Name+'</a>';
+                        return '<a class="author-get" href="#" data-id="' + data.Id+'">'+data.Name+'</a>';
                     }
                 },
                 {
@@ -54,7 +53,7 @@
                 },
                 {
                     "data": function (data) {
-                        return '<button class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" data-id="' + data.Id + '">Delete</button>';
+                        return '<button class="btn btn-danger author-delete" data-id="' + data.Id + '">Delete</button>';
                     }
                 }
             ],
@@ -67,11 +66,6 @@
         addContainer.html(addTemplate.html());
         addTemplate.remove();
         self.rebindTriggers();
-
-        DeleteModal.url = self.deleteUrl;
-        DeleteModal.Init(function () {
-            self.reload();
-        });
     };
 
 }).apply(AuthorList);

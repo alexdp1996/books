@@ -1,0 +1,13 @@
+﻿@model long
+
+@Html.Partial("~/Views/Shared/_Delete.cshtml", Model)
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        DeleteModal.url = "@Url.Action("Delete","Book")";
+        let callback = function () {
+            BookList.reload();
+        }
+        DeleteModal.init(callback);
+    });
+</script>

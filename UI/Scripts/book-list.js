@@ -3,8 +3,6 @@
 (function () {
 
     var self = this;
-    self.popupContentSelector = "#popup > .modal-dialog > .modal-content";
-    self.popupSelector = "#popup";
     self.gridSelector = "#books";
     self.getUrl = "";
     self.getDataUrl = "";
@@ -12,8 +10,9 @@
     self.deleteUrl = "";
 
     self.rebindTriggers = function () {
-        PopupBinder.rebindTrigger(".book-popup", self.popupContentSelector, self.getUrl);
-        PopupBinder.rebindTrigger(".author-popup", self.popupContentSelector, self.authorGetUrl);
+        PopupBinder.rebindTrigger(".book-get", self.getUrl);
+        PopupBinder.rebindTrigger(".author-get", self.authorGetUrl);
+        PopupBinder.rebindTrigger(".book-delete", self.deleteUrl);
     };
 
     self.reload = function () {
@@ -41,7 +40,7 @@
             columns: [
                 {
                     "data": function (data) {
-                        return '<a class="book-popup" data-toggle="modal" href="#" data-target="' + self.popupSelector + '" data-id="' + data.Id + '">' + data.Name + '</a>';
+                        return '<a class="book-get" href="#" data-id="' + data.Id + '">' + data.Name + '</a>';
                     }
                 },
                 {
@@ -68,7 +67,7 @@
                         } else {
                             let result = [];
                             for (let i = 0; i < authors.length; ++i) {
-                                result.push('<a class="author-popup" data-toggle="modal" href="#" data-target="' + self.popupSelector + '" data-id="' + authors[i].Id + '" >' + authors[i].Name + ' ' + authors[i].Surname + '</a>');
+                                result.push('<a class="author-get" data-id="' + authors[i].Id + '" >' + authors[i].Name + ' ' + authors[i].Surname + '</a>');
                             }
                             return result.join(', ');
                         }
@@ -76,7 +75,7 @@
                 },
                 {
                     "data": function (data) {
-                        return '<button class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" data-id="' + data.Id + '">Delete</button>';
+                        return '<button class="btn btn-danger book-delete" data-id="' + data.Id + '">Delete</button>';
                     }
                 }
             ],
@@ -95,10 +94,5 @@
 
     self.Init = function () {
         self.initDataTable();
-
-        DeleteModal.url = self.deleteUrl;
-        DeleteModal.Init(function () {
-            self.reload();
-        });
     };
 }).apply(BookList);

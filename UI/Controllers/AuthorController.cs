@@ -58,6 +58,12 @@ namespace UI.Controllers
             throw new ArgumentException("Model is not valid");
         }
 
+        [HttpGet]
+        public ActionResult DeleteModal(long id)
+        {
+            return PartialView("~/Views/Author/Delete.cshtml", id);
+        }
+
         [HttpPost]
         public ActionResult Delete(long id)
         {

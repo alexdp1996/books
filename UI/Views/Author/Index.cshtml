@@ -2,11 +2,10 @@
     ViewBag.Title = "Index";
 }
 
-@Html.Partial("~/Views/Shared/_Delete.cshtml")
 @Html.Partial("~/Views/Shared/_Popup.cshtml", "popup")
 
 <div id="add-template" class="hidden">
-    <button class="btn btn-default author-popup" data-toggle="modal" data-target="#popup"><i class="glyphicon glyphicon-plus"></i></button>
+    <button class="btn btn-default author-get"><i class="glyphicon glyphicon-plus"></i></button>
 </div>
 
 <table class="table table-striped table-bordered dataTable" style="width: 100%;" id="authors">
@@ -34,7 +33,7 @@
     $(document).ready(function () {
         AuthorList.getDataUrl = "@Url.Action("GetAuthors")";
         AuthorList.getUrl = "@Url.Action("Get")";
-        AuthorList.deleteUrl = "@Url.Action("Delete")";
+        AuthorList.deleteUrl = "@Url.Action("DeleteModal")";
         AuthorList.Init();
     });
 </script>

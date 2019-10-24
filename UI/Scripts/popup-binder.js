@@ -3,7 +3,7 @@
 (function () {
     var self = this;
 
-    self.rebindTrigger = function (triggerSelector, popupContentSelector, url) {
+    self.rebindTrigger = function (triggerSelector, url) {
         $(triggerSelector).click(function () {
             let id = $(this).data('id');
 
@@ -14,8 +14,9 @@
                     id: id
                 },
                 success: function (data) {
-                    let popup = $(popupContentSelector);
+                    let popup = $("#popup > .modal-dialog > .modal-content");
                     popup.html(data);
+                    $("#popup").modal('show');
                 }
             });
         });

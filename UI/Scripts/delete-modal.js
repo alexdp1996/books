@@ -4,18 +4,15 @@
     var self = this;
     self.url = "";
 
-    self.Init = function (callback) {
+    self.init = function (callback) {
         self.callback = callback;
-        $('#confirm-delete').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            self.id = button.data('id');
-        });
     };
 
     self.ConfirmDelete = function () {
+        let id = $("#Id").val();
         $.ajax({
             type: "POST",
-            url: self.url + '?id=' + self.id
+            url: self.url + '?id=' + id
         }).done(function (data) {
             self.callback && self.callback();
             Alert.show("#alert-box", data);

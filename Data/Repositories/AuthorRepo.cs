@@ -8,6 +8,15 @@ namespace Data.Repositories
 {
     public class AuthorRepo : BaseEntityRepo<AuthorEM>, IAuthorRepo
     {
+        public AuthorRepo()
+        {
+
+        }
+
+        internal AuthorRepo(DataContext context) : base(context)
+        {
+
+        }
 
         public override AuthorEM Get(long id)
         {

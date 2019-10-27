@@ -1,12 +1,9 @@
 ﻿CREATE PROCEDURE [dbo].[USPBookGetDataTable]
-	@Skip INT
+	@RecordsFiltered INT
 AS
-	DECLARE @RecordsFiltered INT,
-			@RecordsTotal INT;
+	DECLARE @RecordsTotal INT;
 
 	SELECT @RecordsTotal = COUNT(*) FROM Book;
-	SELECT @RecordsFiltered = COUNT(*) FROM #Books;
-	SET @RecordsFiltered = @RecordsFiltered + @Skip;
 
 	SELECT @RecordsFiltered AS RecordsFiltered, @RecordsTotal AS RecordsTotal;
 

@@ -35,7 +35,7 @@ namespace Data.Repositories
 
             response.RecordsFiltered = books.Count();
 
-            books = books.Skip(model.Start * model.Length).Take(model.Length);
+            books = books.Skip(model.Start).Take(model.Length);
 
             response.Data = books;
 

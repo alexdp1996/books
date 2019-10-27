@@ -44,7 +44,7 @@ namespace Data.Repositories
 
             response.RecordsFiltered = authors.Count();
 
-            authors = authors.Skip(model.Start * model.Length).Take(model.Length);
+            authors = authors.Skip(model.Start).Take(model.Length);
 
             response.Data = authors;
 

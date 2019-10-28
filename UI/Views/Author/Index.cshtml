@@ -28,12 +28,15 @@
 
 @Styles.Render("~/datatables/css")
 @Scripts.Render("~/bundles/datatables")
+@Scripts.Render("~/bundles/view-models")
 @Scripts.Render("~/bundles/authors")
 <script>
+    var DT;
     $(document).ready(function () {
-        AuthorList.getDataUrl = "@Url.Action("GetAuthors")";
-        AuthorList.getUrl = "@Url.Action("Get")";
-        AuthorList.deleteUrl = "@Url.Action("DeleteModal")";
-        AuthorList.Init();
+        let urls = {};
+        urls.get = "@Url.Action("Get")";
+        urls.dtData = "@Url.Action("GetAuthors")";
+        urls.delete = "@Url.Action("DeleteModal")";
+        DT = new AuthorDTController(urls);
     });
 </script>

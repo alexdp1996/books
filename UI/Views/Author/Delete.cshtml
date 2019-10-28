@@ -4,10 +4,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        DeleteModal.url = "@Url.Action("Delete","Author")";
-        let callback = function () {
-            AuthorList.reload();
-        }
-        DeleteModal.init(callback);
+        let url = "@Url.Action("Delete","Author")";
+        let controller = new DeleteController(url, DT, Alert);
     });
 </script>

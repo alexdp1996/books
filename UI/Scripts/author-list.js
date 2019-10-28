@@ -7,10 +7,11 @@
     self.getDataUrl = "";
     self.getUrl = "";
     self.deleteUrl = "";
+    self.popupContoller = new PopupController();
 
     self.rebindTriggers = function () {
-        PopupBinder.rebindTrigger(".author-get", self.getUrl);
-        PopupBinder.rebindTrigger(".author-delete", self.deleteUrl);
+        self.popupContoller.bind(".author-get", self.getUrl);
+        self.popupContoller.bind(".author-delete", self.deleteUrl);
     };
 
     self.reload = function () {

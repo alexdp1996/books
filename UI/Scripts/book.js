@@ -53,9 +53,9 @@
                 model: book
             }
         }).done(function (data) {
-            if (data.Type === Alert.Type.Success) {
-                BookList && BookList.reload();
-                Alert.show("#alert-box", 'Book was saved', Alert.Type.Success);
+            if (data.Type === AlertType.Success) {
+                typeof DT !== 'undefined' && DT.reload();
+                Alert.show("#alert-box", data);
                 $("#popup").modal("hide");
             } else {
                 Alert.show("#popup-alert-box", data);

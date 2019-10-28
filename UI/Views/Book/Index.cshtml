@@ -34,13 +34,16 @@
 
 @Styles.Render("~/datatables/css")
 @Scripts.Render("~/bundles/datatables")
+@Scripts.Render("~/bundles/view-models")
 @Scripts.Render("~/bundles/books")
 <script>
+    var DT;
     $(document).ready(function () {
-        BookList.getDataUrl = "@Url.Action("GetBooks")";
-        BookList.getUrl = "@Url.Action("Get")";
-        BookList.authorGetUrl = "@Url.Action("Get", "Author")";
-        BookList.deleteUrl = "@Url.Action("DeleteModal")";
-        BookList.Init();
+        let urls = {};
+        urls.get = "@Url.Action("Get")";
+        urls.authorGet = "@Url.Action("Get", "Author")";
+        urls.dtData = "@Url.Action("GetBooks")";
+        urls.delete = "@Url.Action("DeleteModal")";
+        DT = new BookDTController(urls, moment);
     });
 </script>

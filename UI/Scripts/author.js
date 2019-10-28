@@ -27,13 +27,13 @@
                 model: author
             }
         }).done(function (data) {
-            if (data.Type === Alert.Type.Success) {
-                typeof BookList !== 'undefined' && BookList.reload();
-                typeof AuthorList !== 'undefined' && AuthorList.reload();
-                Alert.show("#alert-box", data);
+            let alert = new AlertController();
+            if (data.Type === AlertType.Success) {
+                typeof DT !== 'undefined' && DT.reload();
+                alert.show("#alert-box", data);
                 $("#popup").modal("hide");
             } else {
-                Alert.show("#popup-alert-box", data);
+                alert.show("#popup-alert-box", data);
             }
         });
     });

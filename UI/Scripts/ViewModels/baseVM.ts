@@ -1,3 +1,3 @@
 ﻿class BaseVM {
-    public Id: number;
+    public Id?: number;
 }

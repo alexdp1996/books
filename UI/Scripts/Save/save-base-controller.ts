@@ -24,7 +24,7 @@
 
     private init() {
         let self = this;
-        $("#popup form").on('submit', function (e) {
+        $("#popup form").off('submit').on('submit', function (e) {
             e.preventDefault();
             let model: BaseVM = self.getModel();
             self.saveBusiness.Save(model,

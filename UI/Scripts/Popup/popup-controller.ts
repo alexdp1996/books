@@ -7,7 +7,7 @@
 
     public bind(selector: string, url: string): void {
         let self = this;
-        $(selector).click(function () {
+        $(selector).off('click').click(function () {
             let model = new PopupVM();
             model.Url = url;
             model.Id = $(this).data('id');

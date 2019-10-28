@@ -30,36 +30,4 @@
 
         GeneralConfig.disableAutocomplete();
     };
-
-    $("#popup form").on('submit', function (e) {
-        e.preventDefault();
-        let book = {
-            Id: $("#Id").val(),
-            Name: $("#Name").val(),
-            Rate: $("#Rate").val(),
-            Date: $("#Date").val(),
-            Pages: $("#Pages").val(),
-            AuthorIds: $("#AuthorIds").val()
-        };
-
-        $form = $(this);
-
-        let url = $form.attr('action');
-
-        $.ajax({
-            url: url,
-            type: "POST",
-            data: {
-                model: book
-            }
-        }).done(function (data) {
-            if (data.Type === AlertType.Success) {
-                typeof DT !== 'undefined' && DT.reload();
-                Alert.show("#alert-box", data);
-                $("#popup").modal("hide");
-            } else {
-                Alert.show("#popup-alert-box", data);
-            }
-        });
-    });
 }).apply(Book);

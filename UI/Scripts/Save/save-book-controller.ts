@@ -1,0 +1,17 @@
+﻿class SaveBookController extends SaveBaseController {
+    constructor(url: string, alertController: AlertController, DT: IReloadable) {
+        super(url, alertController, DT);
+    }
+
+    getModel(): BaseVM {
+        let book: BookEditVM = {
+            Id: +$("#Id").val(),
+            Name: $("#Name").val() as string,
+            Rate: +$("#Rate").val(),
+            Date: ($("#Date").val() as any) as Date,
+            Pages: +$("#Pages").val(),
+            AuthorIds: ($("#AuthorIds").val() as any) as number[]
+        };
+        return book;
+    }
+}

@@ -40,10 +40,13 @@
 }
 
 @Scripts.Render("~/bundles/jqueryval")
-@Scripts.Render("~/bundles/author")
+@Scripts.Render("~/bundles/save")
+@Scripts.Render("~/bundles/save-author")
 <script>
     $(document).ready(function () {
-        Author.Init();
+        let url = "@Url.Action("Save")";
+        let SaveController = new SaveAuthorController(url, Alert, DT);
+        GeneralConfig.disableAutocomplete();
     });
 </script>
 

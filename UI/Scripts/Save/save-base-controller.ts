@@ -1,22 +1,21 @@
-﻿abstract class SaveBaseController {
-    private DT: IReloadable;
-    private alertController: AlertController;
+﻿declare var Alert: AlertController;
+declare var DT: IReloadable;
+
+abstract class SaveBaseController {
     private saveBusiness: SaveBusiness;
 
-    constructor(url: string, alertController: AlertController, DT: IReloadable) {
-        this.DT = DT;
-        this.alertController = alertController;
+    constructor(url: string) {
         this.saveBusiness = new SaveBusiness(url);
         this.init();
     }
 
     private onError(alert: AlertVM) {
-        this.alertController.show("#popup-alert-box", alert);
+        Alert.show("#popup-alert-box", alert);
     }
 
     private onSuccess(alert: AlertVM) {
-        this.DT.reload();
-        this.alertController.show("#alert-box", alert);
+        DT.reload();
+        Alert.show("#alert-box", alert);
         $("#popup").modal("hide");
     }
 

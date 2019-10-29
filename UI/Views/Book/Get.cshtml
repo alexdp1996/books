@@ -75,10 +75,10 @@
 @Scripts.Render("~/bundles/save-book")
 <script>
     $(document).ready(function () {
-        Book.getAuthorsByTermUrl = "@Url.Action("GetByTerm","Author")";
-        Book.Init();
+        let AuthorsByTermUrl = "@Url.Action("GetByTerm","Author")";
+        let Book = new BookController(AuthorsByTermUrl);
         let url = "@Url.Action("Save")";
-        let SaveController = new SaveBookController(url, Alert, DT);
+        let SaveController = new SaveBookController(url);
     });
 </script>
 

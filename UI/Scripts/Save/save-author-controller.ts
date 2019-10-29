@@ -1,6 +1,6 @@
 ﻿class SaveAuthorController extends SaveBaseController {
-    constructor(url: string, alertController: AlertController, DT: IReloadable) {
-        super(url, alertController, DT);
+    constructor(url: string) {
+        super(url);
     }
 
     getModel(): BaseVM {

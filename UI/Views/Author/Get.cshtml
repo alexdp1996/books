@@ -45,8 +45,7 @@
 <script>
     $(document).ready(function () {
         let url = "@Url.Action("Save")";
-        let SaveController = new SaveAuthorController(url, Alert, DT);
-        GeneralConfig.disableAutocomplete();
+        let SaveController = new SaveAuthorController(url);
     });
 </script>
 

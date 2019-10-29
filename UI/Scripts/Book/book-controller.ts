@@ -1,19 +1,20 @@
-﻿var Book = Book || {};
+﻿class BookController {
+    private authorsUrl: string;
+    private authorSelector: string;
 
-(function () {
-    var self = this;
-    self.authorSelector = "#AuthorIds";
-    self.getAuthorsByTermUrl = "";
+    constructor(authorsUrl: string) {
+        this.authorsUrl = authorsUrl;
+        this.authorSelector = "#AuthorIds";
+        this.init();
+    }
 
-    self.Init = function () {
-        $(self.authorSelector).select2({
+    private init() {
+        let self = this;
+        $(this.authorSelector).select2({
             multiple: true,
             ajax: {
-                url: self.getAuthorsByTermUrl,
+                url: self.authorsUrl,
                 dataType: 'json',
-                dataSrc: function (data) {
-                    return data.Data;
-                },
                 processResults: function (data) {
                     return {
                         results: $.map(data, function (item) {
@@ -27,7 +28,5 @@
             }
         });
         $(".datepicker").datepicker();
-
-        GeneralConfig.disableAutocomplete();
-    };
-}).apply(Book);
+    }
+}

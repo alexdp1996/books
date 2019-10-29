@@ -1,10 +1,10 @@
-﻿class BookDTController extends BaseDTController implements IReloadable {
+﻿declare var moment;
+
+class BookDTController extends BaseDTController implements IReloadable {
     private urls: BookUrlsDT;
     private popupController: PopupController;
     private grid: any;
     private gridSelector: string;
-    private moment: any;
-
 
     constructor(urls: BookUrlsDT, moment : any) {
         super();
@@ -12,7 +12,6 @@
         this.popupController = new PopupController();
         this.gridSelector = "#books";
         this.initDT();
-        this.moment = moment;
     }
 
     private rebindTriggers(): void {
@@ -36,7 +35,7 @@
                 url: self.urls.dtData,
                 type: "POST",
                 dataType: "json",
-                "dataSrc": function (json) {
+                dataSrc: function (json) {
                     return json.data;
                 }
             },
@@ -58,7 +57,7 @@
                 },
                 {
                     "data": function (record: BookVM) {
-                        let date = self.moment(record.Date).format('LL');
+                        let date = moment(record.Date).format('LL');
                         return date;
                     }
                 },

@@ -33,7 +33,7 @@
                 url: self.urls.dtData,
                 type: "POST",
                 dataType: "json",
-                "dataSrc": function (json) {
+                dataSrc: function (json) {
                     return json.data;
                 }
             },

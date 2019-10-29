@@ -1,4 +1,6 @@
-﻿class PopupController {
+﻿declare var GeneralConfig: GeneralConfigController;
+
+class PopupController {
     private service: PopupService;
 
     constructor() {
@@ -23,5 +25,6 @@
         let popup = $("#popup > .modal-dialog > .modal-content");
         popup.html(html);
         $("#popup").modal('show');
+        GeneralConfig.disableAutocomplete();
     }
 }

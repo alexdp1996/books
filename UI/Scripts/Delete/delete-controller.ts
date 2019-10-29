@@ -1,20 +1,21 @@
-﻿class DeleteController {
-    private service: DeleteService;
-    private alertController: AlertController;
+﻿declare var Alert: AlertController;
+declare var DT: IReloadable;
 
-    constructor(url: string, datatable: IReloadable , alertController: AlertController) {
+class DeleteController {
+    private service: DeleteService;
+
+    constructor(url: string, datatable: IReloadable) {
         this.service = new DeleteService(url);
-        this.alertController = alertController;
-        this.bind(datatable);
+        this.bind();
     }
 
-    private bind(datatable: IReloadable) {
+    private bind() {
         let self: DeleteController = this;
         $("#delete").click(function () {
             let id: number = +$("#Id").val();
             self.service.confirm(id, function (alert: AlertVM) {
-                datatable.reload();
-                self.alertController.show("#alert-box", alert);
+                DT.reload();
+                Alert.show("#alert-box", alert);
             });
         });
     }

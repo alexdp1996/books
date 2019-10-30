@@ -1,4 +1,4 @@
-﻿class BaseDTController {
+﻿class BaseDataTableController {
     protected markupTemplate: string;
 
     constructor() {

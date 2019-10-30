@@ -1,4 +1,4 @@
-﻿class SaveService {
+﻿class BaseEntityService {
     private url: string;
 
     constructor(url: string) {

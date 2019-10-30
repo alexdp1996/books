@@ -1,4 +1,4 @@
-﻿class SaveAuthorController extends SaveBaseController {
+﻿class AuthorController extends BaseEntityController {
     constructor(url: string) {
         super(url);
     }

@@ -1,8 +1,8 @@
-﻿class SaveBusiness {
-    private saveService: SaveService;
+﻿class BaseEntityBusiness {
+    private saveService: BaseEntityService;
 
     constructor(url: string) {
-        this.saveService = new SaveService(url);
+        this.saveService = new BaseEntityService(url);
     }
 
     public Save(model: BaseVM, onSuccess: Action<AlertVM>, onError: Action<AlertVM>) {

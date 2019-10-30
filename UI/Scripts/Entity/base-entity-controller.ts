@@ -1,11 +1,11 @@
 ﻿declare var Alert: AlertController;
 declare var DT: IReloadable;
 
-abstract class SaveBaseController {
-    private saveBusiness: SaveBusiness;
+abstract class BaseEntityController {
+    private saveBusiness: BaseEntityBusiness;
 
     constructor(url: string) {
-        this.saveBusiness = new SaveBusiness(url);
+        this.saveBusiness = new BaseEntityBusiness(url);
         this.init();
     }
 

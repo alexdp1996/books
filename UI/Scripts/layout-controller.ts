@@ -1,4 +1,4 @@
-﻿class GeneralConfigController {
+﻿class LayoutController {
     private navSelector: string = ".navbar.navbar-info.bg-info.navbar-fixed-top";
     private bodySelector: string = ".container.body-content";
 
@@ -28,7 +28,7 @@
     };
 }
 
-var GeneralConfig: GeneralConfigController;
+var Layout: LayoutController;
 $(document).ready(function () {
-    GeneralConfig = new GeneralConfigController();
+    Layout = new LayoutController();
 });

@@ -1,11 +1,11 @@
-﻿class AuthorDTController extends BaseDTController implements IReloadable {
-    private urls: UrlsDT;
+﻿class AuthorDataTableController extends BaseDataTableController implements IReloadable {
+    private urls: DataTableUrlsVM;
     private popupController: PopupController;
     private grid: any;
     private gridSelector: string;
 
 
-    constructor(urls: UrlsDT) {
+    constructor(urls: DataTableUrlsVM) {
         super();
         this.urls = urls;
         this.popupController = new PopupController();

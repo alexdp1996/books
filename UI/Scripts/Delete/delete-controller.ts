@@ -4,7 +4,7 @@ declare var DT: IReloadable;
 class DeleteController {
     private service: DeleteService;
 
-    constructor(url: string, datatable: IReloadable) {
+    constructor(url: string) {
         this.service = new DeleteService(url);
         this.bind();
     }

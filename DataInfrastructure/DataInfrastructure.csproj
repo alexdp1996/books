@@ -50,7 +50,6 @@
     <Compile Include="Entities\DataTableRequestEM.cs" />
     <Compile Include="Entities\DataTableResponseEM.cs" />
     <Compile Include="Entities\DataTableResponseGeneralEM.cs" />
-    <Compile Include="Entities\UpdatableBookEM.cs" />
     <Compile Include="Interfaces\IAuthorRepo.cs" />
     <Compile Include="Interfaces\IBaseEntityRepo.cs" />
     <Compile Include="Interfaces\IBookRepo.cs" />

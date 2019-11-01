@@ -9,7 +9,7 @@ namespace LogicInfastructure.Interfaces
         IEnumerable<AuthorBaseVM> Get(string term);
         IEnumerable<AuthorBaseVM> Get(IEnumerable<long> ids);
         DataTableResponseVM<AuthorBaseVM> Get(DataTableRequestVM model);
-        AuthorVM Get(long id);
+        AuthorVM Get(long? id);
         void Delete(long id);
         void Save(AuthorVM model);
     }

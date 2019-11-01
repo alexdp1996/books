@@ -11,7 +11,7 @@ namespace Shared.Services
 #pragma warning disable CS0618 // Type or member is obsolete
             AutoMapper.Mapper.Initialize(mapper =>
             {
-                mapper.CreateMap<BookEditVM, UpdatableBookEM>().ReverseMap();
+                mapper.CreateMap<BookEditVM, BookEM>().ReverseMap();
                 mapper.CreateMap<BookEditVM, BookVM>();
                 mapper.CreateMap<BookEM, BookBaseVM>();
                 mapper.CreateMap<BookEM, BookVM>();

@@ -1,12 +1,9 @@
 ﻿CREATE PROCEDURE [dbo].[USPAuthorGetDataTable]
-	@Skip INT
+	@RecordsFiltered INT
 AS
-	DECLARE @RecordsFiltered INT,
-			@RecordsTotal INT;
+	DECLARE @RecordsTotal INT;
 
 	SELECT @RecordsTotal = COUNT(*) FROM Author;
-	SELECT @RecordsFiltered = COUNT(*) FROM #Authors;
-	SET @RecordsFiltered = @RecordsFiltered + @Skip;
 
 	SELECT @RecordsFiltered AS RecordsFiltered, @RecordsTotal AS RecordsTotal;
 

@@ -2,10 +2,6 @@
 	@Start INT,
 	@Lenght INT
 AS
-	DECLARE @Skip INT;
-
-	SET @Skip = @Start*@Lenght;
-
 	DROP TABLE IF EXISTS #Books;
 	
 	CREATE TABLE #Books
@@ -20,9 +16,13 @@ AS
 	INSERT INTO #Books
 	SELECT B.Id, B.[Name], B.Rate, B.Pages, B.[Date] FROM Book B
 	ORDER BY [Date] DESC
-	OFFSET @Skip ROWS
+	OFFSET @Start ROWS
 	FETCH NEXT @Lenght ROWS ONLY;
 
-	EXEC [dbo].[USPBookGetDataTable] @Skip = @Skip;
+	DECLARE @RecordsFiltered INT;
+
+	SELECT @RecordsFiltered = COUNT(*) FROM Book;
+
+	EXEC [dbo].[USPBookGetDataTable] @RecordsFiltered = @RecordsFiltered;
 
 RETURN 0

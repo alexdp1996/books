@@ -2,10 +2,6 @@
 	@Start INT,
 	@Lenght INT
 AS
-	DECLARE @Skip INT;
-
-	SET @Skip = @Start*@Lenght;
-
 	DROP TABLE IF EXISTS #Authors;
 	
 	CREATE TABLE #Authors
@@ -20,9 +16,13 @@ AS
 	LEFT JOIN AuthorBook AB on A.Id = AB.AuthorId
 	GROUP BY A.Id, A.Name, A.Surname
 	ORDER BY COUNT(AB.BookId) DESC
-	OFFSET @Skip ROWS
+	OFFSET @Start ROWS
 	FETCH NEXT @Lenght ROWS ONLY;
 
-	EXEC [dbo].[USPAuthorGetDataTable] @Skip = @Skip;
+	DECLARE @RecordsFiltered INT;
+
+	SELECT @RecordsFiltered = COUNT(*) FROM Author;
+
+	EXEC [dbo].[USPAuthorGetDataTable] @RecordsFiltered = @RecordsFiltered;
 
 RETURN 0

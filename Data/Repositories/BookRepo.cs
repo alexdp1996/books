@@ -17,7 +17,7 @@ namespace Data.Repositories
         public void UpdateAuthors(long bookId, IEnumerable<long> authorIds)
         {
             var book = Get(bookId);
-            var authorRepo = new AuthorRepo();
+            var authorRepo = new AuthorRepo(DataContext);
             var authors = authorRepo.Get(authorIds);
             book.Authors.Clear();
             book.Authors.AddRange(authors);
@@ -35,7 +35,7 @@ namespace Data.Repositories
 
             response.RecordsFiltered = books.Count();
 
-            books = books.Skip(model.Start * model.Length).Take(model.Length);
+            books = books.Skip(model.Start).Take(model.Length);
 
             response.Data = books;
 

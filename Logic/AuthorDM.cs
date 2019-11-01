@@ -93,13 +93,17 @@ namespace Logic
             }           
         }
 
-        public AuthorVM Get(long id)
+        public AuthorVM Get(long? id)
         {
             using (var authorRepo = Factory.GetService<IAuthorRepo>())
             {
-                var authorEM = authorRepo.Get(id);
-                var authorVM = MapperService.Map<AuthorVM>(authorEM);
-                return authorVM;
+                if (id.HasValue)
+                {
+                    var authorEM = authorRepo.Get(id.Value);
+                    var authorVM = MapperService.Map<AuthorVM>(authorEM);
+                    return authorVM;
+                }
+                return null;
             }
         }
 

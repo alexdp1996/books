@@ -2,10 +2,6 @@
 	@Start INT,
 	@Lenght INT
 AS
-	DECLARE @Skip INT;
-
-	SET @Skip = @Start*@Lenght;
-
 	DROP TABLE IF EXISTS #Authors;
 	
 	CREATE TABLE #Authors
@@ -18,9 +14,13 @@ AS
 	INSERT INTO #Authors
 	SELECT A.[Id], A.[Name], A.[Surname] FROM Author A
 	ORDER BY [Name] ASC
-	OFFSET @Skip ROWS
+	OFFSET @Start ROWS
 	FETCH NEXT @Lenght ROWS ONLY;
 
-	EXEC [dbo].[USPAuthorGetDataTable] @Skip = @Skip;
+	DECLARE @RecordsFiltered INT;
+
+	SELECT @RecordsFiltered = COUNT(*) FROM Author;
+
+	EXEC [dbo].[USPAuthorGetDataTable] @RecordsFiltered = @RecordsFiltered;
 
 RETURN 0

@@ -1,0 +1,13 @@
+﻿@model long
+
+@Html.Partial("~/Views/Shared/_Delete.cshtml", Model)
+
+@Scripts.Render("~/bundles/author")
+
+<script>
+    $(document).ready(function () {
+        let deleteUrl = "@Url.Action("Delete","Author")";
+        let controller = new AuthorController({ delete: deleteUrl });
+        controller.bindDelete();
+    });
+</script>

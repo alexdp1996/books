@@ -8,6 +8,15 @@ namespace Data.Repositories
 {
     public class AuthorRepo : BaseEntityRepo<AuthorEM>, IAuthorRepo
     {
+        public AuthorRepo()
+        {
+
+        }
+
+        internal AuthorRepo(DataContext context) : base(context)
+        {
+
+        }
 
         public override AuthorEM Get(long id)
         {
@@ -35,7 +44,7 @@ namespace Data.Repositories
 
             response.RecordsFiltered = authors.Count();
 
-            authors = authors.Skip(model.Start * model.Length).Take(model.Length);
+            authors = authors.Skip(model.Start).Take(model.Length);
 
             response.Data = authors;
 

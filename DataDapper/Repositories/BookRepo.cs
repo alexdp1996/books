@@ -85,7 +85,7 @@ namespace DataDapper.Repositories
 
         public DataTableResponseEM<BookEM> GetByPagesDesc(DataTableRequestEM model)
         {
-            return GetDataTable(model, "USPBookGetDataTableByNameDESC");
+            return GetDataTable(model, "USPBookGetDataTableByPagesDESC");
         }
 
         public DataTableResponseEM<BookEM> GetByRateAsc(DataTableRequestEM model)

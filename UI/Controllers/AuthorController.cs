@@ -1,4 +1,5 @@
 ﻿using LogicInfastructure.Interfaces;
+using System;
 using System.Web.Mvc;
 using ViewModels;
 using ViewModels.Enums;
@@ -9,12 +10,8 @@ namespace UI.Controllers
     {
 
         [HttpGet]
-        public ActionResult Index(string alert = null)
+        public ActionResult Index()
         {
-            if (alert != null)
-            {
-                ViewBag.Alert = new AlertVM { Message = alert, Type = AlertType.Success };
-            }
             return View();
         }
 
@@ -33,12 +30,12 @@ namespace UI.Controllers
         }
 
         [HttpGet]
-        public ActionResult Get(long id = 0)
+        public ActionResult Get(long? id)
         {
             using (var authorDM = Factory.GetService<IAuthorDM>())
             {
                 var model = authorDM.Get(id);
-                return View(model);
+                return PartialView("~/Views/Author/Get.cshtml", model);
             }           
         }
 
@@ -50,12 +47,21 @@ namespace UI.Controllers
                 using (var authorDM = Factory.GetService<IAuthorDM>())
                 {
                     authorDM.Save(model);
-                    return RedirectToAction("Index", new { alert = "Author was saved" });
+                    var alert = new AlertVM
+                    {
+                        Message = "Author was saved",
+                        Type = AlertType.Success
+                    };
+                    return new JsonResult { Data = alert, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 }
             }
+            throw new ArgumentException("Model is not valid");
+        }
 
-            ViewBag.Alert = new AlertVM { Message = "Failed to save author", Type = AlertType.Danger };
-            return View("~/Views/Author/Get.cshtml",model);
+        [HttpGet]
+        public ActionResult DeleteModal(long id)
+        {
+            return PartialView("~/Views/Author/Delete.cshtml", id);
         }
 
         [HttpPost]
@@ -64,7 +70,12 @@ namespace UI.Controllers
             using (var authorDM = Factory.GetService<IAuthorDM>())
             {
                 authorDM.Delete(id);
-                return new EmptyResult();
+                var alert = new AlertVM
+                {
+                    Message = "Author with id " + id + " was deleted",
+                    Type = AlertType.Success
+                };
+                return new JsonResult { Data = alert, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
 

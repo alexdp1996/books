@@ -8,6 +8,11 @@ namespace Data.Repositories
     {
         protected DataContext DataContext { get; }
 
+        internal BaseEntityRepo(DataContext context)
+        {
+            DataContext = context;
+        }
+
         public BaseEntityRepo()
         {
             DataContext = new DataContext();

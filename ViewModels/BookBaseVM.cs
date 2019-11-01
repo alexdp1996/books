@@ -17,6 +17,7 @@ namespace ViewModels
         [Range(25, 10000, ErrorMessage = "Value beetween 25 and 10000 is required")]
         public int Pages { get; set; }
         [Required]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
     }
 }

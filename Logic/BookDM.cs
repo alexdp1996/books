@@ -26,7 +26,7 @@ namespace Logic
 
         public void Save(BookEditVM model)
         {
-            var book = MapperService.Map<UpdatableBookEM>(model);
+            var book = MapperService.Map<BookEM>(model);
             using (var bookRepo = Factory.GetService<IBookRepo>())
             using (var scope = new TransactionService())
             {
@@ -42,19 +42,23 @@ namespace Logic
                     id = bookRepo.Add(book);
                 }
 
-                bookRepo.UpdateAuthors(id, book.AuthorIds);
+                bookRepo.UpdateAuthors(id, model.AuthorIds);
 
                 scope.Complete();
             }
         }
 
-        public BookVM Get(long id)
+        public BookVM Get(long? id)
         {
             using (var bookRepo = Factory.GetService<IBookRepo>())
             {
-                var bookEM = bookRepo.Get(id);
-                var bookVM = MapperService.Map<BookVM>(bookEM);
-                return bookVM;
+                if (id.HasValue)
+                {
+                    var bookEM = bookRepo.Get(id.Value);
+                    var bookVM = MapperService.Map<BookVM>(bookEM);
+                    return bookVM;
+                }
+                return null;
             }
         }
 

@@ -76,7 +76,9 @@
     $(document).ready(function () {
         let authorsByTermUrl = "@Url.Action("GetByTerm","Author")";
         let saveUrl = "@Url.Action("Save")";
-        new BookController(saveUrl, authorsByTermUrl);
+        let controller = new BookController({ save: saveUrl, authors: authorsByTermUrl });
+        controller.initPlugins();
+        controller.bindSave();
     });
 </script>
 

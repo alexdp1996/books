@@ -41,11 +41,11 @@
 
 @Scripts.Render("~/bundles/jqueryval")
 @Scripts.Render("~/bundles/base-entity")
-@Scripts.Render("~/bundles/author")
+@Scripts.Render("~/bundles/book")
 <script>
     $(document).ready(function () {
-        let url = "@Url.Action("Save")";
-        new AuthorController(url);
+        let saveUrl = "@Url.Action("Save")";;
+        let controller = new AuthorController({ save: saveUrl });
+        controller.bindSave();
     });
 </script>
-

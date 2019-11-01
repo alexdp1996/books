@@ -1,6 +1,6 @@
 ﻿class AuthorController extends BaseEntityController {
-    constructor(url: string) {
-        super(url);
+    constructor(urls: EntityUrlsVM) {
+        super(urls);
     }
 
     getModel(): BaseVM {

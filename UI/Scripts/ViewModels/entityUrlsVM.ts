@@ -1,5 +1,4 @@
 ﻿class EntityUrlsVM {
-    public get: string;
-    public delete: string;
-    public dtData: string;
+    public save?: string;
+    public delete?: string;
 }

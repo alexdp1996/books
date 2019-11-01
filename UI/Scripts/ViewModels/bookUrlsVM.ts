@@ -1,3 +1,3 @@
 ﻿class BookUrlsVM extends EntityUrlsVM {
-    public authorGet: string;
+    public authors?: string;
 }

@@ -4,11 +4,10 @@ class BookController extends BaseEntityController {
     private authorsUrl: string;
     private authorsSelector: string;
 
-    constructor(saveUrl: string, authorsUrl: string) {
-        super(saveUrl);
+    constructor(urls: BookUrlsVM) {
+        super(urls);
         this.authorsSelector = "#AuthorIds";
-        this.authorsUrl = authorsUrl;
-        this.initPlugins();
+        this.authorsUrl = urls.authors;
     }
 
     getModel(): BaseVM {
@@ -23,7 +22,7 @@ class BookController extends BaseEntityController {
         return book;
     }
 
-    private initPlugins() {
+    public initPlugins() {
         let self = this;
         $(this.authorsSelector).select2({
             multiple: true,

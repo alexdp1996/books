@@ -2,9 +2,11 @@
 
 @Html.Partial("~/Views/Shared/_Delete.cshtml", Model)
 
-<script type="text/javascript">
+@Scripts.Render("~/bundles/book")
+<script>
     $(document).ready(function () {
-        let url = "@Url.Action("Delete","Book")";
-        let controller = new DeletionController(url);
+        let deleteUrl = "@Url.Action("Delete","Book")";;
+        let controller = new BookController({ delete: deleteUrl });
+        controller.bindDelete();
     });
 </script>

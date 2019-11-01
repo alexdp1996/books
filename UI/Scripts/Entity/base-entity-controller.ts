@@ -2,18 +2,19 @@
 declare var DT: IReloadable;
 
 abstract class BaseEntityController {
-    private saveBusiness: BaseEntityBusiness;
+    private service: BaseEntityService;
+    private business: BaseEntityBusiness;
 
-    constructor(url: string) {
-        this.saveBusiness = new BaseEntityBusiness(url);
-        this.init();
+    constructor(urls: EntityUrlsVM) {
+        this.service = new BaseEntityService(urls);
+        this.business = new BaseEntityBusiness(this.service);
     }
 
-    private onError(alert: AlertVM) {
+    private onSaveError(alert: AlertVM) {
         Alert.show("#popup-alert-box", alert);
     }
 
-    private onSuccess(alert: AlertVM) {
+    private onSaveSuccess(alert: AlertVM) {
         DT.reload();
         Alert.show("#alert-box", alert);
         $("#popup").modal("hide");
@@ -21,14 +22,25 @@ abstract class BaseEntityController {
 
     abstract getModel(): BaseVM;
 
-    private init() {
+    public bindSave() {
         let self = this;
         $("#popup form").off('submit').on('submit', function (e) {
             e.preventDefault();
             let model: BaseVM = self.getModel();
-            self.saveBusiness.Save(model,
-                function (alert) { self.onSuccess(alert); },
-                function (alert) { self.onError(alert); });
+            self.business.Save(model,
+                function (alert) { self.onSaveSuccess(alert); },
+                function (alert) { self.onSaveError(alert); });
+        });
+    }
+
+    public bindDelete() {
+        let self = this;
+        $("#delete").click(function () {
+            let id: number = +$("#Id").val();
+            self.service.Delete(id, function (alert: AlertVM) {
+                DT.reload();
+                Alert.show("#alert-box", alert);
+            });
         });
     }
 }

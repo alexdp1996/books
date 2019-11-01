@@ -1,8 +1,8 @@
 ﻿class BaseEntityBusiness {
-    private saveService: BaseEntityService;
+    private service: BaseEntityService;
 
-    constructor(url: string) {
-        this.saveService = new BaseEntityService(url);
+    constructor(service: BaseEntityService) {
+        this.service = service;
     }
 
     public Save(model: BaseVM, onSuccess: Action<AlertVM>, onError: Action<AlertVM>) {
@@ -13,6 +13,6 @@
                 onError(alert);
             }
         };
-        this.saveService.Save(model, processResult);
+        this.service.Save(model, processResult);
     }
 }

@@ -1,12 +1,12 @@
 ﻿declare var moment;
 
 class BookDataTableController extends BaseDataTableController implements IReloadable {
-    private urls: BookUrlsVM;
+    private urls: BookDataTableUrlsVM;
     private popupController: PopupController;
     private grid: any;
     private gridSelector: string;
 
-    constructor(urls: BookUrlsVM) {
+    constructor(urls: BookDataTableUrlsVM) {
         super();
         this.urls = urls;
         this.popupController = new PopupController();

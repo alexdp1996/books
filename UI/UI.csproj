@@ -247,8 +247,6 @@
     <TypeScriptCompile Include="Scripts\DataTable\author-datatable-controller.ts" />
     <TypeScriptCompile Include="Scripts\DataTable\base-datatable-controller.ts" />
     <TypeScriptCompile Include="Scripts\DataTable\book-datatable-controller.ts" />
-    <TypeScriptCompile Include="Scripts\Deletion\deletion-controller.ts" />
-    <TypeScriptCompile Include="Scripts\Deletion\deletion-service.ts" />
     <TypeScriptCompile Include="Scripts\Interfaces\func.ts" />
     <TypeScriptCompile Include="Scripts\Interfaces\ireloadable.ts" />
     <TypeScriptCompile Include="Scripts\Popup\popup-controller.ts" />
@@ -263,11 +261,13 @@
     <TypeScriptCompile Include="Scripts\ViewModels\authorVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\baseVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\bookBaseVM.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\bookUrlsVM.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\bookDataTableUrlsVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\bookVM.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\bookUrlsVM.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\entityUrlsVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\savableBookVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\popupVM.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\entityUrlsVM.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\dataTableUrlsVM.ts" />
     <TypeScriptCompile Include="Scripts\layout-controller.ts" />
   </ItemGroup>
   <PropertyGroup>

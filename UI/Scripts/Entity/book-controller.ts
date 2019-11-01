@@ -1,4 +1,6 @@
-﻿class BookController extends BaseEntityController {
+﻿declare var ProcessedResult;
+
+class BookController extends BaseEntityController {
     private authorsUrl: string;
     private authorsSelector: string;
 
@@ -10,7 +12,7 @@
     }
 
     getModel(): BaseVM {
-        let book: BookEditVM = {
+        let book: SavableBookVM = {
             Id: $("#Id").val() as any,
             Name: $("#Name").val() as string,
             Rate: +$("#Rate").val(),
@@ -28,18 +30,20 @@
             ajax: {
                 url: self.authorsUrl,
                 dataType: 'json',
-                processResults: function (data: AuthorBaseVM[]) {
-                    return {
-                        results: $.map(data, (item: AuthorBaseVM) => {
-                            return {
-                                text: item.Name + " " + item.Surname,
-                                id: item.Id
-                            };
-                        })
-                    };
-                }
+                processResults: self.processSelectData
             }
         });
         $(".datepicker").datepicker();
+    }
+
+    processSelectData(data: AuthorBaseVM[]): any {
+        return {
+            results: $.map(data, (item: AuthorBaseVM) => {
+                return {
+                    text: item.Name + " " + item.Surname,
+                    id: item.Id
+                };
+            })
+        };
     }
 }

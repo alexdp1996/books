@@ -1,4 +1,4 @@
-﻿class DeleteService {
+﻿class DeletionService {
     private url: string;
 
     constructor(url: string) {

@@ -1,16 +1,16 @@
 ﻿declare var Alert: AlertController;
 declare var DT: IReloadable;
 
-class DeleteController {
-    private service: DeleteService;
+class DeletionController {
+    private service: DeletionService;
 
     constructor(url: string) {
-        this.service = new DeleteService(url);
+        this.service = new DeletionService(url);
         this.bind();
     }
 
     private bind() {
-        let self: DeleteController = this;
+        let self: DeletionController = this;
         $("#delete").click(function () {
             let id: number = +$("#Id").val();
             self.service.confirm(id, function (alert: AlertVM) {

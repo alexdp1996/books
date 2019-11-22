@@ -39,22 +39,22 @@
             },
             columns: [
                 {
-                    "data": function (record: AuthorVM) {
+                    "data": function (record: DetailedAuthorVM) {
                         return '<a class="author-get" href="#" data-id="' + record.Id + '">' + record.Name + '</a>';
                     }
                 },
                 {
-                    "data": function (record: AuthorVM) {
+                    "data": function (record: DetailedAuthorVM) {
                         return record.Surname;
                     }
                 },
                 {
-                    "data": function (record: AuthorVM) {
+                    "data": function (record: DetailedAuthorVM) {
                         return record.CountOfBooks;
                     }
                 },
                 {
-                    "data": function (record: AuthorVM) {
+                    "data": function (record: DetailedAuthorVM) {
                         return '<button class="btn btn-danger author-delete" data-id="' + record.Id + '">Delete</button>';
                     }
                 }

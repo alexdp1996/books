@@ -41,12 +41,12 @@ class BookDataTableController extends BaseDataTableController implements IReload
             },
             columns: [
                 {
-                    "data": function (record: BookVM) {
+                    "data": function (record: DetailedBookVM) {
                         return '<a class="book-get" href="#" data-id="' + record.Id + '">' + record.Name + '</a>';
                     }
                 },
                 {
-                    "data": function (record: BookVM) {
+                    "data": function (record: DetailedBookVM) {
                         return record.Pages;
                     }
                 },
@@ -56,13 +56,13 @@ class BookDataTableController extends BaseDataTableController implements IReload
                     }
                 },
                 {
-                    "data": function (record: BookVM) {
+                    "data": function (record: DetailedBookVM) {
                         let date = moment(record.Date).format('LL');
                         return date;
                     }
                 },
                 {
-                    "data": function (record: BookVM) {
+                    "data": function (record: DetailedBookVM) {
                         let authors = record.Authors;
                         if (!authors.length) {
                             return '';
@@ -76,7 +76,7 @@ class BookDataTableController extends BaseDataTableController implements IReload
                     }
                 },
                 {
-                    "data": function (record: BookVM) {
+                    "data": function (record: DetailedBookVM) {
                         return '<button class="btn btn-danger book-delete" data-id="' + record.Id + '">Delete</button>';
                     }
                 }

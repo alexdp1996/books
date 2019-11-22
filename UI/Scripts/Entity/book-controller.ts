@@ -11,7 +11,7 @@ class BookController extends BaseEntityController {
     }
 
     getModel(): BaseVM {
-        let book: SavableBookVM = {
+        let book: EditedBookVM = {
             Id: $("#Id").val() as any,
             Name: $("#Name").val() as string,
             Rate: +$("#Rate").val(),
@@ -35,9 +35,9 @@ class BookController extends BaseEntityController {
         $(".datepicker").datepicker();
     }
 
-    processSelectData(data: AuthorBaseVM[]): any {
+    processSelectData(data: AuthorVM[]): any {
         return {
-            results: $.map(data, (item: AuthorBaseVM) => {
+            results: $.map(data, (item: AuthorVM) => {
                 return {
                     text: item.Name + " " + item.Surname,
                     id: item.Id

@@ -1,3 +1,6 @@
-﻿class BookVM extends BookBaseVM {
-    public Authors : AuthorBaseVM[];
+﻿class BookVM extends BaseVM {
+    public Name: string;
+    public Date: Date;
+    public Rate: number;
+    public Pages: number;
 }

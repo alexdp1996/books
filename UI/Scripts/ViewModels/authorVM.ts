@@ -1,3 +1,4 @@
-﻿class AuthorVM extends AuthorBaseVM {
-    public CountOfBooks: number;
+﻿class AuthorVM extends BaseVM {
+    public Name: string;
+    public Surname: string;
 }

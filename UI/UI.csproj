@@ -257,17 +257,16 @@
     <TypeScriptCompile Include="Scripts\Entity\base-entity-business.ts" />
     <TypeScriptCompile Include="Scripts\Entity\base-entity-service.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\alertVM.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\authorBaseVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\authorVM.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\detailedAuthorVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\baseVM.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\bookBaseVM.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\bookDataTableUrlsVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\bookVM.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\bookDataTableUrlsVM.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\detailedBookVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\bookUrlsVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\entityUrlsVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\alertOptionsVM.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\savableBookVM.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\popupVM.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\editedBookVM.ts" />    <TypeScriptCompile Include="Scripts\ViewModels\popupVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\dataTableUrlsVM.ts" />
     <TypeScriptCompile Include="Scripts\layout-controller.ts" />
   </ItemGroup>

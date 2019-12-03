@@ -265,6 +265,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\bookVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\bookUrlsVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\entityUrlsVM.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\alertOptionsVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\savableBookVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\popupVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\dataTableUrlsVM.ts" />

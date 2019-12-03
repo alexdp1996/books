@@ -62,17 +62,6 @@ namespace Logic
             }
         }
 
-        public BookVM Get(BookEditVM book)
-        {
-            var result = MapperService.Map<BookVM>(book);
-
-            using (var authorDM = Factory.GetService<IAuthorDM>())
-            {
-                result.Authors = authorDM.Get(book.AuthorIds).ToList();
-                return result;
-            }
-        }
-
         public DataTableResponseVM<BookVM> Get(DataTableRequestVM model)
         {
             var dataTableEM = MapperService.Map<DataTableRequestEM>(model);

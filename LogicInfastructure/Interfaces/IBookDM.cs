@@ -8,7 +8,6 @@ namespace LogicInfastructure.Interfaces
         void Delete(long id);
         void Save(BookEditVM model);
         BookVM Get(long? id);
-        BookVM Get(BookEditVM book);
         DataTableResponseVM<BookVM> Get(DataTableRequestVM model);
     }
 }

@@ -1,6 +1,5 @@
 ﻿class BaseEntityService {
     private urls: EntityUrlsVM;
-    private deleteUrl: string;
 
     constructor(urls: EntityUrlsVM) {
         this.urls = urls;

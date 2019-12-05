@@ -1,14 +1,9 @@
-﻿class AuthorDataTableController extends BaseDataTableController implements IReloadable {
-    private urls: DataTableUrlsVM;
-    private popupController: PopupController;
-    private grid: any;
-    private gridSelector: string;
-
+﻿class AuthorDataTableController extends BaseDataTableController {
+    private urls: DataTableUrlsVM;  
 
     constructor(urls: DataTableUrlsVM) {
         super();
         this.urls = urls;
-        this.popupController = new PopupController();
         this.gridSelector = "#authors";
         this.initDT();
     }
@@ -65,9 +60,5 @@
 
         this.applyAddButton();
         this.rebindTriggers();
-    }
-
-    public reload(): void {
-        this.grid.ajax.reload();
     }
 }

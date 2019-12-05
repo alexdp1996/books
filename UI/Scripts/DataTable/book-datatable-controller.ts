@@ -2,14 +2,10 @@
 
 class BookDataTableController extends BaseDataTableController implements IReloadable {
     private urls: BookDataTableUrlsVM;
-    private popupController: PopupController;
-    private grid: any;
-    private gridSelector: string;
 
     constructor(urls: BookDataTableUrlsVM) {
         super();
         this.urls = urls;
-        this.popupController = new PopupController();
         this.gridSelector = "#books";
         this.initDT();
     }
@@ -87,9 +83,5 @@ class BookDataTableController extends BaseDataTableController implements IReload
 
         this.applyAddButton();
         this.rebindTriggers();
-    }
-
-    public reload(): void {
-        this.grid.ajax.reload();
     }
 }

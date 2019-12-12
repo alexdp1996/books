@@ -37,27 +37,32 @@ class BookDataTableController extends BaseDataTableController implements IReload
             },
             columns: [
                 {
-                    "data": function (record: DetailedBookVM) {
+                    "name": "Name",
+                    "data": function(record: DetailedBookVM) {
                         return '<a class="book-get" href="#" data-id="' + record.Id + '">' + record.Name + '</a>';
                     }
                 },
                 {
+                    "name": "Pages",
                     "data": function (record: DetailedBookVM) {
                         return record.Pages;
                     }
                 },
                 {
+                    "name": "Rate",
                     "data": function (data) {
                         return data.Rate;
                     }
                 },
                 {
+                    "name": "Date",
                     "data": function (record: DetailedBookVM) {
                         let date = moment(record.Date).format('LL');
                         return date;
                     }
                 },
                 {
+                    "name": "Authors",
                     "data": function (record: DetailedBookVM) {
                         let authors = record.Authors;
                         if (!authors.length) {

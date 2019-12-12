@@ -21,6 +21,8 @@ namespace Shared.Services
                 //DataTable
                 mapper.CreateMap<ColumnVM, ColumnEM>();
                 mapper.CreateMap<SearchVM, SearchEM>();
+                mapper.CreateMap<OrderVM, OrderEM>().ForMember(d => d.IsAcs, o => o.MapFrom(s => s.Dir == "asc"));
+
                 mapper.CreateMap<DataTableRequestVM, DataTableRequestEM>();
                 mapper.CreateMap<DataTableResponseEM<BookEM>, DataTableResponseVM<BookVM>>();
                 mapper.CreateMap<DataTableResponseEM<AuthorEM>, DataTableResponseVM<AuthorBaseVM>>();

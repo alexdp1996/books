@@ -1,8 +1,10 @@
 ﻿using DataInfrastructure.Entities;
+using DataInfrastructure.Enums;
 using DataInfrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Data.Repositories
 {
@@ -33,14 +35,32 @@ namespace Data.Repositories
             return DataContext.Authors.Where(a => (a.Name + " " + a.Surname).ToLower().Contains(term.ToLower()));
         }
 
-        private DataTableResponseEM<AuthorEM> Get(DataTableRequestEM model, Func<IQueryable<AuthorEM>, IOrderedQueryable<AuthorEM>> orderFunc)
+        public DataTableResponseEM<AuthorEM> Get(DataTableRequestEM model)
         {
+            Expression<Func<AuthorEM, object>> selector;
+
+            var order = model.Order[0];
+            switch (order.Column)
+            {
+                case (int)AuthorColumn.Surname: { selector = a => a.Surname; break; }
+                case (int)AuthorColumn.AmountOfBooks: { selector = a => a.Books.Count; break; }
+                case (int)AuthorColumn.Name:
+                default: { selector = a => a.Name; break; }
+            }
+
             var response = new DataTableResponseEM<AuthorEM>();
 
             var authors = DataContext.Authors.Include("Books").AsQueryable();
             response.RecordsTotal = authors.Count();
 
-            authors = orderFunc(authors);
+            if (order.IsAcs)
+            {
+                authors = authors.OrderBy(selector);
+            }
+            else
+            {
+                authors = authors.OrderByDescending(selector);
+            }
 
             response.RecordsFiltered = authors.Count();
 
@@ -49,36 +69,6 @@ namespace Data.Repositories
             response.Data = authors;
 
             return response;
-        }
-
-        public DataTableResponseEM<AuthorEM> GetByAmountOfBooksAsc(DataTableRequestEM model)
-        {
-            return Get(model, authors => authors.OrderBy(a => a.Books.Count));
-        }
-
-        public DataTableResponseEM<AuthorEM> GetByAmountOfBooksDesc(DataTableRequestEM model)
-        {
-            return Get(model, authors => authors.OrderByDescending(a => a.Books.Count));
-        }
-
-        public DataTableResponseEM<AuthorEM> GetByNameAsc(DataTableRequestEM model)
-        {
-            return Get(model, authors => authors.OrderBy(a => a.Name));
-        }
-
-        public DataTableResponseEM<AuthorEM> GetByNameDesc(DataTableRequestEM model)
-        {
-            return Get(model, authors => authors.OrderByDescending(a => a.Name));
-        }
-
-        public DataTableResponseEM<AuthorEM> GetBySurnameAsc(DataTableRequestEM model)
-        {
-            return Get(model, authors => authors.OrderBy(a => a.Surname));
-        }
-
-        public DataTableResponseEM<AuthorEM> GetBySurnameDesc(DataTableRequestEM model)
-        {
-            return Get(model, authors => authors.OrderByDescending(b => b.Surname));
         }
     }
 }

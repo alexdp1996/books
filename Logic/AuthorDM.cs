@@ -40,52 +40,9 @@ namespace Logic
         {
             var dataTableEM = MapperService.Map<DataTableRequestEM>(model);
 
-            var asc = model.Order[0].Dir == "asc";
-            var column = (AuthorColumn)model.Order[0].Column;
             using (var authorRepo = Factory.GetService<IAuthorRepo>())
             {
-                DataTableResponseEM<AuthorEM> responseEM;
-                switch (column)
-                {
-                    default:
-                    case AuthorColumn.Name:
-                        {
-                            if (asc)
-                            {
-                                responseEM = authorRepo.GetByNameAsc(dataTableEM);
-                            }
-                            else
-                            {
-                                responseEM = authorRepo.GetByNameDesc(dataTableEM);
-                            }
-                            break;
-                        }
-                    case AuthorColumn.Surname:
-                        {
-                            if (asc)
-                            {
-                                responseEM = authorRepo.GetBySurnameAsc(dataTableEM);
-                            }
-                            else
-                            {
-                                responseEM = authorRepo.GetBySurnameDesc(dataTableEM);
-                            }
-                            break;
-                        }
-                    case AuthorColumn.AmountOfBooks:
-                        {
-                            if (asc)
-                            {
-                                responseEM = authorRepo.GetByAmountOfBooksAsc(dataTableEM);
-                            }
-                            else
-                            {
-                                responseEM = authorRepo.GetByAmountOfBooksDesc(dataTableEM);
-                            }
-                            break;
-                        }
-
-                }
+                var responseEM = authorRepo.Get(dataTableEM);
                 var responseVM = MapperService.Map<DataTableResponseVM<AuthorBaseVM>>(responseEM);
                 responseVM.draw = model.Draw;
 

@@ -66,63 +66,9 @@ namespace Logic
         {
             var dataTableEM = MapperService.Map<DataTableRequestEM>(model);
 
-            var asc = model.Order[0].Dir == "asc";
-            var column = (BookColumn) model.Order[0].Column;
             using (var bookRepo = Factory.GetService<IBookRepo>())
             {
-                DataTableResponseEM<BookEM> responseEM;
-                switch (column)
-                {
-                    default:
-                    case BookColumn.Name:
-                        {
-                            if (asc)
-                            {
-                                responseEM = bookRepo.GetByNameAsc(dataTableEM);
-                            }
-                            else
-                            {
-                                responseEM = bookRepo.GetByNameDesc(dataTableEM);
-                            }
-                            break;
-                        }
-                    case BookColumn.Pages:
-                        {
-                            if (asc)
-                            {
-                                responseEM = bookRepo.GetByPagesAsc(dataTableEM);
-                            }
-                            else
-                            {
-                                responseEM = bookRepo.GetByPagesDesc(dataTableEM);
-                            }
-                            break;
-                        }
-                    case BookColumn.Rate:
-                        {
-                            if (asc)
-                            {
-                                responseEM = bookRepo.GetByRateAsc(dataTableEM);
-                            }
-                            else
-                            {
-                                responseEM = bookRepo.GetByRateDesc(dataTableEM);
-                            }
-                            break;
-                        }
-                    case BookColumn.Date:
-                        {
-                            if (asc)
-                            {
-                                responseEM = bookRepo.GetByDateAsc(dataTableEM);
-                            }
-                            else
-                            {
-                                responseEM = bookRepo.GetByDateDesc(dataTableEM);
-                            }
-                            break;
-                        }
-                }
+                var responseEM = bookRepo.Get(dataTableEM);
                 var responseVM = MapperService.Map<DataTableResponseVM<BookVM>>(responseEM);
                 responseVM.draw = model.Draw;
 

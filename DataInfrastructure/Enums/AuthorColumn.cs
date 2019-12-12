@@ -1,4 +1,4 @@
-﻿namespace ViewModels.Enums
+﻿namespace DataInfrastructure.Enums
 {
     public enum AuthorColumn
     {

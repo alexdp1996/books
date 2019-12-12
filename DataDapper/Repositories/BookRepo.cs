@@ -57,54 +57,20 @@ namespace DataDapper.Repositories
             }
         }
 
-        #region DataTable
-        public DataTableResponseEM<BookEM> GetByDateAsc(DataTableRequestEM model)
-        {
-            return GetDataTable(model, "USPBookGetDataTableByDateASC");
-        }
-
-        public DataTableResponseEM<BookEM> GetByDateDesc(DataTableRequestEM model)
-        {
-            return GetDataTable(model, "USPBookGetDataTableByDateDESC");
-        }
-
-        public DataTableResponseEM<BookEM> GetByNameAsc(DataTableRequestEM model)
-        {
-            return GetDataTable(model, "USPBookGetDataTableByNameASC");
-        }
-
-        public DataTableResponseEM<BookEM> GetByNameDesc(DataTableRequestEM model)
-        {
-            return GetDataTable(model, "USPBookGetDataTableByNameDESC");
-        }
-
-        public DataTableResponseEM<BookEM> GetByPagesAsc(DataTableRequestEM model)
-        {
-            return GetDataTable(model, "USPBookGetDataTableByPagesASC");
-        }
-
-        public DataTableResponseEM<BookEM> GetByPagesDesc(DataTableRequestEM model)
-        {
-            return GetDataTable(model, "USPBookGetDataTableByPagesDESC");
-        }
-
-        public DataTableResponseEM<BookEM> GetByRateAsc(DataTableRequestEM model)
-        {
-            return GetDataTable(model, "USPBookGetDataTableByRateASC");
-        }
-
-        public DataTableResponseEM<BookEM> GetByRateDesc(DataTableRequestEM model)
-        {
-            return GetDataTable(model, "USPBookGetDataTableByRateDESC");
-        }
-
-        private DataTableResponseEM<BookEM> GetDataTable(DataTableRequestEM model, string SPname)
+        public DataTableResponseEM<BookEM> Get(DataTableRequestEM model)
         {
             using (var con = Connection)
             {
+                var SPname = "USPBookGetList";
+
+                var order = model.Order[0];
+                var orderColumnName = model.Columns[order.Column].Name;
+
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@Start", model.Start);
                 queryParameters.Add("@Lenght", model.Length);
+                queryParameters.Add("@OrderColumnName", orderColumnName);
+                queryParameters.Add("@IsAsc", order.IsAcs);
 
                 var reader = con.QueryMultiple(SPname, queryParameters, commandType: CommandType.StoredProcedure);
                 var generalInfo = reader.ReadSingle<DataTableResponseGeneralEM>();
@@ -132,6 +98,5 @@ namespace DataDapper.Repositories
                 return datatableResponse;
             }
         }
-        #endregion
     }
 }

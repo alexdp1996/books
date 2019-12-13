@@ -1,12 +1,19 @@
 ﻿declare var moment;
 
-class BookDataTableController extends BaseDataTableController implements IReloadable {
+class BookDataTableController implements IReloadable {
     private urls: BookDataTableUrlsVM;
+    private markupTemplate: string;
+    private grid: any;
+    private popupController: PopupController;
+    private gridSelector: string;
 
     constructor(urls: BookDataTableUrlsVM) {
-        super();
         this.urls = urls;
         this.gridSelector = "#books";
+        this.popupController = new PopupController();
+        this.markupTemplate = `<'row'<'col-md-12'<'pull-left'l><'#add.pull-right'>>>
+                               <'row'<'col-md-12'tr>>
+                               <'row'<'col-md-12'<'pull-left'i><'pull-right'p>>>`;
         this.initDT();
     }
 
@@ -88,5 +95,16 @@ class BookDataTableController extends BaseDataTableController implements IReload
 
         this.applyAddButton();
         this.rebindTriggers();
+    }
+
+    private applyAddButton(): void {
+        let addTemplate = $("#add-template");
+        let addContainer = $("#add");
+        addContainer.html(addTemplate.html());
+        addTemplate.remove();
+    }
+
+    public reload(): void {
+        this.grid.ajax.reload();
     }
 }

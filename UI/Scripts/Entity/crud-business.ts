@@ -1,11 +1,11 @@
-﻿class BaseEntityBusiness {
-    private service: BaseEntityService;
+﻿class CRUDBusiness {
+    private service: CRUDService;
 
-    constructor(service: BaseEntityService) {
+    constructor(service: CRUDService) {
         this.service = service;
     }
 
-    public Save(model: BaseVM, onSuccess: Action<AlertVM>, onError: Action<AlertVM>) {
+    public Save(model: any, onSuccess: Action<AlertVM>, onError: Action<AlertVM>) {
         let processResult: Action<AlertVM> = function (alert: AlertVM) {
             if (alert.Type === AlertType.Success) {
                 onSuccess(alert);

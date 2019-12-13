@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DataInfrastructure.Interfaces
 {
-    public interface IAuthorRepo : IBaseEntityRepo<AuthorEM>
+    public interface IAuthorRepo : ICRUD<AuthorEM, long>
     {
         IEnumerable<AuthorEM> Get(IEnumerable<long> Ids);
         IEnumerable<AuthorEM> Get(string term);

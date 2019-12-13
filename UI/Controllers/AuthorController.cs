@@ -16,7 +16,7 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetAuthors(DataTableRequestVM model)
+        public ActionResult GetList(DataTableRequestVM model)
         {
             using (var authorDM = Factory.GetService<IAuthorDM>())
             {

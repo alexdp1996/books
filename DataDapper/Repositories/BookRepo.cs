@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace DataDapper.Repositories
 {
-    public class BookRepo : BaseEntityRepo<BookEM>, IBookRepo
+    public class BookRepo : CRUDRepo<BookEM, long>, IBookRepo
     {
         public void UpdateAuthors(long bookId, IEnumerable<long> authorIds)
         {

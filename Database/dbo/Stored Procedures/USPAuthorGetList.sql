@@ -53,7 +53,7 @@ AS
 
 	SELECT BookId, AuthorId FROM #AuthorBook
 
-	SELECT DISTINCT B.Id, B.[Name], B.[Date], B.Pages, B.Rate
+	SELECT DISTINCT B.Id, B.[Name], B.[CreatedDate], B.Pages, B.Rate
 	FROM #AuthorBook AB
 	JOIN Book B ON AB.BookId = B.Id
 

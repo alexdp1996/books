@@ -1,13 +1,13 @@
 ﻿declare var Alert: AlertController;
 declare var DT: IReloadable;
 
-abstract class BaseEntityController {
-    private service: BaseEntityService;
-    private business: BaseEntityBusiness;
+abstract class CRUDController {
+    private service: CRUDService;
+    private business: CRUDBusiness;
 
     constructor(urls: EntityUrlsVM) {
-        this.service = new BaseEntityService(urls);
-        this.business = new BaseEntityBusiness(this.service);
+        this.service = new CRUDService(urls);
+        this.business = new CRUDBusiness(this.service);
     }
 
     private onSaveError(alert: AlertVM) {
@@ -20,13 +20,13 @@ abstract class BaseEntityController {
         $("#popup").modal("hide");
     }
 
-    abstract getModel(): BaseVM;
+    abstract getModel(): any;
 
     public bindSave() {
         let self = this;
         $("#popup form").off('submit').on('submit', function (e) {
             e.preventDefault();
-            let model: BaseVM = self.getModel();
+            let model: any = self.getModel();
             self.business.Save(model,
                 function (alert) { self.onSaveSuccess(alert); },
                 function (alert) { self.onSaveError(alert); });

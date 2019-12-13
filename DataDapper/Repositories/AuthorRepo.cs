@@ -9,7 +9,7 @@ using Shared.Services;
 
 namespace DataDapper.Repositories
 {
-    public class AuthorRepo : BaseEntityRepo<AuthorEM>, IAuthorRepo
+    public class AuthorRepo : CRUDRepo<AuthorEM, long>, IAuthorRepo
     {
         public override void Delete(long id)
         {

@@ -44,7 +44,6 @@
     <Compile Include="Entities\AuthorBookEM.cs" />
     <Compile Include="Entities\AuthorEM.cs" />
     <Compile Include="Entities\AuthorMappingObjectEM.cs" />
-    <Compile Include="Entities\BaseEM.cs" />
     <Compile Include="Entities\BookEM.cs" />
     <Compile Include="Entities\BookMappingObjectEM.cs" />
     <Compile Include="Entities\DataTableRequestEM.cs" />
@@ -53,7 +52,7 @@
     <Compile Include="Enums\AuthorColumn.cs" />
     <Compile Include="Enums\BookColumn.cs" />
     <Compile Include="Interfaces\IAuthorRepo.cs" />
-    <Compile Include="Interfaces\IBaseEntityRepo.cs" />
+    <Compile Include="Interfaces\ICRUD.cs" />
     <Compile Include="Interfaces\IBookRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

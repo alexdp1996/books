@@ -12,20 +12,20 @@ AS
 		[Name]          NVARCHAR (50),
 		[Rate]          INT,
 		[Pages]         INT,
-		[Date]          DATETIME
+		[CreatedDate]          DATETIME
 	);
 
 	INSERT INTO #Books
-	SELECT B.Id, B.[Name], B.Rate, B.Pages, B.[Date] FROM Book B
+	SELECT B.Id, B.[Name], B.Rate, B.Pages, B.[CreatedDate] FROM Book B
 	ORDER BY 
 		CASE WHEN @OrderColumnName = 'Name' AND @IsAsc = 1 THEN B.[Name] END ASC,
 		CASE WHEN @OrderColumnName = 'Rate' AND @IsAsc = 1  THEN B.[Rate]  END ASC,
 		CASE WHEN @OrderColumnName = 'Pages' AND @IsAsc = 1  THEN B.[Pages] END ASC,
-		CASE WHEN @OrderColumnName = 'Date' AND @IsAsc = 1  THEN B.[Date] END ASC,
+		CASE WHEN @OrderColumnName = 'CreatedDate' AND @IsAsc = 1  THEN B.[CreatedDate] END ASC,
 		CASE WHEN @OrderColumnName = 'Name' AND @IsAsc = 0 THEN B.[Name] END DESC,
 		CASE WHEN @OrderColumnName = 'Rate' AND @IsAsc = 0 THEN B.[Rate] END DESC,
 		CASE WHEN @OrderColumnName = 'Pages' AND @IsAsc = 0 THEN B.[Pages] END DESC,
-		CASE WHEN @OrderColumnName = 'Date' AND @IsAsc = 0 THEN B.[Date] END DESC
+		CASE WHEN @OrderColumnName = 'CreatedDate' AND @IsAsc = 0 THEN B.[CreatedDate] END DESC
 	OFFSET @Start ROWS
 	FETCH NEXT @Lenght ROWS ONLY;
 
@@ -48,7 +48,7 @@ AS
 	FROM #Books B
 	JOIN AuthorBook AB ON AB.BookId = B.Id
 
-	SELECT B.Id, B.[Name], B.[Date], B.Pages, B.Rate FROM #Books B
+	SELECT B.Id, B.[Name], B.[CreatedDate], B.Pages, B.Rate FROM #Books B
 
 	SELECT BookId, AuthorId FROM #AuthorBook
 

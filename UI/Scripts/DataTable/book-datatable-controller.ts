@@ -64,7 +64,7 @@ class BookDataTableController implements IReloadable {
                 {
                     "name": "Date",
                     "data": function (record: DetailedBookVM) {
-                        let date = moment(record.Date).format('LL');
+                        let date = moment(record.CreatedDate).format('LL');
                         return date;
                     }
                 },

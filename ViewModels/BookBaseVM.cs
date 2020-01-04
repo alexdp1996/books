@@ -18,6 +18,6 @@ namespace ViewModels
         public int Pages { get; set; }
         [Required]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime Date { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

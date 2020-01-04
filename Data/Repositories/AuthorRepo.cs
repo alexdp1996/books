@@ -8,19 +8,21 @@ using System.Linq.Expressions;
 
 namespace Data.Repositories
 {
-    public class AuthorRepo : BaseEntityRepo<AuthorEM>, IAuthorRepo
+    public class AuthorRepo : IAuthorRepo
     {
+        private DataContext DataContext { get; }
+
         public AuthorRepo()
         {
-
+            DataContext = new DataContext();
         }
 
-        internal AuthorRepo(DataContext context) : base(context)
+        internal AuthorRepo(DataContext context)
         {
-
+            DataContext = context;
         }
 
-        public override AuthorEM Get(long id)
+        public AuthorEM Get(long id)
         {
             return DataContext.Authors.Include("Books").FirstOrDefault(b => b.Id == id);
         }
@@ -69,6 +71,31 @@ namespace Data.Repositories
             response.Data = authors;
 
             return response;
+        }
+
+        public long Add(AuthorEM entity)
+        {
+            DataContext.Set<AuthorEM>().Add(entity);
+            DataContext.SaveChanges();
+            return entity.Id.Value;
+        }
+
+        public void Update(AuthorEM entity)
+        {
+            var entry = Get(entity.Id.Value);
+            DataContext.Entry(entry).CurrentValues.SetValues(entity);
+            DataContext.SaveChanges();
+        }
+
+        public void Delete(long id)
+        {
+            DataContext.Set<AuthorEM>().Remove(Get(id));
+            DataContext.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
         }
     }
 }

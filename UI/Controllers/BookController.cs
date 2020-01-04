@@ -15,7 +15,7 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetBooks(DataTableRequestVM model)
+        public ActionResult GetList(DataTableRequestVM model)
         {
             using (var bookDM = Factory.GetService<IBookDM>())
             {

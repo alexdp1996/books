@@ -1,9 +1,9 @@
-﻿class AuthorController extends BaseEntityController {
+﻿class AuthorController extends CRUDController {
     constructor(urls: EntityUrlsVM) {
         super(urls);
     }
 
-    getModel(): BaseVM {
+    getModel(): AuthorVM {
         let author : AuthorVM = {
             Id: $("#Id").val() as any,
             Name: $("#Name").val() as string,

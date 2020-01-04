@@ -1,6 +1,6 @@
 ﻿declare var ProcessedResult;
 
-class BookController extends BaseEntityController {
+class BookController extends CRUDController {
     private authorsUrl: string;
     private authorsSelector: string;
 
@@ -10,7 +10,7 @@ class BookController extends BaseEntityController {
         this.authorsUrl = urls.authors;
     }
 
-    getModel(): BaseVM {
+    getModel(): EditedBookVM {
         let book: EditedBookVM = {
             Id: $("#Id").val() as any,
             Name: $("#Name").val() as string,

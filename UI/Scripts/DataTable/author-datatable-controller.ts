@@ -1,10 +1,17 @@
-﻿class AuthorDataTableController extends BaseDataTableController {
+﻿class AuthorDataTableController implements IReloadable {
     private urls: DataTableUrlsVM;  
+    private markupTemplate: string;
+    private grid: any;
+    private popupController: PopupController;
+    private gridSelector: string;
 
     constructor(urls: DataTableUrlsVM) {
-        super();
         this.urls = urls;
         this.gridSelector = "#authors";
+        this.popupController = new PopupController();
+        this.markupTemplate = `<'row'<'col-md-12'<'pull-left'l><'#add.pull-right'>>>
+                               <'row'<'col-md-12'tr>>
+                               <'row'<'col-md-12'<'pull-left'i><'pull-right'p>>>`;
         this.initDT();
     }
 
@@ -63,5 +70,16 @@
 
         this.applyAddButton();
         this.rebindTriggers();
+    }
+
+    protected applyAddButton(): void {
+        let addTemplate = $("#add-template");
+        let addContainer = $("#add");
+        addContainer.html(addTemplate.html());
+        addTemplate.remove();
+    }
+
+    public reload(): void {
+        this.grid.ajax.reload();
     }
 }

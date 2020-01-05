@@ -1,5 +1,4 @@
 ﻿using DataInfrastructure.Entities;
-using DataInfrastructure.Enums;
 using DataInfrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -58,12 +57,13 @@ namespace Data.Repositories
             Expression<Func<BookEM, object>> selector;
 
             var order = model.Order[0];
-            switch (order.Column)
+            var orderColumn = model.Columns[order.Column];
+            switch (orderColumn.Name)
             {
-                case (int)BookColumn.Date: { selector = b => b.CreatedDate; break; }
-                case (int)BookColumn.Pages: { selector = b => b.Pages; break; }
-                case (int)BookColumn.Rate: { selector = b => b.Rate; break; }
-                case (int)BookColumn.Name:
+                case "CreatedDate": { selector = b => b.CreatedDate; break; }
+                case "Pages": { selector = b => b.Pages; break; }
+                case "Rate": { selector = b => b.Rate; break; }
+                case "Name":
                 default: { selector = b => b.Name; break; }
             }
 

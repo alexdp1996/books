@@ -40,16 +40,16 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Save(AuthorVM model)
+        public ActionResult Create(AuthorVM model)
         {
             if (ModelState.IsValid)
             {
                 using (var authorDM = Factory.GetService<IAuthorDM>())
                 {
-                    authorDM.Save(model);
+                    authorDM.Create(model);
                     var alert = new AlertVM
                     {
-                        Message = "Author was saved",
+                        Message = "Author was added",
                         Type = AlertType.Success
                     };
                     return new JsonResult { Data = alert, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -58,10 +58,23 @@ namespace UI.Controllers
             throw new ArgumentException("Model is not valid");
         }
 
-        [HttpGet]
-        public ActionResult DeleteModal(long id)
+        [HttpPost]
+        public ActionResult Update(AuthorVM model)
         {
-            return PartialView("~/Views/Author/Delete.cshtml", id);
+            if (ModelState.IsValid)
+            {
+                using (var authorDM = Factory.GetService<IAuthorDM>())
+                {
+                    authorDM.Update(model);
+                    var alert = new AlertVM
+                    {
+                        Message = "Author was updated",
+                        Type = AlertType.Success
+                    };
+                    return new JsonResult { Data = alert, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+            }
+            throw new ArgumentException("Model is not valid");
         }
 
         [HttpPost]

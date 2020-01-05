@@ -72,20 +72,23 @@ namespace Logic
             }
         }
 
-        public void Save(AuthorVM model)
+        public void Update(AuthorVM model)
         {
             var author = MapperService.Map<AuthorEM>(model);
 
             using (var authorRepo = Factory.GetService<IAuthorRepo>())
             {
-                if (author.Id.HasValue)
-                {
-                    authorRepo.Update(author);
-                }
-                else
-                {
-                    authorRepo.Add(author);
-                }  
+                authorRepo.Update(author);
+            }
+        }
+
+        public void Create(AuthorVM model)
+        {
+            var author = MapperService.Map<AuthorEM>(model);
+
+            using (var authorRepo = Factory.GetService<IAuthorRepo>())
+            {
+                authorRepo.Create(author);
             }
         }
     }

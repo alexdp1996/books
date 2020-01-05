@@ -70,15 +70,4 @@
 
 @Scripts.Render("~/bundles/jqueryval")
 @Styles.Render("~/book/css")
-@Scripts.Render("~/bundles/crud")
-@Scripts.Render("~/bundles/book")
-<script>
-    $(document).ready(function () {
-        let authorsByTermUrl = "@Url.Action("GetByTerm","Author")";
-        let saveUrl = "@Url.Action("Save")";
-        let controller = new BookController({ save: saveUrl, authors: authorsByTermUrl });
-        controller.initPlugins();
-        controller.bindSave();
-    });
-</script>
 

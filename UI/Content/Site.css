@@ -5,3 +5,7 @@
 .dl-horizontal dt {
     text-align: left;
 }
+
+.author-get {
+    cursor: pointer;
+}

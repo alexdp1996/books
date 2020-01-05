@@ -73,7 +73,7 @@ namespace Data.Repositories
             return response;
         }
 
-        public long Add(AuthorEM entity)
+        public long Create(AuthorEM entity)
         {
             DataContext.Set<AuthorEM>().Add(entity);
             DataContext.SaveChanges();

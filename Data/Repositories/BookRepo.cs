@@ -18,7 +18,7 @@ namespace Data.Repositories
         }
 
 
-        public long Add(BookEM entity)
+        public long Create(BookEM entity)
         {
             DataContext.Set<BookEM>().Add(entity);
             DataContext.SaveChanges();

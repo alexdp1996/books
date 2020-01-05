@@ -11,6 +11,7 @@ namespace LogicInfastructure.Interfaces
         DataTableResponseVM<AuthorBaseVM> Get(DataTableRequestVM model);
         AuthorVM Get(long? id);
         void Delete(long id);
-        void Save(AuthorVM model);
+        void Update(AuthorVM model);
+        void Create(AuthorVM model);
     }
 }

@@ -2,15 +2,35 @@
 using DataDapper.Extensions;
 using DataInfrastructure.Entities;
 using DataInfrastructure.Interfaces;
+using Dommel;
 using Shared.Services;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
 namespace DataDapper.Repositories
 {
-    public class BookRepo : CRUDRepo<BookEM, long>, IBookRepo
+    public class BookRepo : BaseRepo, IBookRepo
     {
+        public long Create(BookEM entity)
+        {
+            using (var con = Connection)
+            {
+                var result = con.Insert(entity);
+                var converted = (long)Convert.ChangeType(result, typeof(long));
+                return converted;
+            }
+        }
+
+        public void Update(BookEM entity)
+        {
+            using (var con = Connection)
+            {
+                con.Update(entity);
+            }
+        }
+
         public void UpdateAuthors(long bookId, IEnumerable<long> authorIds)
         {
             using (var con = Connection)
@@ -24,7 +44,7 @@ namespace DataDapper.Repositories
             }
         }
 
-        public override void Delete(long id)
+        public void Delete(long id)
         {
             using (var con = Connection)
             {
@@ -36,7 +56,7 @@ namespace DataDapper.Repositories
             }
         }
 
-        public override BookEM Get(long id)
+        public BookEM Get(long id)
         {
             using (var con = Connection)
             {

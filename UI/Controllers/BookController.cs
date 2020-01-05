@@ -39,16 +39,16 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Save(BookEditVM model)
+        public ActionResult Update(BookEditVM model)
         {
             using (var bookDM = Factory.GetService<IBookDM>())
             {
                 if (ModelState.IsValid)
                 {
-                    bookDM.Save(model);
+                    bookDM.Update(model);
                     var alert = new AlertVM
                     {
-                        Message = "Book was saved",
+                        Message = "Book was updated",
                         Type = AlertType.Success
                     };
                     return new JsonResult { Data = alert, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -57,10 +57,23 @@ namespace UI.Controllers
             throw new ArgumentException("Model is not valid");
         }
 
-        [HttpGet]
-        public ActionResult DeleteModal(long id)
+        [HttpPost]
+        public ActionResult Create(BookEditVM model)
         {
-            return PartialView("~/Views/Book/Delete.cshtml", id);
+            using (var bookDM = Factory.GetService<IBookDM>())
+            {
+                if (ModelState.IsValid)
+                {
+                    bookDM.Create(model);
+                    var alert = new AlertVM
+                    {
+                        Message = "Book was added",
+                        Type = AlertType.Success
+                    };
+                    return new JsonResult { Data = alert, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+            }
+            throw new ArgumentException("Model is not valid");
         }
 
         [HttpPost]

@@ -1,17 +1,37 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Dapper;
 using DataDapper.Extensions;
 using DataInfrastructure.Entities;
 using DataInfrastructure.Interfaces;
+using Dommel;
 using Shared.Services;
 
 namespace DataDapper.Repositories
 {
-    public class AuthorRepo : CRUDRepo<AuthorEM, long>, IAuthorRepo
+    public class AuthorRepo : BaseRepo, IAuthorRepo
     {
-        public override void Delete(long id)
+        public long Create(AuthorEM entity)
+        {
+            using (var con = Connection)
+            {
+                var result = con.Insert(entity);
+                var converted = (long)Convert.ChangeType(result, typeof(long));
+                return converted;
+            }
+        }
+
+        public void Update(AuthorEM entity)
+        {
+            using (var con = Connection)
+            {
+                con.Update(entity);
+            }
+        }
+
+        public void Delete(long id)
         {
             using (var con = Connection)
             {
@@ -51,7 +71,7 @@ namespace DataDapper.Repositories
             }
         }
 
-        public override AuthorEM Get(long id)
+        public AuthorEM Get(long id)
         {
             using (var con = Connection)
             {

@@ -40,12 +40,3 @@
 }
 
 @Scripts.Render("~/bundles/jqueryval")
-@Scripts.Render("~/bundles/crud")
-@Scripts.Render("~/bundles/author")
-<script>
-    $(document).ready(function () {
-        let saveUrl = "@Url.Action("Save")";;
-        let controller = new AuthorController({ save: saveUrl });
-        controller.bindSave();
-    });
-</script>

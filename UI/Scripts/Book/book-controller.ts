@@ -54,7 +54,7 @@ class BookController {
                     }
                 },
                 {
-                    "name": "Date",
+                    "name": "CreatedDate",
                     "data": function (record: DetailedBookVM) {
                         let date = moment(record.CreatedDate).format('LL');
                         return date;
@@ -201,7 +201,7 @@ class BookController {
         let book: EditedBookVM = {
             Name: $("#Name").val() as string,
             Rate: +$("#Rate").val(),
-            CreatedDate: ($("#Date").val() as any) as Date,
+            CreatedDate: ($("#CreatedDate").val() as any) as Date,
             Pages: +$("#Pages").val(),
             AuthorIds: ($("#AuthorIds").val() as any) as number[]
         };
@@ -216,7 +216,7 @@ class BookController {
             Id: $("#Id").val() as number,
             Name: $("#Name").val() as string,
             Rate: +$("#Rate").val(),
-            CreatedDate: ($("#Date").val() as any) as Date,
+            CreatedDate: ($("#CreatedDate").val() as any) as Date,
             Pages: +$("#Pages").val(),
             AuthorIds: ($("#AuthorIds").val() as any) as number[]
         };

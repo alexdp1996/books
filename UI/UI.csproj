@@ -219,9 +219,9 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LogicInfastructure\LogicInfastructure.csproj">
-      <Project>{62f425b7-1872-4e2d-bb31-28bbebdce777}</Project>
-      <Name>LogicInfastructure</Name>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
+      <Project>{fe64a4c8-7d26-48df-9a10-b5d1f8220064}</Project>
+      <Name>Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared\Shared.csproj">
       <Project>{838b39d1-3392-4700-8a72-6ec2af83b104}</Project>

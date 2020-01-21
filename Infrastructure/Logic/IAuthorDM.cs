@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using ViewModels;
+
+namespace Infrastructure.Logic
+{
+    public interface IAuthorDM : IDisposable
+    {
+        IEnumerable<AuthorBaseVM> Get(string term);
+        IEnumerable<AuthorBaseVM> Get(IEnumerable<long> ids);
+        DataTableResponseVM<AuthorBaseVM> Get(DataTableRequestVM model);
+        AuthorVM Get(long? id);
+        void Delete(long id);
+        void Update(AuthorVM model);
+        void Create(AuthorVM model);
+    }
+}

@@ -48,21 +48,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataDapper\DataDapper.csproj">
-      <Project>{aa623d21-af7f-4e95-b511-5e026743cd91}</Project>
-      <Name>DataDapper</Name>
+    <ProjectReference Include="..\EntityModels\EntityModels.csproj">
+      <Project>{57b99944-3533-4ca2-8a3b-17cee4b2cccb}</Project>
+      <Name>EntityModels</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataInfrastructure\DataInfrastructure.csproj">
-      <Project>{89ff6359-6770-4deb-bbef-72e2dd3b0651}</Project>
-      <Name>DataInfrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Data\Data.csproj">
-      <Project>{ed002c37-e9e9-4fb3-a7b1-9653e53bec5a}</Project>
-      <Name>Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LogicInfastructure\LogicInfastructure.csproj">
-      <Project>{62f425b7-1872-4e2d-bb31-28bbebdce777}</Project>
-      <Name>LogicInfastructure</Name>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
+      <Project>{fe64a4c8-7d26-48df-9a10-b5d1f8220064}</Project>
+      <Name>Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared\Shared.csproj">
       <Project>{838b39d1-3392-4700-8a72-6ec2af83b104}</Project>

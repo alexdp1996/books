@@ -1,4 +1,4 @@
-﻿using LogicInfastructure.Interfaces;
+﻿using Infrastructure.Logic;
 using System;
 using System.Web.Mvc;
 using ViewModels;

@@ -4,14 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{838B39D1-3392-4700-8A72-6EC2AF83B104}</ProjectGuid>
+    <ProjectGuid>{57B99944-3533-4CA2-8A3B-17CEE4B2CCCB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Shared</RootNamespace>
-    <AssemblyName>Shared</AssemblyName>
+    <RootNamespace>EntityModels</RootNamespace>
+    <AssemblyName>EntityModels</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,12 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=8.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.8.1.1\lib\net461\AutoMapper.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,25 +42,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IFactory.cs" />
-    <Compile Include="MapperResolvers\AuthorResolver.cs" />
-    <Compile Include="MapperResolvers\BookResolver.cs" />
+    <Compile Include="AuthorBookEM.cs" />
+    <Compile Include="AuthorEM.cs" />
+    <Compile Include="AuthorMappingObjectEM.cs" />
+    <Compile Include="BookEM.cs" />
+    <Compile Include="BookMappingObjectEM.cs" />
+    <Compile Include="DataTableRequestEM.cs" />
+    <Compile Include="DataTableResponseEM.cs" />
+    <Compile Include="DataTableResponseGeneralEM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\MapperService.cs" />
-    <Compile Include="Services\TransactionService.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\EntityModels\EntityModels.csproj">
-      <Project>{57b99944-3533-4ca2-8a3b-17cee4b2cccb}</Project>
-      <Name>EntityModels</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ViewModels\ViewModels.csproj">
-      <Project>{46490fc5-aa61-44e6-8e0d-eb50e058c206}</Project>
-      <Name>ViewModels</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

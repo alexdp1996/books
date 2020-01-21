@@ -1,11 +1,10 @@
-﻿using DataInfrastructure.Entities;
-using DataInfrastructure.Interfaces;
-using LogicInfastructure.Interfaces;
+﻿using EntityModels;
+using Infrastructure.Data;
+using Infrastructure.Logic;
 using Shared.Interfaces;
 using Shared.Services;
 using System.Collections.Generic;
 using ViewModels;
-using ViewModels.Enums;
 
 namespace Logic
 {

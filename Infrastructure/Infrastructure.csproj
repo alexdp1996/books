@@ -4,14 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{838B39D1-3392-4700-8A72-6EC2AF83B104}</ProjectGuid>
+    <ProjectGuid>{FE64A4C8-7D26-48DF-9A10-B5D1F8220064}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Shared</RootNamespace>
-    <AssemblyName>Shared</AssemblyName>
+    <RootNamespace>Infrastructure</RootNamespace>
+    <AssemblyName>Infrastructure</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,12 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=8.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.8.1.1\lib\net461\AutoMapper.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,15 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IFactory.cs" />
-    <Compile Include="MapperResolvers\AuthorResolver.cs" />
-    <Compile Include="MapperResolvers\BookResolver.cs" />
+    <Compile Include="Data\IAuthorRepo.cs" />
+    <Compile Include="Data\IBookRepo.cs" />
+    <Compile Include="Data\ICRUD.cs" />
+    <Compile Include="Logic\IAuthorDM.cs" />
+    <Compile Include="Logic\IBookDM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\MapperService.cs" />
-    <Compile Include="Services\TransactionService.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EntityModels\EntityModels.csproj">

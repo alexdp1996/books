@@ -1,4 +1,4 @@
-﻿using DataInfrastructure.Entities;
+﻿using EntityModels;
 using Shared.MapperResolvers;
 using ViewModels;
 

@@ -13,11 +13,11 @@ class BookController {
         this.authorsUrl = urls.authors;
     }
 
-    public initDataTable(dataUrl: string, authorController: AuthorController): void {
+    public initDataTable(dataUrl: string): void {
         let self = this;
         this.grid = $("#books").DataTable({
             "drawCallback": function () {
-                self.rebindTriggers(authorController);
+                self.rebindTriggers();
             },
             dom: `<'row'<'col-md-12'<'pull-left'l><'#add.pull-right'>>>
                   <'row'<'col-md-12'tr>>
@@ -69,7 +69,7 @@ class BookController {
                         } else {
                             let result = [];
                             for (let i = 0; i < authors.length; ++i) {
-                                result.push('<a class="author-get" data-id="' + authors[i].Id + '" >' + authors[i].Name + ' ' + authors[i].Surname + '</a>');
+                                result.push('<span data-id="' + authors[i].Id + '" >' + authors[i].Name + ' ' + authors[i].Surname + '</span>');
                             }
                             return result.join(', ');
                         }
@@ -92,27 +92,24 @@ class BookController {
 
         $(".book-create").off('click').click(function () {
             self.get(null, function () {
-                self.initCreate();
+                self.initPlugins();
+                $("#popup form").off('submit').on('submit', function (e) {
+                    e.preventDefault();
+                    self.create();
+                });
             });
         });
     }
 
-    private rebindTriggers(authorController: AuthorController): void {
+    private rebindTriggers(): void {
         let self = this;
         $(".book-get").off('click').click(function () {
             let id = $(this).data('id');
             self.get(id, function () {
-                self.initUpdate(function () {
-                    self.reloadDataTable();
-                });
-            });
-        });
-
-        $(".author-get").off('click').click(function () {
-            let id = $(this).data('id');
-            authorController.get(id, function () {
-                authorController.initUpdate(function () {
-                    self.reloadDataTable();
+                self.initPlugins();
+                $("#popup form").off('submit').on('submit', function (e) {
+                    e.preventDefault();
+                    self.update();
                 });
             });
         });
@@ -137,7 +134,9 @@ class BookController {
             `;
 
             self.renderPopup(html);
-            self.initDelete();
+            $("#delete").click(function () {
+                self.delete();
+            });
         });
     };
 
@@ -172,10 +171,6 @@ class BookController {
         Layout.disableAutocomplete();
     }
 
-    private reloadDataTable(): void {
-        this.grid.ajax.reload();
-    }
-
     private showAlert(selector: string, model: AlertVM): void {
         let options = AlertBusiness.getOptions(model.Type);
         let html = `
@@ -194,9 +189,10 @@ class BookController {
     private onSaveSuccess(alert: AlertVM) {
         this.showAlert("#alert-box", alert);
         $("#popup").modal("hide");
+        this.grid.ajax.reload();
     }
 
-    public create() {
+    private create() {
         let self = this;
         let book: EditedBookVM = {
             Name: $("#Name").val() as string,
@@ -206,11 +202,11 @@ class BookController {
             AuthorIds: ($("#AuthorIds").val() as any) as number[]
         };
         self.business.create(book,
-            function (alert) { self.onSaveSuccess(alert); self.reloadDataTable(); },
+            function (alert) { self.onSaveSuccess(alert); },
             function (alert) { self.onSaveError(alert); });
     }
 
-    public update(callback: Action<void>) {
+    private update() {
         let self = this;
         let book: EditedBookVM = {
             Id: $("#Id").val() as number,
@@ -221,46 +217,21 @@ class BookController {
             AuthorIds: ($("#AuthorIds").val() as any) as number[]
         };
         self.business.update(book,
-            function (alert) { self.onSaveSuccess(alert); callback(); },
+            function (alert) { self.onSaveSuccess(alert); },
             function (alert) { self.onSaveError(alert); });
     }
 
-    public get(id: number | null, callback: Action<void>): void {
+    private get(id: number | null, callback: Action<void>): void {
         let self = this;
         this.service.get(id, function (html) { self.renderPopup(html); callback(); });
     }
 
-    public delete() {
+    private delete() {
         let self = this;
         let id: number = +$("#Id").val();
         this.service.delete(id, function (alert: AlertVM) {
             this.showAlert("#alert-box", alert);
-            self.reloadDataTable();
-        });
-    }
-
-    public initCreate() {
-        let self = this;
-        this.initPlugins();
-        $("#popup form").off('submit').on('submit', function (e) {
-            e.preventDefault();
-            self.create();
-        });
-    }
-
-    public initUpdate(callback: Action<void>) {
-        let self = this;
-        this.initPlugins();
-        $("#popup form").off('submit').on('submit', function (e) {
-            e.preventDefault();
-            self.update(callback);
-        });
-    }
-
-    public initDelete() {
-        let self = this;
-        $("#delete").click(function () {
-            self.delete();
+            self.grid.ajax.reload();
         });
     }
 }

@@ -35,19 +35,12 @@
 @Styles.Render("~/datatables/css")
 @Scripts.Render("~/bundles/datatables")
 @Scripts.Render("~/bundles/view-models")
-@Scripts.Render("~/bundles/author")
 @Scripts.Render("~/bundles/book")
 @Scripts.Render("~/bundles/jqueryval")
 @Styles.Render("~/book/css")
 
 <script>
     $(document).ready(function () {
-        let authorUrls = {};
-        authorUrls.update = "@Url.Action("Update","Author")";
-        authorUrls.get = "@Url.Action("Get","Author")";
-        authorUrls.delete = "@Url.Action("Delete","Author")";
-
-        let authorController = new AuthorController(authorUrls);
 
         let bookUrls = {};
         bookUrls.update = "@Url.Action("Update","Book")";
@@ -59,6 +52,6 @@
         let bookController = new BookController(bookUrls);
 
         let dataUrl = "@Url.Action("GetList","Book")";
-        bookController.initDataTable(dataUrl, authorController);
+        bookController.initDataTable(dataUrl);
     });
 </script>

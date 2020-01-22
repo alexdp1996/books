@@ -68,7 +68,10 @@
 
         $(".author-create").off('click').click(function () {
             self.get(null, function () {
-                self.initCreate();
+                $("#popup form").off('submit').on('submit', function (e) {
+                    e.preventDefault();
+                    self.create();
+                });
             });
         });
     }
@@ -78,8 +81,9 @@
         $(".author-get").off('click').click(function () {
             let id = $(this).data('id');
             self.get(id, function () {
-                self.initUpdate(function () {
-                    self.reloadDataTable();
+                $("#popup form").off('submit').on('submit', function (e) {
+                    e.preventDefault();
+                    self.update();
                 });
             });
         });
@@ -104,13 +108,11 @@
             `;
 
             self.renderPopup(html);
-            self.initDelete();
+            $("#delete").click(function () {
+                self.delete();
+            });
         });
     };
-
-    private reloadDataTable(): void {
-        this.grid.ajax.reload();
-    }
 
     private showAlert(selector: string, model: AlertVM): void {
         let options = AlertBusiness.getOptions(model.Type);
@@ -130,20 +132,21 @@
     private onSaveSuccess(alert: AlertVM) {
         this.showAlert("#alert-box", alert);
         $("#popup").modal("hide");
+        this.grid.ajax.reload();
     }
 
-    public create() {
+    private create() {
         let self = this;
         let author: AuthorVM = {
             Name: $("#Name").val() as string,
             Surname: $("#Surname").val() as string
         };
         self.business.create(author,
-            function (alert) { self.onSaveSuccess(alert); self.reloadDataTable(); },
+            function (alert) { self.onSaveSuccess(alert); },
             function (alert) { self.onSaveError(alert); });
     }
 
-    public update(callback: Action<void>) {
+    private update() {
         let self = this;
         let author: AuthorVM = {
             Id: $("#Id").val() as number,
@@ -151,21 +154,21 @@
             Surname: $("#Surname").val() as string
         };
         self.business.update(author,
-            function (alert) { self.onSaveSuccess(alert); callback(); },
+            function (alert) { self.onSaveSuccess(alert); },
             function (alert) { self.onSaveError(alert); });
     }
 
-    public get(id: number | null, callback: Action<void>): void {
+    private get(id: number | null, callback: Action<void>): void {
         let self = this;
         this.service.get(id, function (html) { self.renderPopup(html); callback(); });
     }
 
-    public delete() {
+    private delete() {
         let self = this;
         let id: number = +$("#Id").val();
         this.service.delete(id, function (alert: AlertVM) {
             this.showAlert("#alert-box", alert);
-            self.reloadDataTable();
+            self.grid.ajax.reload();
         });
     }
 
@@ -174,28 +177,5 @@
         popup.html(html);
         $("#popup").modal('show');
         Layout.disableAutocomplete();
-    }
-
-    public initCreate() {
-        let self = this;
-        $("#popup form").off('submit').on('submit', function (e) {
-            e.preventDefault();
-            self.create();
-        });
-    }
-
-    public initUpdate(callback: Action<void>) {
-        let self = this;
-        $("#popup form").off('submit').on('submit', function (e) {
-            e.preventDefault();
-            self.update(callback);
-        });
-    }
-
-    public initDelete() {
-        let self = this;
-        $("#delete").click(function () {
-            self.delete();
-        });
     }
 }

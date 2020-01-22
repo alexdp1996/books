@@ -25,23 +25,13 @@ namespace Logic
             }
         }
 
-        public IEnumerable<AuthorBaseVM> Get(IEnumerable<long> ids)
-        {
-            using (var authorRepo = Factory.GetService<IAuthorRepo>())
-            {
-                var authorsEM = authorRepo.Get(ids);
-                var authorsVM = MapperService.Map<IEnumerable<AuthorBaseVM>>(authorsEM);
-                return authorsVM;
-            }
-        }
-
-        public DataTableResponseVM<AuthorBaseVM> Get(DataTableRequestVM model)
+        public DataTableResponseVM<AuthorBaseVM> GetList(DataTableRequestVM model)
         {
             var dataTableEM = MapperService.Map<DataTableRequestEM>(model);
 
             using (var authorRepo = Factory.GetService<IAuthorRepo>())
             {
-                var responseEM = authorRepo.Get(dataTableEM);
+                var responseEM = authorRepo.GetList(dataTableEM);
                 var responseVM = MapperService.Map<DataTableResponseVM<AuthorBaseVM>>(responseEM);
                 responseVM.draw = model.Draw;
 

@@ -19,7 +19,7 @@ namespace UI.Controllers
         {
             using (var bookDM = Factory.GetService<IBookDM>())
             {
-                var tableVM = bookDM.Get(model);
+                var tableVM = bookDM.GetList(model);
                 return new JsonResult
                 {
                     Data = tableVM,

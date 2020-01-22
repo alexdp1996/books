@@ -67,13 +67,13 @@ namespace Logic
             }
         }
 
-        public DataTableResponseVM<BookVM> Get(DataTableRequestVM model)
+        public DataTableResponseVM<BookVM> GetList(DataTableRequestVM model)
         {
             var dataTableEM = MapperService.Map<DataTableRequestEM>(model);
 
             using (var bookRepo = Factory.GetService<IBookRepo>())
             {
-                var responseEM = bookRepo.Get(dataTableEM);
+                var responseEM = bookRepo.GetList(dataTableEM);
                 var responseVM = MapperService.Map<DataTableResponseVM<BookVM>>(responseEM);
                 responseVM.draw = model.Draw;
 

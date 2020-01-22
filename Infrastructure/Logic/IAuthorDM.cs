@@ -7,8 +7,7 @@ namespace Infrastructure.Logic
     public interface IAuthorDM : IDisposable
     {
         IEnumerable<AuthorBaseVM> Get(string term);
-        IEnumerable<AuthorBaseVM> Get(IEnumerable<long> ids);
-        DataTableResponseVM<AuthorBaseVM> Get(DataTableRequestVM model);
+        DataTableResponseVM<AuthorBaseVM> GetList(DataTableRequestVM model);
         AuthorVM Get(long? id);
         void Delete(long id);
         void Update(AuthorVM model);

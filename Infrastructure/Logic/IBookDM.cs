@@ -9,6 +9,6 @@ namespace Infrastructure.Logic
         void Update(BookEditVM model);
         void Create(BookEditVM model);
         BookVM Get(long? id);
-        DataTableResponseVM<BookVM> Get(DataTableRequestVM model);
+        DataTableResponseVM<BookVM> GetList(DataTableRequestVM model);
     }
 }

@@ -77,7 +77,7 @@ namespace Data.Repositories
             }
         }
 
-        public DataTableResponseEM<BookEM> Get(DataTableRequestEM model)
+        public DataTableResponseEM<BookEM> GetList(DataTableRequestEM model)
         {
             using (var con = Connection)
             {

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Dapper;
-using Data.Extensions;
 using Dommel;
 using EntityModels;
 using Infrastructure.Data;
@@ -43,20 +42,6 @@ namespace Data.Repositories
             }
         }
 
-        public IEnumerable<AuthorEM> Get(IEnumerable<long> Ids)
-        {
-            using (var con = Connection)
-            {
-                var SP = "USPAuthorGetByIds";
-                var queryParameters = new DynamicParameters();
-                queryParameters.Add("@Ids", Ids.AsParameter());
-
-                var authors = con.Query<AuthorEM>(SP, queryParameters, commandType: CommandType.StoredProcedure);
-
-                return authors;
-            }
-        }
-
         public IEnumerable<AuthorEM> Get(string term)
         {
             using (var con = Connection)
@@ -92,7 +77,7 @@ namespace Data.Repositories
             }
         }
 
-        public DataTableResponseEM<AuthorEM> Get(DataTableRequestEM model)
+        public DataTableResponseEM<AuthorEM> GetList(DataTableRequestEM model)
         {
             using (var con = Connection)
             {

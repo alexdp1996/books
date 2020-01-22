@@ -20,7 +20,7 @@ namespace UI.Controllers
         {
             using (var authorDM = Factory.GetService<IAuthorDM>())
             {
-                var tableVM = authorDM.Get(model);
+                var tableVM = authorDM.GetList(model);
                 return new JsonResult
                 {
                     Data = tableVM,

@@ -1,23 +1,53 @@
-﻿class AuthorController {
+﻿declare var Alert: AlertController;
+
+class AuthorController {
     private grid: any;
     private gridSelector: string;
     private service: AuthorService;
-    private business: AuthorBusiness;
+    private getListUrl: string;
 
     constructor(urls: EntityUrlsVM) {
         this.service = new AuthorService(urls);
-        this.business = new AuthorBusiness(this.service);
+        this.getListUrl = urls.getList;
     }
 
-    public initDataTable(dataUrl: string): void {
+    public init() {
+        this.initDataTable(this.getListUrl);
+        this.initBtn();
+    }
+
+    private initBtn() {
+        let authorAddBtn = $("#author-create-btn")[0];
+        let authorAddBtnHtml = authorAddBtn.outerHTML;
+        authorAddBtn.remove();
+
+        let authorAddDiv = $("#authorAddDiv");
+        authorAddDiv.html(authorAddBtnHtml);
+
+        let self = this;
+
+        $("#author-create-btn").off('click').click(function () {
+            self.authorCreateBtnOnClick();
+        });
+    }
+
+    private authorCreateBtnOnClick() {
+        let self = this;
+        let promise = self.service.get();
+        promise.then(function (html) {
+            self.getForm(html);
+        });
+    }
+
+    private initDataTable(dataUrl: string): void {
         this.gridSelector = "#authors";
 
         let self = this;
         self.grid = $(self.gridSelector).DataTable({
             "drawCallback": function () {
-                self.rebindTriggers();
+                self.initDataTableCtrls();
             },
-            dom: `<'row'<'col-md-12'<'pull-left'l><'#add.pull-right'>>>
+            dom: `<'row'<'col-md-12'<'pull-left'l><'#authorAddDiv.pull-right'>>>
                   <'row'<'col-md-12'tr>>
                   <'row'<'col-md-12'<'pull-left'i><'pull-right'p>>>`,
             serverSide: true,
@@ -35,147 +65,112 @@
             columns: [
                 {
                     "name": "Name",
-                    "data": function (record: DetailedAuthorVM) {
-                        return '<a class="author-get" href="#" data-id="' + record.Id + '">' + record.Name + '</a>';
+                    "data": function (record: AuthorVM) {
+                        return '<a class="author-get-lnk" href="#" data-id="' + record.Id + '">' + record.Name + '</a>';
                     }
                 },
                 {
                     "name": "Surname",
-                    "data": function (record: DetailedAuthorVM) {
+                    "data": function (record: AuthorVM) {
                         return record.Surname;
                     }
                 },
                 {
                     "name": "CountOfBooks",
-                    "data": function (record: DetailedAuthorVM) {
+                    "data": function (record: AuthorVM) {
                         return record.CountOfBooks;
                     }
                 },
                 {
-                    "data": function (record: DetailedAuthorVM) {
-                        return '<button class="btn btn-danger author-delete" data-id="' + record.Id + '">Delete</button>';
+                    "data": function (record: AuthorVM) {
+                        return '<button class="btn btn-danger author-delete-btn" data-id="' + record.Id + '">Delete</button>';
                     }
                 }
             ],
             columnDefs: [{ orderable: false, targets: [3] }],
             "orderMulti": false
         });
-
-        let addTemplate = $("#add-template");
-        let addContainer = $("#add");
-        addContainer.html(addTemplate.html());
-        addTemplate.remove();
-
-        $(".author-create").off('click').click(function () {
-            self.get(null, function () {
-                $("#popup form").off('submit').on('submit', function (e) {
-                    e.preventDefault();
-                    self.create();
-                });
-            });
-        });
     }
 
-    private rebindTriggers(): void {
+    private initDataTableCtrls(): void {
         let self = this;
-        $(".author-get").off('click').click(function () {
-            let id = $(this).data('id');
-            self.get(id, function () {
-                $("#popup form").off('submit').on('submit', function (e) {
-                    e.preventDefault();
-                    self.update();
-                });
-            });
+
+        $(".author-get-lnk").off('click').click(function () {
+            self.authorGetLnkOnClick(this);
         });
 
-        $(".author-delete").off('click').click(function () {
+        $(".author-delete-btn").off('click').click(function () {
             let id = $(this).data('id');
-            let html = `
-                <div class="modal-header">
-                    <h5 class="modal-title">Confirm delete</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" id="Id" value="${id}" />
-                    <p>Are you sure you want to delete this?</p>
-                </div>
-                <div class="modal-footer">
-                    <button id="delete" class="btn btn-danger" data-dismiss="modal">Yes</button>
-                    <button class="btn btn-default" data-dismiss="modal">No</button>
-                </div>
-            `;
-
-            self.renderPopup(html);
-            $("#delete").click(function () {
-                self.delete();
-            });
+            self.deleteForm(id);
         });
     };
 
-    private showAlert(selector: string, model: AlertVM): void {
-        let options = AlertBusiness.getOptions(model.Type);
-        let html = `
-            <div class="alert ${options.AlertClass} alert-dismissible fade in">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>${options.MessageType}</strong> ${model.Message}
-                </div>
-        `;
-        $(selector).html(html);
+    private authorGetLnkOnClick(sender: HTMLElement) {
+        let self = this;
+        let id = $(sender).data('id');
+        let promise = self.service.get(id);
+
+        promise.then(function (html) {
+            self.getForm(html);
+        });
     }
 
-    private onSaveError(alert: AlertVM) {
-        this.showAlert("#popup-alert-box", alert);
-    }
-
-    private onSaveSuccess(alert: AlertVM) {
-        this.showAlert("#alert-box", alert);
+    private onSaveSuccess(message: string) {
+        Alert.showSuccess(message);
         $("#popup").modal("hide");
         this.grid.ajax.reload();
     }
 
-    private create() {
+    public create() {
         let self = this;
         let author: AuthorVM = {
             Name: $("#Name").val() as string,
             Surname: $("#Surname").val() as string
         };
-        self.business.create(author,
-            function (alert) { self.onSaveSuccess(alert); },
-            function (alert) { self.onSaveError(alert); });
+        self.service.create(author)
+            .done(() => { self.onSaveSuccess("Author was created"); })
+            .fail(() => { Alert.showError("Failed to create author"); });
     }
 
-    private update() {
+    public update() {
         let self = this;
         let author: AuthorVM = {
             Id: $("#Id").val() as number,
             Name: $("#Name").val() as string,
             Surname: $("#Surname").val() as string
         };
-        self.business.update(author,
-            function (alert) { self.onSaveSuccess(alert); },
-            function (alert) { self.onSaveError(alert); });
+        self.service.update(author)
+            .done(() => { self.onSaveSuccess("Author was updated"); })
+            .fail(() => { Alert.showError("Failed to update author"); });
     }
 
-    private get(id: number | null, callback: Action<void>): void {
-        let self = this;
-        this.service.get(id, function (html) { self.renderPopup(html); callback(); });
-    }
-
-    private delete() {
-        let self = this;
-        let id: number = +$("#Id").val();
-        this.service.delete(id, function (alert: AlertVM) {
-            this.showAlert("#alert-box", alert);
-            self.grid.ajax.reload();
-        });
-    }
-
-    private renderPopup(html: string): void {
+    private getForm(html: string): void {
         let popup = $("#popup > .modal-dialog > .modal-content");
         popup.html(html);
         $("#popup").modal('show');
         Layout.disableAutocomplete();
     }
+
+    private delete(id: number) {
+        let self = this;
+        this.service.delete(id)
+            .done(() => {
+                Alert.showSuccess("Author with Id=" + id + " was deleted");
+                self.grid.ajax.reload();
+            })
+            .fail(() => {
+                Alert.showSuccess("Failed to delete author with Id=" + id);
+            });
+    }
+
+    private deleteForm(id: number): void {
+        let self = this;
+        $("#delete-popup").modal('show');
+        Layout.disableAutocomplete();
+
+        $("#delete").click(function () {
+            self.delete(id);
+        });
+    }
+
 }

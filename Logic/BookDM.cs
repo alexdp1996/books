@@ -3,6 +3,7 @@ using Infrastructure.Data;
 using Infrastructure.Logic;
 using Shared.Interfaces;
 using Shared.Services;
+using System.Linq;
 using ViewModels;
 
 namespace Logic
@@ -22,7 +23,7 @@ namespace Logic
             }
         }
 
-        public void Update(BookEditVM model)
+        public void Update(BookVM model)
         {
             var book = MapperService.Map<BookEM>(model);
             using (var bookRepo = Factory.GetService<IBookRepo>())
@@ -32,13 +33,14 @@ namespace Logic
 
                 id = book.Id.Value;
                 bookRepo.Update(book);
-                bookRepo.UpdateAuthors(id, model.AuthorIds);
+                var authorsIds = model.Authors.Select(a => a.Id.Value);
+                bookRepo.UpdateAuthors(id, authorsIds);
 
                 scope.Complete();
             }
         }
 
-        public void Create(BookEditVM model)
+        public void Create(BookVM model)
         {
             var book = MapperService.Map<BookEM>(model);
             using (var bookRepo = Factory.GetService<IBookRepo>())
@@ -47,7 +49,8 @@ namespace Logic
                 long id;
 
                 id = bookRepo.Create(book);
-                bookRepo.UpdateAuthors(id, model.AuthorIds);
+                var authorsIds = model.Authors.Select(a => a.Id.Value);
+                bookRepo.UpdateAuthors(id, authorsIds);
 
                 scope.Complete();
             }

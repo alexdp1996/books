@@ -3,10 +3,11 @@
 }
 
 @Html.Partial("~/Views/Shared/_Popup.cshtml", "popup")
+@Html.Partial("~/Views/Shared/_Delete.cshtml")
 
-<div id="add-template" class="hidden">
-    <button class="btn btn-default book-create"><i class="glyphicon glyphicon-plus"></i></button>
-</div>
+<button class="btn btn-default" id="book-create-btn">
+    <i class="glyphicon glyphicon-plus"></i>
+</button>
 
 <table class="table table-striped table-bordered dataTable" style="width: 100%;" id="books">
     <thead>
@@ -40,6 +41,7 @@
 @Styles.Render("~/book/css")
 
 <script>
+    var BookController;
     $(document).ready(function () {
 
         let bookUrls = {};
@@ -47,11 +49,10 @@
         bookUrls.create = "@Url.Action("Create","Book")";
         bookUrls.get = "@Url.Action("Get","Book")";
         bookUrls.delete = "@Url.Action("Delete","Book")";
-        bookUrls.authors = "@Url.Action("GetByTerm","Author")"
+        bookUrls.getAuthors = "@Url.Action("GetByTerm","Author")"
+        bookUrls.getList = "@Url.Action("GetList","Book")";
 
-        let bookController = new BookController(bookUrls);
-
-        let dataUrl = "@Url.Action("GetList","Book")";
-        bookController.initDataTable(dataUrl);
+        BookController = new BookController(bookUrls);
+        BookController.init();
     });
 </script>

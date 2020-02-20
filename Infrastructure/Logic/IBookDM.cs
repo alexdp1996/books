@@ -6,8 +6,8 @@ namespace Infrastructure.Logic
     public interface IBookDM : IDisposable
     {
         void Delete(long id);
-        void Update(BookEditVM model);
-        void Create(BookEditVM model);
+        void Update(BookVM model);
+        void Create(BookVM model);
         BookVM Get(long? id);
         DataTableResponseVM<BookVM> GetList(DataTableRequestVM model);
     }

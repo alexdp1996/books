@@ -2,7 +2,6 @@
 using System;
 using System.Web.Mvc;
 using ViewModels;
-using ViewModels.Enums;
 
 namespace UI.Controllers
 {
@@ -39,38 +38,28 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Update(BookEditVM model)
+        public ActionResult Update(BookVM model)
         {
             using (var bookDM = Factory.GetService<IBookDM>())
             {
                 if (ModelState.IsValid)
                 {
                     bookDM.Update(model);
-                    var alert = new AlertVM
-                    {
-                        Message = "Book was updated",
-                        Type = AlertType.Success
-                    };
-                    return new JsonResult { Data = alert, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    return new EmptyResult();
                 }
             }
             throw new ArgumentException("Model is not valid");
         }
 
         [HttpPost]
-        public ActionResult Create(BookEditVM model)
+        public ActionResult Create(BookVM model)
         {
             using (var bookDM = Factory.GetService<IBookDM>())
             {
                 if (ModelState.IsValid)
                 {
                     bookDM.Create(model);
-                    var alert = new AlertVM
-                    {
-                        Message = "Book was added",
-                        Type = AlertType.Success
-                    };
-                    return new JsonResult { Data = alert, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    return new EmptyResult();
                 }
             }
             throw new ArgumentException("Model is not valid");
@@ -82,12 +71,7 @@ namespace UI.Controllers
             using (var bookDM = Factory.GetService<IBookDM>())
             {
                 bookDM.Delete(id);
-                var alert = new AlertVM
-                {
-                    Message = "Book with id " + id + " was deleted",
-                    Type = AlertType.Success
-                };
-                return new JsonResult { Data = alert, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                return new EmptyResult();
             }
         }
     }

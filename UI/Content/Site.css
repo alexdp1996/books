@@ -9,3 +9,7 @@
 .author-get {
     cursor: pointer;
 }
+
+.alert {
+    display: none;
+}

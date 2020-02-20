@@ -199,6 +199,7 @@
     <Content Include="Views\Book\Get.cshtml" />
     <Content Include="Views\Author\Get.cshtml" />
     <Content Include="Views\Shared\_Popup.cshtml" />
+    <Content Include="Views\Shared\_Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -240,24 +241,16 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\alert-business.ts" />
-    <TypeScriptCompile Include="Scripts\Author\author-business.ts" />
+    <TypeScriptCompile Include="Scripts\alert-controller.ts" />
     <TypeScriptCompile Include="Scripts\Author\author-service.ts" />
     <TypeScriptCompile Include="Scripts\Interfaces\func.ts" />
     <TypeScriptCompile Include="Scripts\Author\author-controller.ts" />
     <TypeScriptCompile Include="Scripts\Book\book-controller.ts" />
-    <TypeScriptCompile Include="Scripts\Book\book-business.ts" />
     <TypeScriptCompile Include="Scripts\Book\book-service.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\alertVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\authorVM.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\detailedAuthorVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\bookVM.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\detailedBookVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\bookUrlsVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\entityUrlsVM.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\alertOptionsVM.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\editedBookVM.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\popupVM.ts" />
     <TypeScriptCompile Include="Scripts\layout-controller.ts" />
   </ItemGroup>
   <PropertyGroup>

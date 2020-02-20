@@ -5,48 +5,47 @@
         this.urls = urls;
     }
 
-    public create(model: EditedBookVM, success: Action<AlertVM>) {
+    public create(model: BookVM) {
         let self = this;
-        $.ajax({
+        return $.ajax({
             url: self.urls.create,
             type: "POST",
             data: {
                 model: model
             }
-        }).done(success);
+        });
     }
 
-    public update(model: EditedBookVM, success: Action<AlertVM>) {
+    public update(model: BookVM) {
         let self = this;
-        $.ajax({
+        return $.ajax({
             url: self.urls.update,
             type: "POST",
             data: {
                 model: model
             }
-        }).done(success);
+        });
     }
 
-    public delete(id: number, callback: (alert: AlertVM) => void): void {
+    public delete(id: number) {
         let self = this;
-        $.ajax({
+        return $.ajax({
             type: "POST",
             url: self.urls.delete,
             data: {
                 id: id
             }
-        }).done(callback);
+        });
     }
 
-    public get(id : number|null, callback: (html: string) => void): void {
+    public get(id?: number): Promise<string> {
         let self = this;
-        $.ajax({
+        return $.ajax({
             url: self.urls.get,
             type: "GET",
             data: {
                 id: id
-            },
-            success: callback
+            }
         });
     }
 }

@@ -2,7 +2,6 @@
 using System;
 using System.Web.Mvc;
 using ViewModels;
-using ViewModels.Enums;
 
 namespace UI.Controllers
 {
@@ -47,12 +46,7 @@ namespace UI.Controllers
                 using (var authorDM = Factory.GetService<IAuthorDM>())
                 {
                     authorDM.Create(model);
-                    var alert = new AlertVM
-                    {
-                        Message = "Author was added",
-                        Type = AlertType.Success
-                    };
-                    return new JsonResult { Data = alert, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    return new EmptyResult();
                 }
             }
             throw new ArgumentException("Model is not valid");
@@ -66,12 +60,7 @@ namespace UI.Controllers
                 using (var authorDM = Factory.GetService<IAuthorDM>())
                 {
                     authorDM.Update(model);
-                    var alert = new AlertVM
-                    {
-                        Message = "Author was updated",
-                        Type = AlertType.Success
-                    };
-                    return new JsonResult { Data = alert, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    return new EmptyResult();
                 }
             }
             throw new ArgumentException("Model is not valid");
@@ -83,12 +72,7 @@ namespace UI.Controllers
             using (var authorDM = Factory.GetService<IAuthorDM>())
             {
                 authorDM.Delete(id);
-                var alert = new AlertVM
-                {
-                    Message = "Author with id " + id + " was deleted",
-                    Type = AlertType.Success
-                };
-                return new JsonResult { Data = alert, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                return new EmptyResult();
             }
         }
 

@@ -1,6 +1,5 @@
 ﻿@model BookVM
 
-<div id="popup-alert-box"></div>
 @using (Html.BeginForm("Save", "Book"))
 {
     <div class="form-horizontal">
@@ -49,14 +48,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Authors, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-4">
-                    <select class="form-control" id="AuthorIds" style="width: 100%;" name="AuthorIds">
-                        @if (Model != null)
-                        {
-                            foreach (var o in Model.Authors)
-                            {
-                                <option selected="selected" value="@o.Id">@(o.Name + " " + o.Surname)</option>
-                            }
-                        }
+                    <select class="form-control" id="Authors" style="width: 100%;" name="Authors">
                     </select>
                 </div>
             </div>
@@ -71,3 +63,29 @@
 @Scripts.Render("~/bundles/jqueryval")
 @Styles.Render("~/book/css")
 
+@if (Model == null)
+{
+    <script>
+        $(document).ready(function () {
+            BookController.initPlugins([]);
+            $("#popup form").off('submit').on('submit', function (e) {
+                e.preventDefault();
+                BookController.create();
+            });
+        });
+    </script>
+}
+else
+{
+    <script>
+        $(document).ready(function () {
+            let authorsJson = '@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Authors, Newtonsoft.Json.Formatting.None)) ';
+            let selectedOptions = JSON.parse(authorsJson);
+            BookController.initPlugins(selectedOptions);
+            $("#popup form").off('submit').on('submit', function (e) {
+                e.preventDefault();
+                BookController.update();
+            });
+        });
+    </script>
+}

@@ -15,24 +15,24 @@ namespace Logic
 
         }
 
-        public IEnumerable<AuthorBaseVM> Get(string term)
+        public IEnumerable<AuthorVM> Get(string term)
         {
             using (var authorRepo = Factory.GetService<IAuthorRepo>())
             {
                 var authorsEM = authorRepo.Get(term);
-                var authorsVM = MapperService.Map<IEnumerable<AuthorBaseVM>>(authorsEM);
+                var authorsVM = MapperService.Map<IEnumerable<AuthorVM>>(authorsEM);
                 return authorsVM;
             }
         }
 
-        public DataTableResponseVM<AuthorBaseVM> GetList(DataTableRequestVM model)
+        public DataTableResponseVM<AuthorVM> GetList(DataTableRequestVM model)
         {
             var dataTableEM = MapperService.Map<DataTableRequestEM>(model);
 
             using (var authorRepo = Factory.GetService<IAuthorRepo>())
             {
                 var responseEM = authorRepo.GetList(dataTableEM);
-                var responseVM = MapperService.Map<DataTableResponseVM<AuthorBaseVM>>(responseEM);
+                var responseVM = MapperService.Map<DataTableResponseVM<AuthorVM>>(responseEM);
                 responseVM.draw = model.Draw;
 
                 return responseVM;

@@ -4,4 +4,5 @@
     public CreatedDate: Date;
     public Rate: number;
     public Pages: number;
+    public Authors: AuthorVM[];
 }

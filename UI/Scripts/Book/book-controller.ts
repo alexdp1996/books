@@ -5,21 +5,27 @@ class BookController {
     private authorsUrl: string;
     private grid: any;
     private service: BookService;
-    private business: BookBusiness;
+    private getListUrl: string;
+    private selectSourceAuthors: AuthorVM[];
 
     constructor(urls: BookUrlsVM) {
         this.service = new BookService(urls);
-        this.business = new BookBusiness(this.service);
-        this.authorsUrl = urls.authors;
+        this.authorsUrl = urls.getAuthors;
+        this.getListUrl = urls.getList;
     }
 
-    public initDataTable(dataUrl: string): void {
+    public init() {
+        this.initDataTable(this.getListUrl);
+        this.initBtn();
+    }
+
+    private initDataTable(dataUrl: string): void {
         let self = this;
         this.grid = $("#books").DataTable({
             "drawCallback": function () {
-                self.rebindTriggers();
+                self.initDataTableCtrls();
             },
-            dom: `<'row'<'col-md-12'<'pull-left'l><'#add.pull-right'>>>
+            dom: `<'row'<'col-md-12'<'pull-left'l><'#bookAddDiv.pull-right'>>>
                   <'row'<'col-md-12'tr>>
                   <'row'<'col-md-12'<'pull-left'i><'pull-right'p>>>`,
             serverSide: true,
@@ -37,13 +43,13 @@ class BookController {
             columns: [
                 {
                     "name": "Name",
-                    "data": function (record: DetailedBookVM) {
+                    "data": function (record: BookVM) {
                         return '<a class="book-get" href="#" data-id="' + record.Id + '">' + record.Name + '</a>';
                     }
                 },
                 {
                     "name": "Pages",
-                    "data": function (record: DetailedBookVM) {
+                    "data": function (record: BookVM) {
                         return record.Pages;
                     }
                 },
@@ -55,14 +61,14 @@ class BookController {
                 },
                 {
                     "name": "CreatedDate",
-                    "data": function (record: DetailedBookVM) {
+                    "data": function (record: BookVM) {
                         let date = moment(record.CreatedDate).format('LL');
                         return date;
                     }
                 },
                 {
                     "name": "Authors",
-                    "data": function (record: DetailedBookVM) {
+                    "data": function (record: BookVM) {
                         let authors = record.Authors;
                         if (!authors.length) {
                             return '';
@@ -76,162 +82,168 @@ class BookController {
                     }
                 },
                 {
-                    "data": function (record: DetailedBookVM) {
-                        return '<button class="btn btn-danger book-delete" data-id="' + record.Id + '">Delete</button>';
+                    "data": function (record: BookVM) {
+                        return '<button class="btn btn-danger book-delete-btn" data-id="' + record.Id + '">Delete</button>';
                     }
                 }
             ],
             columnDefs: [{ orderable: false, targets: [4, 5] }],
             "orderMulti": false
         });
+    }
 
-        let addTemplate = $("#add-template");
-        let addContainer = $("#add");
-        addContainer.html(addTemplate.html());
-        addTemplate.remove();
+    private initBtn() {
+        let bookAddBtn = $("#book-create-btn")[0];
+        let bookAddBtnHtml = bookAddBtn.outerHTML;
+        bookAddBtn.remove();
 
-        $(".book-create").off('click').click(function () {
-            self.get(null, function () {
-                self.initPlugins();
-                $("#popup form").off('submit').on('submit', function (e) {
-                    e.preventDefault();
-                    self.create();
-                });
-            });
+        let bookAddDiv = $("#bookAddDiv");
+        bookAddDiv.html(bookAddBtnHtml);
+
+        let self = this;
+        $("#book-create-btn").off('click').click(function () {
+            self.bookCreateBtnOnClick();
         });
     }
 
-    private rebindTriggers(): void {
+    private bookCreateBtnOnClick() {
+        let self = this;
+        let promise = self.service.get();
+        promise.then(function (html) {
+            self.getForm(html);
+        });
+    }
+
+    private initDataTableCtrls(): void {
         let self = this;
         $(".book-get").off('click').click(function () {
-            let id = $(this).data('id');
-            self.get(id, function () {
-                self.initPlugins();
-                $("#popup form").off('submit').on('submit', function (e) {
-                    e.preventDefault();
-                    self.update();
-                });
-            });
+            self.bookGetLnkOnClick(this);
         });
 
-        $(".book-delete").off('click').click(function () {
+        $(".book-delete-btn").off('click').click(function () {
             let id = $(this).data('id');
-            let html = `
-                <div class="modal-header">
-                    <h5 class="modal-title">Confirm delete</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" id="Id" value="${id}" />
-                    <p>Are you sure you want to delete this?</p>
-                </div>
-                <div class="modal-footer">
-                    <button id="delete" class="btn btn-danger" data-dismiss="modal">Yes</button>
-                    <button class="btn btn-default" data-dismiss="modal">No</button>
-                </div>
-            `;
-
-            self.renderPopup(html);
-            $("#delete").click(function () {
-                self.delete();
-            });
+            self.deleteForm(id);
         });
     };
 
-    private initPlugins() {
+    private bookGetLnkOnClick(sender: HTMLElement) {
         let self = this;
-        $("#AuthorIds").select2({
-            multiple: true,
-            ajax: {
-                url: self.authorsUrl,
-                dataType: 'json',
-                processResults: self.processSelectData
-            }
+        let id = $(sender).data('id');
+        let promise = self.service.get(id);
+
+        promise.then(function (html) {
+            self.getForm(html);
         });
-        $(".datepicker").datepicker();
     }
 
-    processSelectData(data: AuthorVM[]): any {
+    createSelectOption(item: AuthorVM) {
+        let optionIsPresent = this.selectSourceAuthors.some(function (e) {
+            e.Id == item.Id;
+        });
+
+        if (!optionIsPresent) {
+            this.selectSourceAuthors.push(item);
+        }
+        
         return {
-            results: $.map(data, (item: AuthorVM) => {
-                return {
-                    text: item.Name + " " + item.Surname,
-                    id: item.Id
-                };
-            })
+            text: item.Name + " " + item.Surname,
+            id: item.Id
         };
     }
 
-    private renderPopup(html: string): void {
+    public initPlugins(selectedAuthors: AuthorVM[]) {
+        let self = this;
+        this.selectSourceAuthors = selectedAuthors;
+
+        let authorsCtrl = $("#Authors").select2({
+            multiple: true,
+            minimumInputLength: 3,
+            ajax: {
+                url: self.authorsUrl,
+                dataType: 'json',
+                processResults: (data) => {
+                    return {
+                        results: $.map(data, (item) => { return self.createSelectOption(item); })
+                    };
+                }
+            }
+        });
+
+        selectedAuthors.every((e) => {
+            authorsCtrl.append(new Option(e.Name + " " + e.Surname, e.Id.toString(), false, true));
+        });
+
+        $(".datepicker").datepicker();
+    }
+
+    private onSaveSuccess(alert: string) {
+        Alert.showSuccess(alert);
+        $("#popup").modal("hide");
+        this.grid.ajax.reload();
+    }
+
+    public create() {
+        let self = this;
+        let selectedAuthorsIds = ($("#Authors").val() as any) as number[]; 
+        let book: BookVM = {
+            Name: $("#Name").val() as string,
+            Rate: +$("#Rate").val(),
+            CreatedDate: ($("#CreatedDate").val() as any) as Date,
+            Pages: +$("#Pages").val(),
+            Authors: this.selectSourceAuthors.filter(function (sourceItem) {
+                return selectedAuthorsIds.some(function (selectedId) { return sourceItem.Id == selectedId });
+            })
+            
+        };
+        self.service.create(book)
+            .done(() => { self.onSaveSuccess("Book was created"); })
+            .fail(() => { Alert.showError("Failed to create book"); });
+    }
+
+    public update() {
+        let self = this;
+        let selectedAuthorsIds = ($("#Authors").val() as any) as number[]
+        let book: BookVM = {
+            Id: $("#Id").val() as number,
+            Name: $("#Name").val() as string,
+            Rate: +$("#Rate").val(),
+            CreatedDate: ($("#CreatedDate").val() as any) as Date,
+            Pages: +$("#Pages").val(),
+            Authors: this.selectSourceAuthors.filter(function (sourceItem) {
+                return selectedAuthorsIds.some(function (selectedId) { return sourceItem.Id == selectedId });
+            })
+        };
+        self.service.update(book)
+            .done(() => { self.onSaveSuccess("Book was updated"); })
+            .fail(() => { Alert.showError("Failed to update book"); });
+    }
+
+    private getForm(html: string): void {
         let popup = $("#popup > .modal-dialog > .modal-content");
         popup.html(html);
         $("#popup").modal('show');
         Layout.disableAutocomplete();
     }
 
-    private showAlert(selector: string, model: AlertVM): void {
-        let options = AlertBusiness.getOptions(model.Type);
-        let html = `
-            <div class="alert ${options.AlertClass} alert-dismissible fade in">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>${options.MessageType}</strong> ${model.Message}
-                </div>
-        `;
-        $(selector).html(html);
-    }
-
-    private onSaveError(alert: AlertVM) {
-        this.showAlert("#popup-alert-box", alert);
-    }
-
-    private onSaveSuccess(alert: AlertVM) {
-        this.showAlert("#alert-box", alert);
-        $("#popup").modal("hide");
-        this.grid.ajax.reload();
-    }
-
-    private create() {
+    private delete(id: number) {
         let self = this;
-        let book: EditedBookVM = {
-            Name: $("#Name").val() as string,
-            Rate: +$("#Rate").val(),
-            CreatedDate: ($("#CreatedDate").val() as any) as Date,
-            Pages: +$("#Pages").val(),
-            AuthorIds: ($("#AuthorIds").val() as any) as number[]
-        };
-        self.business.create(book,
-            function (alert) { self.onSaveSuccess(alert); },
-            function (alert) { self.onSaveError(alert); });
+        this.service.delete(id)
+            .done(() => {
+                Alert.showSuccess("Book with Id=" + id + " was deleted");
+                self.grid.ajax.reload();
+            })
+            .fail(() => {
+                Alert.showSuccess("Failed to delete book with Id=" + id);
+            });
     }
 
-    private update() {
+    private deleteForm(id: number): void {
         let self = this;
-        let book: EditedBookVM = {
-            Id: $("#Id").val() as number,
-            Name: $("#Name").val() as string,
-            Rate: +$("#Rate").val(),
-            CreatedDate: ($("#CreatedDate").val() as any) as Date,
-            Pages: +$("#Pages").val(),
-            AuthorIds: ($("#AuthorIds").val() as any) as number[]
-        };
-        self.business.update(book,
-            function (alert) { self.onSaveSuccess(alert); },
-            function (alert) { self.onSaveError(alert); });
-    }
+        $("#delete-popup").modal('show');
+        Layout.disableAutocomplete();
 
-    private get(id: number | null, callback: Action<void>): void {
-        let self = this;
-        this.service.get(id, function (html) { self.renderPopup(html); callback(); });
-    }
-
-    private delete() {
-        let self = this;
-        let id: number = +$("#Id").val();
-        this.service.delete(id, function (alert: AlertVM) {
-            this.showAlert("#alert-box", alert);
-            self.grid.ajax.reload();
+        $("#delete").click(function () {
+            self.delete(id);
         });
     }
 }

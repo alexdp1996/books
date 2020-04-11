@@ -1,8 +1,7 @@
-﻿using LogicInfastructure.Interfaces;
+﻿using Infrastructure.Logic;
 using System;
 using System.Web.Mvc;
 using ViewModels;
-using ViewModels.Enums;
 
 namespace UI.Controllers
 {
@@ -16,11 +15,11 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetAuthors(DataTableRequestVM model)
+        public ActionResult GetList(DataTableRequestVM model)
         {
             using (var authorDM = Factory.GetService<IAuthorDM>())
             {
-                var tableVM = authorDM.Get(model);
+                var tableVM = authorDM.GetList(model);
                 return new JsonResult
                 {
                     Data = tableVM,
@@ -40,28 +39,31 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Save(AuthorVM model)
+        public ActionResult Create(AuthorVM model)
         {
             if (ModelState.IsValid)
             {
                 using (var authorDM = Factory.GetService<IAuthorDM>())
                 {
-                    authorDM.Save(model);
-                    var alert = new AlertVM
-                    {
-                        Message = "Author was saved",
-                        Type = AlertType.Success
-                    };
-                    return new JsonResult { Data = alert, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    authorDM.Create(model);
+                    return new EmptyResult();
                 }
             }
             throw new ArgumentException("Model is not valid");
         }
 
-        [HttpGet]
-        public ActionResult DeleteModal(long id)
+        [HttpPost]
+        public ActionResult Update(AuthorVM model)
         {
-            return PartialView("~/Views/Author/Delete.cshtml", id);
+            if (ModelState.IsValid)
+            {
+                using (var authorDM = Factory.GetService<IAuthorDM>())
+                {
+                    authorDM.Update(model);
+                    return new EmptyResult();
+                }
+            }
+            throw new ArgumentException("Model is not valid");
         }
 
         [HttpPost]
@@ -70,12 +72,7 @@ namespace UI.Controllers
             using (var authorDM = Factory.GetService<IAuthorDM>())
             {
                 authorDM.Delete(id);
-                var alert = new AlertVM
-                {
-                    Message = "Author with id " + id + " was deleted",
-                    Type = AlertType.Success
-                };
-                return new JsonResult { Data = alert, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                return new EmptyResult();
             }
         }
 

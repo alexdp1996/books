@@ -1,3 +1,17 @@
-﻿<div id="alert-box">
+﻿<div class="alert alert-success alert-dismissible fade in" id="alert-success-div" >
+    <button type="button" class="close">&times;</button>
+    <strong>Success!</strong> <span class="alert-message"></span>
+</div>
+
+<div class="alert alert-danger alert-dismissible fade in" id="alert-danger-div">
+    <button type="button" class="close">&times;</button>
+    <strong>Danger!</strong> <span class="alert-message"></span>
 </div>
 @Scripts.Render("~/bundles/alert")
+<script>
+    $(document).ready(function(){
+        $('.alert.alert-dismissible .close').click(function () {
+            $('.alert.alert-dismissible').hide();
+        }); 
+});
+</script>

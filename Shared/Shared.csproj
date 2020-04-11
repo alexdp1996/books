@@ -56,9 +56,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataInfrastructure\DataInfrastructure.csproj">
-      <Project>{89ff6359-6770-4deb-bbef-72e2dd3b0651}</Project>
-      <Name>DataInfrastructure</Name>
+    <ProjectReference Include="..\EntityModels\EntityModels.csproj">
+      <Project>{57b99944-3533-4ca2-8a3b-17cee4b2cccb}</Project>
+      <Name>EntityModels</Name>
     </ProjectReference>
     <ProjectReference Include="..\ViewModels\ViewModels.csproj">
       <Project>{46490fc5-aa61-44e6-8e0d-eb50e058c206}</Project>

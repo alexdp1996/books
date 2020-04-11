@@ -66,29 +66,17 @@
     <Build Include="dbo\Tables\AuthorBook.sql" />
     <Build Include="dbo\Tables\Author.sql" />
     <Build Include="dbo\Tables\__MigrationHistory.sql" />
-    <Build Include="dbo\Stored Procedures\USPAuthorGetDataTableByNameASC.sql" />
-    <Build Include="dbo\Stored Procedures\USPAuthorGetDataTable.sql" />
+    <Build Include="dbo\Stored Procedures\USPAuthorGetList.sql" />
     <Build Include="dbo\Stored Procedures\USPBookDelete.sql" />
     <Build Include="dbo\Stored Procedures\USPBookGet.sql" />
     <Build Include="dbo\Stored Procedures\USPBookUpdateAuthors.sql" />
-    <Build Include="dbo\Stored Procedures\USPBookGetDataTable.sql" />
-    <Build Include="dbo\Stored Procedures\USPBookGetDataTableByNameASC.sql" />
-    <Build Include="dbo\Stored Procedures\USPBookGetDataTableByNameDESC.sql" />
-    <Build Include="dbo\Stored Procedures\USPBookGetDataTableByDateDESC.sql" />
-    <Build Include="dbo\Stored Procedures\USPBookGetDataTableByDateASC.sql" />
-    <Build Include="dbo\Stored Procedures\USPBookGetDataTableByPagesDESC.sql" />
-    <Build Include="dbo\Stored Procedures\USPBookGetDataTableByPagesASC.sql" />
-    <Build Include="dbo\Stored Procedures\USPBookGetDataTableByRateASC.sql" />
-    <Build Include="dbo\Stored Procedures\USPBookGetDataTableByRateDESC.sql" />
-    <Build Include="dbo\Stored Procedures\USPAuthorGetDataTableByNameDESC.sql" />
-    <Build Include="dbo\Stored Procedures\USPAuthorGetDataTableBySurnameDESC.sql" />
-    <Build Include="dbo\Stored Procedures\USPAuthorGetDataTableBySurnameASC.sql" />
-    <Build Include="dbo\Stored Procedures\USPAuthorGetDataTableByAmountOfBooksASC.sql" />
-    <Build Include="dbo\Stored Procedures\USPAuthorGetDataTableByAmountOfBooksDESC.sql" />
+    <Build Include="dbo\Stored Procedures\USPBookGetList.sql" />
     <Build Include="dbo\User Defined Types\BigIntList.sql" />
     <Build Include="dbo\Stored Procedures\USPAuthorGet.sql" />
     <Build Include="dbo\Stored Procedures\USPAuthorDelete.sql" />
     <Build Include="dbo\Stored Procedures\USPAuthorGetByTerm.sql" />
-    <Build Include="dbo\Stored Procedures\USPAuthorGetByIds.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Database.refactorlog" />
   </ItemGroup>
 </Project>

@@ -200,8 +200,6 @@
     <Content Include="Views\Author\Get.cshtml" />
     <Content Include="Views\Shared\_Popup.cshtml" />
     <Content Include="Views\Shared\_Delete.cshtml" />
-    <Content Include="Views\Book\Delete.cshtml" />
-    <Content Include="Views\Author\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -222,9 +220,9 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LogicInfastructure\LogicInfastructure.csproj">
-      <Project>{62f425b7-1872-4e2d-bb31-28bbebdce777}</Project>
-      <Name>LogicInfastructure</Name>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
+      <Project>{fe64a4c8-7d26-48df-9a10-b5d1f8220064}</Project>
+      <Name>Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared\Shared.csproj">
       <Project>{838b39d1-3392-4700-8a72-6ec2af83b104}</Project>
@@ -244,30 +242,15 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\alert-controller.ts" />
-    <TypeScriptCompile Include="Scripts\DataTable\author-datatable-controller.ts" />
-    <TypeScriptCompile Include="Scripts\DataTable\base-datatable-controller.ts" />
-    <TypeScriptCompile Include="Scripts\DataTable\book-datatable-controller.ts" />
+    <TypeScriptCompile Include="Scripts\Author\author-service.ts" />
     <TypeScriptCompile Include="Scripts\Interfaces\func.ts" />
-    <TypeScriptCompile Include="Scripts\Interfaces\ireloadable.ts" />
-    <TypeScriptCompile Include="Scripts\Popup\popup-controller.ts" />
-    <TypeScriptCompile Include="Scripts\Popup\popup-service.ts" />
-    <TypeScriptCompile Include="Scripts\Entity\author-controller.ts" />
-    <TypeScriptCompile Include="Scripts\Entity\book-controller.ts" />
-    <TypeScriptCompile Include="Scripts\Entity\base-entity-controller.ts" />
-    <TypeScriptCompile Include="Scripts\Entity\base-entity-business.ts" />
-    <TypeScriptCompile Include="Scripts\Entity\base-entity-service.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\alertVM.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\authorBaseVM.ts" />
+    <TypeScriptCompile Include="Scripts\Author\author-controller.ts" />
+    <TypeScriptCompile Include="Scripts\Book\book-controller.ts" />
+    <TypeScriptCompile Include="Scripts\Book\book-service.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\authorVM.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\baseVM.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\bookBaseVM.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\bookDataTableUrlsVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\bookVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\bookUrlsVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\entityUrlsVM.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\savableBookVM.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\popupVM.ts" />
-    <TypeScriptCompile Include="Scripts\ViewModels\dataTableUrlsVM.ts" />
     <TypeScriptCompile Include="Scripts\layout-controller.ts" />
   </ItemGroup>
   <PropertyGroup>

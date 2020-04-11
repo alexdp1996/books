@@ -1,84 +1,121 @@
-﻿using DataInfrastructure.Entities;
-using DataInfrastructure.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using Dapper;
+using Dommel;
+using EntityModels;
+using Infrastructure.Data;
+using Shared.Services;
 
 namespace Data.Repositories
 {
-    public class AuthorRepo : BaseEntityRepo<AuthorEM>, IAuthorRepo
+    public class AuthorRepo : BaseRepo, IAuthorRepo
     {
-        public AuthorRepo()
+        public long Create(AuthorEM entity)
         {
-
+            using (var con = Connection)
+            {
+                var result = con.Insert(entity);
+                var converted = (long)Convert.ChangeType(result, typeof(long));
+                return converted;
+            }
         }
 
-        internal AuthorRepo(DataContext context) : base(context)
+        public void Update(AuthorEM entity)
         {
-
+            using (var con = Connection)
+            {
+                con.Update(entity);
+            }
         }
 
-        public override AuthorEM Get(long id)
+        public void Delete(long id)
         {
-            return DataContext.Authors.Include("Books").FirstOrDefault(b => b.Id == id);
-        }
+            using (var con = Connection)
+            {
+                var SP = "USPAuthorDelete";
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@Id", id);
 
-        public IEnumerable<AuthorEM> Get(IEnumerable<long> Ids)
-        {
-            return DataContext.Authors.Where(a => Ids.Contains(a.Id.Value));
+                con.Query(SP, queryParameters, commandType: CommandType.StoredProcedure);
+            }
         }
 
         public IEnumerable<AuthorEM> Get(string term)
         {
-            return DataContext.Authors.Where(a => (a.Name + " " + a.Surname).ToLower().Contains(term.ToLower()));
+            using (var con = Connection)
+            {
+                var SP = "USPAuthorGetByTerm";
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@Term", term);
+
+                var authors = con.Query<AuthorEM>(SP, queryParameters, commandType: CommandType.StoredProcedure);
+
+                return authors;
+            }
         }
 
-        private DataTableResponseEM<AuthorEM> Get(DataTableRequestEM model, Func<IQueryable<AuthorEM>, IOrderedQueryable<AuthorEM>> orderFunc)
+        public AuthorEM Get(long id)
         {
-            var response = new DataTableResponseEM<AuthorEM>();
+            using (var con = Connection)
+            {
+                var SP = "USPAuthorGet";
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@Id", id);
 
-            var authors = DataContext.Authors.Include("Books").AsQueryable();
-            response.RecordsTotal = authors.Count();
+                var result = con.QueryMultiple(SP, queryParameters, commandType: CommandType.StoredProcedure);
 
-            authors = orderFunc(authors);
+                var mappingObject = new AuthorMappingObjectEM();
 
-            response.RecordsFiltered = authors.Count();
+                mappingObject.Author = result.ReadSingleOrDefault<AuthorEM>();
+                mappingObject.Books = result.Read<BookEM>().AsList();
 
-            authors = authors.Skip(model.Start).Take(model.Length);
+                var author = MapperService.Map<AuthorEM>(mappingObject);
 
-            response.Data = authors;
-
-            return response;
+                return author;
+            }
         }
 
-        public DataTableResponseEM<AuthorEM> GetByAmountOfBooksAsc(DataTableRequestEM model)
+        public DataTableResponseEM<AuthorEM> GetList(DataTableRequestEM model)
         {
-            return Get(model, authors => authors.OrderBy(a => a.Books.Count));
-        }
+            using (var con = Connection)
+            {
+                var SPname = "USPAuthorGetList";
 
-        public DataTableResponseEM<AuthorEM> GetByAmountOfBooksDesc(DataTableRequestEM model)
-        {
-            return Get(model, authors => authors.OrderByDescending(a => a.Books.Count));
-        }
+                var order = model.Order[0];
+                var orderColumnName = model.Columns[order.Column].Name;
 
-        public DataTableResponseEM<AuthorEM> GetByNameAsc(DataTableRequestEM model)
-        {
-            return Get(model, authors => authors.OrderBy(a => a.Name));
-        }
+                var queryParameters = new DynamicParameters();
+                queryParameters.Add("@Start", model.Start);
+                queryParameters.Add("@Lenght", model.Length);
+                queryParameters.Add("@OrderColumnName", orderColumnName);
+                queryParameters.Add("@IsAsc", order.IsAcs);
 
-        public DataTableResponseEM<AuthorEM> GetByNameDesc(DataTableRequestEM model)
-        {
-            return Get(model, authors => authors.OrderByDescending(a => a.Name));
-        }
+                var reader = con.QueryMultiple(SPname, queryParameters, commandType: CommandType.StoredProcedure);
+                var generalInfo = reader.ReadSingle<DataTableResponseGeneralEM>();
 
-        public DataTableResponseEM<AuthorEM> GetBySurnameAsc(DataTableRequestEM model)
-        {
-            return Get(model, authors => authors.OrderBy(a => a.Surname));
-        }
+                var datatableResponse = new DataTableResponseEM<AuthorEM>();
+                datatableResponse.RecordsFiltered = generalInfo.RecordsFiltered;
+                datatableResponse.RecordsTotal = generalInfo.RecordsTotal;
 
-        public DataTableResponseEM<AuthorEM> GetBySurnameDesc(DataTableRequestEM model)
-        {
-            return Get(model, authors => authors.OrderByDescending(b => b.Surname));
+                var authors = reader.Read<AuthorEM>().AsList();
+
+                var authorBook = reader.Read<AuthorBookEM>().AsList();
+
+                var books = reader.Read<BookEM>().AsList();
+
+                foreach (var a in authors)
+                {
+                    var bookIds = authorBook.Where(ab => ab.AuthorId == a.Id.Value).Select(s => s.BookId).ToList();
+                    var booksToAdd = books.Where(b => bookIds.Contains(b.Id.Value));
+                    a.Books.AddRange(booksToAdd);
+                }
+
+                datatableResponse.Data = authors;
+
+                return datatableResponse;
+            }
         }
     }
 }

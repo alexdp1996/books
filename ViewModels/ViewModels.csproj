@@ -42,17 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlertVM.cs" />
-    <Compile Include="AuthorBaseVM.cs" />
     <Compile Include="AuthorVM.cs" />
-    <Compile Include="BookBaseVM.cs" />
-    <Compile Include="BookEditVM.cs" />
     <Compile Include="BookVM.cs" />
     <Compile Include="DataTableResponseVM.cs" />
     <Compile Include="DataTableRequestVM.cs" />
-    <Compile Include="Enums\AlertType.cs" />
-    <Compile Include="Enums\AuthorColumn.cs" />
-    <Compile Include="Enums\BookColumn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

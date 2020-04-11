@@ -1,11 +1,10 @@
-﻿using DataInfrastructure.Entities;
-using DataInfrastructure.Interfaces;
-using LogicInfastructure.Interfaces;
+﻿using EntityModels;
+using Infrastructure.Data;
+using Infrastructure.Logic;
 using Shared.Interfaces;
 using Shared.Services;
 using System.Linq;
 using ViewModels;
-using ViewModels.Enums;
 
 namespace Logic
 {
@@ -24,7 +23,7 @@ namespace Logic
             }
         }
 
-        public void Save(BookEditVM model)
+        public void Update(BookVM model)
         {
             var book = MapperService.Map<BookEM>(model);
             using (var bookRepo = Factory.GetService<IBookRepo>())
@@ -32,17 +31,26 @@ namespace Logic
             {
                 long id;
 
-                if (book.Id.HasValue)
-                {
-                    id = book.Id.Value;
-                    bookRepo.Update(book);
-                }
-                else
-                {
-                    id = bookRepo.Add(book);
-                }
+                id = book.Id.Value;
+                bookRepo.Update(book);
+                var authorsIds = model.Authors.Select(a => a.Id.Value);
+                bookRepo.UpdateAuthors(id, authorsIds);
 
-                bookRepo.UpdateAuthors(id, model.AuthorIds);
+                scope.Complete();
+            }
+        }
+
+        public void Create(BookVM model)
+        {
+            var book = MapperService.Map<BookEM>(model);
+            using (var bookRepo = Factory.GetService<IBookRepo>())
+            using (var scope = new TransactionService())
+            {
+                long id;
+
+                id = bookRepo.Create(book);
+                var authorsIds = model.Authors.Select(a => a.Id.Value);
+                bookRepo.UpdateAuthors(id, authorsIds);
 
                 scope.Complete();
             }
@@ -62,78 +70,13 @@ namespace Logic
             }
         }
 
-        public BookVM Get(BookEditVM book)
-        {
-            var result = MapperService.Map<BookVM>(book);
-
-            using (var authorDM = Factory.GetService<IAuthorDM>())
-            {
-                result.Authors = authorDM.Get(book.AuthorIds).ToList();
-                return result;
-            }
-        }
-
-        public DataTableResponseVM<BookVM> Get(DataTableRequestVM model)
+        public DataTableResponseVM<BookVM> GetList(DataTableRequestVM model)
         {
             var dataTableEM = MapperService.Map<DataTableRequestEM>(model);
 
-            var asc = model.Order[0].Dir == "asc";
-            var column = (BookColumn) model.Order[0].Column;
             using (var bookRepo = Factory.GetService<IBookRepo>())
             {
-                DataTableResponseEM<BookEM> responseEM;
-                switch (column)
-                {
-                    default:
-                    case BookColumn.Name:
-                        {
-                            if (asc)
-                            {
-                                responseEM = bookRepo.GetByNameAsc(dataTableEM);
-                            }
-                            else
-                            {
-                                responseEM = bookRepo.GetByNameDesc(dataTableEM);
-                            }
-                            break;
-                        }
-                    case BookColumn.Pages:
-                        {
-                            if (asc)
-                            {
-                                responseEM = bookRepo.GetByPagesAsc(dataTableEM);
-                            }
-                            else
-                            {
-                                responseEM = bookRepo.GetByPagesDesc(dataTableEM);
-                            }
-                            break;
-                        }
-                    case BookColumn.Rate:
-                        {
-                            if (asc)
-                            {
-                                responseEM = bookRepo.GetByRateAsc(dataTableEM);
-                            }
-                            else
-                            {
-                                responseEM = bookRepo.GetByRateDesc(dataTableEM);
-                            }
-                            break;
-                        }
-                    case BookColumn.Date:
-                        {
-                            if (asc)
-                            {
-                                responseEM = bookRepo.GetByDateAsc(dataTableEM);
-                            }
-                            else
-                            {
-                                responseEM = bookRepo.GetByDateDesc(dataTableEM);
-                            }
-                            break;
-                        }
-                }
+                var responseEM = bookRepo.GetList(dataTableEM);
                 var responseVM = MapperService.Map<DataTableResponseVM<BookVM>>(responseEM);
                 responseVM.draw = model.Draw;
 

@@ -3,10 +3,11 @@
 }
 
 @Html.Partial("~/Views/Shared/_Popup.cshtml", "popup")
+@Html.Partial("~/Views/Shared/_Delete.cshtml")
 
-<div id="add-template" class="hidden">
-    <button class="btn btn-default author-get"><i class="glyphicon glyphicon-plus"></i></button>
-</div>
+<button class="btn btn-default" id="author-create-btn">
+    <i class="glyphicon glyphicon-plus"></i>
+</button>
 
 <table class="table table-striped table-bordered dataTable" style="width: 100%;" id="authors">
     <thead>
@@ -29,14 +30,19 @@
 @Styles.Render("~/datatables/css")
 @Scripts.Render("~/bundles/datatables")
 @Scripts.Render("~/bundles/view-models")
-@Scripts.Render("~/bundles/authors")
+@Scripts.Render("~/bundles/author")
 <script>
-    var DT;
+    var AuthorController;
+
     $(document).ready(function () {
-        let urls = {};
-        urls.get = "@Url.Action("Get")";
-        urls.dtData = "@Url.Action("GetAuthors")";
-        urls.delete = "@Url.Action("DeleteModal")";
-        DT = new AuthorDataTableController(urls);
+        let authorUrls = {};
+        authorUrls.create = "@Url.Action("Create","Author")";
+        authorUrls.update = "@Url.Action("Update","Author")";
+        authorUrls.get = "@Url.Action("Get","Author")";
+        authorUrls.delete = "@Url.Action("Delete","Author")";
+        authorUrls.getList = "@Url.Action("GetList","Author")";
+
+        AuthorController = new AuthorController(authorUrls);
+        AuthorController.init();
     });
 </script>

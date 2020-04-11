@@ -3,7 +3,7 @@
     [Name]  NVARCHAR (MAX) NULL,
     [Rate]  INT            NOT NULL,
     [Pages] INT            NOT NULL,
-    [Date]  DATETIME       NOT NULL,
+    [CreatedDate]  DATETIME       NOT NULL,
     CONSTRAINT [PK_dbo.Book] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 

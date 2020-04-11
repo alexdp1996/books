@@ -1,11 +1,10 @@
-﻿using DataInfrastructure.Entities;
-using DataInfrastructure.Interfaces;
-using LogicInfastructure.Interfaces;
+﻿using EntityModels;
+using Infrastructure.Data;
+using Infrastructure.Logic;
 using Shared.Interfaces;
 using Shared.Services;
 using System.Collections.Generic;
 using ViewModels;
-using ViewModels.Enums;
 
 namespace Logic
 {
@@ -16,77 +15,24 @@ namespace Logic
 
         }
 
-        public IEnumerable<AuthorBaseVM> Get(string term)
+        public IEnumerable<AuthorVM> Get(string term)
         {
             using (var authorRepo = Factory.GetService<IAuthorRepo>())
             {
                 var authorsEM = authorRepo.Get(term);
-                var authorsVM = MapperService.Map<IEnumerable<AuthorBaseVM>>(authorsEM);
+                var authorsVM = MapperService.Map<IEnumerable<AuthorVM>>(authorsEM);
                 return authorsVM;
             }
         }
 
-        public IEnumerable<AuthorBaseVM> Get(IEnumerable<long> ids)
-        {
-            using (var authorRepo = Factory.GetService<IAuthorRepo>())
-            {
-                var authorsEM = authorRepo.Get(ids);
-                var authorsVM = MapperService.Map<IEnumerable<AuthorBaseVM>>(authorsEM);
-                return authorsVM;
-            }
-        }
-
-        public DataTableResponseVM<AuthorBaseVM> Get(DataTableRequestVM model)
+        public DataTableResponseVM<AuthorVM> GetList(DataTableRequestVM model)
         {
             var dataTableEM = MapperService.Map<DataTableRequestEM>(model);
 
-            var asc = model.Order[0].Dir == "asc";
-            var column = (AuthorColumn)model.Order[0].Column;
             using (var authorRepo = Factory.GetService<IAuthorRepo>())
             {
-                DataTableResponseEM<AuthorEM> responseEM;
-                switch (column)
-                {
-                    default:
-                    case AuthorColumn.Name:
-                        {
-                            if (asc)
-                            {
-                                responseEM = authorRepo.GetByNameAsc(dataTableEM);
-                            }
-                            else
-                            {
-                                responseEM = authorRepo.GetByNameDesc(dataTableEM);
-                            }
-                            break;
-                        }
-                    case AuthorColumn.Surname:
-                        {
-                            if (asc)
-                            {
-                                responseEM = authorRepo.GetBySurnameAsc(dataTableEM);
-                            }
-                            else
-                            {
-                                responseEM = authorRepo.GetBySurnameDesc(dataTableEM);
-                            }
-                            break;
-                        }
-                    case AuthorColumn.AmountOfBooks:
-                        {
-                            if (asc)
-                            {
-                                responseEM = authorRepo.GetByAmountOfBooksAsc(dataTableEM);
-                            }
-                            else
-                            {
-                                responseEM = authorRepo.GetByAmountOfBooksDesc(dataTableEM);
-                            }
-                            break;
-                        }
-
-                }
-                var responseVM = MapperService.Map<DataTableResponseVM<AuthorBaseVM>>(responseEM);
+                var responseEM = authorRepo.GetList(dataTableEM);
+                var responseVM = MapperService.Map<DataTableResponseVM<AuthorVM>>(responseEM);
                 responseVM.draw = model.Draw;
 
                 return responseVM;
@@ -115,20 +61,23 @@ namespace Logic
             }
         }
 
-        public void Save(AuthorVM model)
+        public void Update(AuthorVM model)
         {
             var author = MapperService.Map<AuthorEM>(model);
 
             using (var authorRepo = Factory.GetService<IAuthorRepo>())
             {
-                if (author.Id.HasValue)
-                {
-                    authorRepo.Update(author);
-                }
-                else
-                {
-                    authorRepo.Add(author);
-                }  
+                authorRepo.Update(author);
+            }
+        }
+
+        public void Create(AuthorVM model)
+        {
+            var author = MapperService.Map<AuthorEM>(model);
+
+            using (var authorRepo = Factory.GetService<IAuthorRepo>())
+            {
+                authorRepo.Create(author);
             }
         }
     }

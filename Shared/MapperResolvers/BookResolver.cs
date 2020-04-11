@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using DataInfrastructure.Entities;
+using EntityModels;
 
 namespace Shared.MapperResolvers
 {

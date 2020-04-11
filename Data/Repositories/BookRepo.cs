@@ -38,7 +38,7 @@ namespace Data.Repositories
                 var SP = "USPBookUpdateAuthors";
                 var queryParameters = new DynamicParameters();
                 queryParameters.Add("@BookId", bookId);
-                queryParameters.Add("@AuthorIds", authorIds.AsParameter());
+                queryParameters.Add("@AuthorIds", authorIds.AsEnumerableParameter());
 
                 con.Query(SP, queryParameters, commandType: CommandType.StoredProcedure);
             }

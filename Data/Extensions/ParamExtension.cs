@@ -7,7 +7,7 @@ namespace Data.Extensions
 {
     public static class ParamExtension
     {
-        public static ICustomQueryParameter AsParameter<T>(this IEnumerable<T> elements)
+        public static ICustomQueryParameter AsEnumerableParameter<T>(this IEnumerable<T> elements)
         {
             var datatable = new DataTable();
 

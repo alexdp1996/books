@@ -220,24 +220,6 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
-      <Project>{fe64a4c8-7d26-48df-9a10-b5d1f8220064}</Project>
-      <Name>Infrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Shared\Shared.csproj">
-      <Project>{838b39d1-3392-4700-8a72-6ec2af83b104}</Project>
-      <Name>Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Unity\Unity.csproj">
-      <Project>{5d119cd3-a209-452e-a659-448fb0c4e1f0}</Project>
-      <Name>Unity</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ViewModels\ViewModels.csproj">
-      <Project>{46490fc5-aa61-44e6-8e0d-eb50e058c206}</Project>
-      <Name>ViewModels</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
@@ -252,6 +234,28 @@
     <TypeScriptCompile Include="Scripts\ViewModels\bookUrlsVM.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\entityUrlsVM.ts" />
     <TypeScriptCompile Include="Scripts\layout-controller.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InfrastructureVB\InfrastructureVB.vbproj">
+      <Project>{02b80a28-bce7-431f-97fd-85066478924f}</Project>
+      <Name>InfrastructureVB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LogicVB\LogicVB.vbproj">
+      <Project>{2c401011-fac9-4f2b-b66c-34db94ad9df6}</Project>
+      <Name>LogicVB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedVB\SharedVB.vbproj">
+      <Project>{3bf625fa-597a-43b5-8721-68efa61aaf6d}</Project>
+      <Name>SharedVB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnityVB\UnityVB.vbproj">
+      <Project>{83e09515-c6dd-4635-9927-2ecca5a0bf6f}</Project>
+      <Name>UnityVB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ViewModelsVB\ViewModelsVB.vbproj">
+      <Project>{47127943-9f8d-473b-b2e8-86336b8b9a0c}</Project>
+      <Name>ViewModelsVB</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

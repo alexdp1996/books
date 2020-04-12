@@ -1,4 +1,5 @@
-﻿using EntityModels;
+﻿using AutoMapper;
+using EntityModels;
 using Shared.MapperResolvers;
 using ViewModels;
 
@@ -6,10 +7,11 @@ namespace Shared.Services
 {
     public static class MapperService
     {
+        private static IMapper _mapper;
+
         static MapperService()
         {
-#pragma warning disable CS0618 // Type or member is obsolete
-            AutoMapper.Mapper.Initialize(mapper =>
+            _mapper = new MapperConfiguration(mapper =>
             {
                 mapper.CreateMap<AuthorEM, AuthorVM>().ForMember(d => d.CountOfBooks, o => o.MapFrom(s => s.Books.Count)).ReverseMap();
                 mapper.CreateMap<BookEM, BookVM>().ReverseMap();
@@ -25,13 +27,12 @@ namespace Shared.Services
 
                 mapper.CreateMap<BookMappingObjectEM, BookEM>().ConvertUsing<BookResolver>();
                 mapper.CreateMap<AuthorMappingObjectEM, AuthorEM>().ConvertUsing<AuthorResolver>();
-            });
-#pragma warning restore CS0618 // Type or member is obsolete
+            }).CreateMapper();
         }
 
         public static T Map<T>(object source)
         {
-            return AutoMapper.Mapper.Map<T>(source);
+            return _mapper.Map<T>(source);
         }
     }
 }

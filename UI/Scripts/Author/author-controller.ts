@@ -29,6 +29,13 @@ class AuthorController {
         $("#author-create-btn").off('click').click(function () {
             self.authorCreateBtnOnClick();
         });
+
+        $("#author-publish-btn").off('click').click(function () {
+            self.service.getPublishForm()
+                .then((response) => {
+                    self.getForm(response);
+                });
+        });
     }
 
     private authorCreateBtnOnClick() {
@@ -173,4 +180,19 @@ class AuthorController {
         });
     }
 
+    public publish() {
+        let author: AuthorVM = {
+            Name: $("#Name").val() as string,
+            Surname: $("#Surname").val() as string
+        };
+
+        this.service.publish(author)
+            .catch(() => {
+                Alert.showError("Failed to publish author model to SNS");
+            })
+            .then((model) => {
+                Alert.showSuccess("Author was published to SNS, message id: " + model);
+                $("#popup").modal("hide");
+            });
+    }
 }

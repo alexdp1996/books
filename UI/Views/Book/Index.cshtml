@@ -5,6 +5,12 @@
 @Html.Partial("~/Views/Shared/_Popup.cshtml", "popup")
 @Html.Partial("~/Views/Shared/_Delete.cshtml")
 
+<div class="pull-right">
+    <button class="btn btn-default" id="book-publish-btn">
+        Publish to SNS
+    </button>
+</div>
+
 <button class="btn btn-default" id="book-create-btn">
     <i class="glyphicon glyphicon-plus"></i>
 </button>
@@ -51,6 +57,8 @@
         bookUrls.delete = "@Url.Action("Delete","Book")";
         bookUrls.getAuthors = "@Url.Action("GetByTerm","Author")"
         bookUrls.getList = "@Url.Action("GetList","Book")";
+        bookUrls.getPublishForm = "@Url.Action("Publish","Book")";
+        bookUrls.publish = "@Url.Action("Publish","Book")";
 
         BookController = new BookController(bookUrls);
         BookController.init();

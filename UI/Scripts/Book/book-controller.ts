@@ -104,6 +104,13 @@ class BookController {
         $("#book-create-btn").off('click').click(function () {
             self.bookCreateBtnOnClick();
         });
+
+        $("#book-publish-btn").off('click').click(function () {
+            self.service.getPublishForm()
+                .then((response) => {
+                    self.getForm(response);
+                });
+        });
     }
 
     private bookCreateBtnOnClick() {
@@ -245,5 +252,24 @@ class BookController {
         $("#delete").click(function () {
             self.delete(id);
         });
+    }
+
+    public publish() {
+        let book: BookVM = {
+            Name: $("#Name").val() as string,
+            Rate: +$("#Rate").val(),
+            CreatedDate: ($("#CreatedDate").val() as any) as Date,
+            Pages: +$("#Pages").val(),
+            Authors: []
+        };
+
+        this.service.publish(book)
+            .catch(() => {
+                Alert.showError("Failed to publish book model to SNS");
+            })
+            .then((model) => {
+                Alert.showSuccess("Book was published to SNS, message id: " + model);
+                $("#popup").modal("hide");
+            });
     }
 }

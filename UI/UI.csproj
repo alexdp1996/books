@@ -200,6 +200,8 @@
     <Content Include="Views\Author\Get.cshtml" />
     <Content Include="Views\Shared\_Popup.cshtml" />
     <Content Include="Views\Shared\_Delete.cshtml" />
+    <Content Include="Views\Book\Publish.cshtml" />
+    <Content Include="Views\Author\Publish.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -220,6 +222,10 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AmazonIntegration\AmazonIntegration.csproj">
+      <Project>{1896dbe7-4f10-443c-8a06-03a38d17d749}</Project>
+      <Name>AmazonIntegration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
       <Project>{fe64a4c8-7d26-48df-9a10-b5d1f8220064}</Project>
       <Name>Infrastructure</Name>

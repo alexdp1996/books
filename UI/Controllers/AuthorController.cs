@@ -1,5 +1,8 @@
-﻿using Infrastructure.Logic;
+﻿using AmazonIntegration;
+using Infrastructure.Logic;
+using Newtonsoft.Json;
 using System;
+using System.Configuration;
 using System.Web.Mvc;
 using ViewModels;
 
@@ -64,6 +67,30 @@ namespace UI.Controllers
                 }
             }
             throw new ArgumentException("Model is not valid");
+        }
+
+        [HttpPost]
+        public ActionResult Publish(AuthorVM model)
+        {
+            using (var bookDM = Factory.GetService<IBookDM>())
+            {
+                if (ModelState.IsValid)
+                {
+                    var sns = new SNS();
+                    var json = JsonConvert.SerializeObject(model);
+                    var arn = ConfigurationManager.AppSettings["AWSSNSTopicARN"];
+                    var messageId = sns.PublishEntity(arn, json, "Author", "Author");
+
+                    return new JsonResult { Data = messageId, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+            }
+            throw new ArgumentException("Model is not valid");
+        }
+
+        [HttpGet]
+        public ActionResult Publish()
+        {
+            return PartialView();
         }
 
         [HttpPost]

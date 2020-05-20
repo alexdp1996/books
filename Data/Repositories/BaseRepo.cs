@@ -2,8 +2,8 @@
 using System.Data.SqlClient;
 using System.Configuration;
 using Dapper.FluentMap;
-using Data.Maps;
 using Dapper.FluentMap.Dommel;
+using DataMaps;
 
 namespace Data.Repositories
 {

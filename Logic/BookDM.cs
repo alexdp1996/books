@@ -1,8 +1,11 @@
-﻿using EntityModels;
+﻿using AmazonIntegration;
+using EntityModels;
 using Infrastructure.Data;
 using Infrastructure.Logic;
+using Newtonsoft.Json;
 using Shared.Interfaces;
 using Shared.Services;
+using System.Configuration;
 using System.Linq;
 using ViewModels;
 
@@ -83,6 +86,15 @@ namespace Logic
                 return responseVM;
             }
             
+        }
+
+        public string Publish(BookVM model)
+        {
+            var em = MapperService.Map<BookEM>(model);
+            var json = JsonConvert.SerializeObject(em);
+            var arn = ConfigurationManager.AppSettings["AWSSNSTopicARN"];
+            var sns = new SNS();
+            return sns.PublishEntity(arn, json, "Book", "Book");
         }
     }
 }

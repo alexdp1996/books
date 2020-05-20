@@ -1,8 +1,5 @@
-﻿using AmazonIntegration;
-using Infrastructure.Logic;
-using Newtonsoft.Json;
+﻿using Infrastructure.Logic;
 using System;
-using System.Configuration;
 using System.Web.Mvc;
 using ViewModels;
 
@@ -72,15 +69,11 @@ namespace UI.Controllers
         [HttpPost]
         public ActionResult Publish(AuthorVM model)
         {
-            using (var bookDM = Factory.GetService<IBookDM>())
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                using (var authorDM = Factory.GetService<IAuthorDM>())
                 {
-                    var sns = new SNS();
-                    var json = JsonConvert.SerializeObject(model);
-                    var arn = ConfigurationManager.AppSettings["AWSSNSTopicARN"];
-                    var messageId = sns.PublishEntity(arn, json, "Author", "Author");
-
+                    var messageId = authorDM.Publish(model);
                     return new JsonResult { Data = messageId, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 }
             }

@@ -10,5 +10,6 @@ namespace Infrastructure.Logic
         void Create(BookVM model);
         BookVM Get(long? id);
         DataTableResponseVM<BookVM> GetList(DataTableRequestVM model);
+        string Publish(BookVM model);
     }
 }

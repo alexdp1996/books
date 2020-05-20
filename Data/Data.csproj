@@ -57,14 +57,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\ParamExtension.cs" />
-    <Compile Include="Maps\AuthorMap.cs" />
-    <Compile Include="Maps\BookMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AuthorRepo.cs" />
     <Compile Include="Repositories\BaseRepo.cs" />
     <Compile Include="Repositories\BookRepo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataMaps\DataMaps.csproj">
+      <Project>{c95eedc7-fd98-47f7-b2d8-736574dffebf}</Project>
+      <Name>DataMaps</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EntityModels\EntityModels.csproj">
       <Project>{57b99944-3533-4ca2-8a3b-17cee4b2cccb}</Project>
       <Name>EntityModels</Name>

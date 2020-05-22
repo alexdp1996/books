@@ -1,7 +1,7 @@
 ﻿using Dapper.FluentMap.Dommel.Mapping;
 using EntityModels;
 
-namespace Data.Maps
+namespace DataMaps
 {
     public class BookMap : DommelEntityMap<BookEM>
     {

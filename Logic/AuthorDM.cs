@@ -1,9 +1,12 @@
-﻿using EntityModels;
+﻿using AmazonIntegration;
+using EntityModels;
 using Infrastructure.Data;
 using Infrastructure.Logic;
+using Newtonsoft.Json;
 using Shared.Interfaces;
 using Shared.Services;
 using System.Collections.Generic;
+using System.Configuration;
 using ViewModels;
 
 namespace Logic
@@ -79,6 +82,15 @@ namespace Logic
             {
                 authorRepo.Create(author);
             }
+        }
+
+        public string Publish(AuthorVM model)
+        {
+            var em = MapperService.Map<AuthorEM>(model);
+            var json = JsonConvert.SerializeObject(em);
+            var arn = ConfigurationManager.AppSettings["AWSSNSTopicARN"];
+            var sns = new SNS();
+            return sns.PublishEntity(arn, json, "Author", "Author");
         }
     }
 }

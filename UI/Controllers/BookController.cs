@@ -66,6 +66,26 @@ namespace UI.Controllers
         }
 
         [HttpPost]
+        public ActionResult Publish(BookVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var bookDM = Factory.GetService<IBookDM>())
+                {
+                    var messageId = bookDM.Publish(model);
+                    return new JsonResult { Data = messageId, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+            }
+            throw new ArgumentException("Model is not valid");
+        }
+
+        [HttpGet]
+        public ActionResult Publish()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
         public ActionResult Delete(long id)
         {
             using (var bookDM = Factory.GetService<IBookDM>())

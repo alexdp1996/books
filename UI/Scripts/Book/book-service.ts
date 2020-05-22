@@ -48,4 +48,23 @@
             }
         });
     }
+
+    public getPublishForm() {
+        let self = this;
+        return $.ajax({
+            url: self.urls.getPublishForm,
+            type: "GET"
+        });
+    }
+
+    public publish(model: BookVM): Promise<string> {
+        let self = this;
+        return $.ajax({
+            url: self.urls.publish,
+            type: "POST",
+            data: {
+                model: model
+            }
+        });
+    }
 }

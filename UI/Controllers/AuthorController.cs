@@ -67,6 +67,26 @@ namespace UI.Controllers
         }
 
         [HttpPost]
+        public ActionResult Publish(AuthorVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var authorDM = Factory.GetService<IAuthorDM>())
+                {
+                    var messageId = authorDM.Publish(model);
+                    return new JsonResult { Data = messageId, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+            }
+            throw new ArgumentException("Model is not valid");
+        }
+
+        [HttpGet]
+        public ActionResult Publish()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
         public ActionResult Delete(long id)
         {
             using (var authorDM = Factory.GetService<IAuthorDM>())

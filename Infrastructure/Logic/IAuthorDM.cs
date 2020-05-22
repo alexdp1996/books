@@ -12,5 +12,6 @@ namespace Infrastructure.Logic
         void Delete(long id);
         void Update(AuthorVM model);
         void Create(AuthorVM model);
+        string Publish(AuthorVM model);
     }
 }

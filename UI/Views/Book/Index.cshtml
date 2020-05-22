@@ -59,6 +59,7 @@
         bookUrls.getList = "@Url.Action("GetList","Book")";
         bookUrls.getPublishForm = "@Url.Action("Publish","Book")";
         bookUrls.publish = "@Url.Action("Publish","Book")";
+        bookUrls.sendToRabbitMQ = "@Url.Action("SendToRabitMQ", "Book")";
 
         BookController = new BookController(bookUrls);
         BookController.init();

@@ -13,5 +13,6 @@ namespace Infrastructure.Logic
         void Update(AuthorVM model);
         void Create(AuthorVM model);
         string Publish(AuthorVM model);
+        void SendToRabbitMQ(long id);
     }
 }

@@ -83,7 +83,8 @@ class BookController {
                 },
                 {
                     "data": function (record: BookVM) {
-                        return '<button class="btn btn-danger book-delete-btn" data-id="' + record.Id + '">Delete</button>';
+                        return '<button class="btn btn-danger book-delete-btn" data-id="' + record.Id + '">Delete</button>'
+                            + '<button class="btn btn-info book-send-btn" data-id="' + record.Id + '">RabbitMQ</button>';
                     }
                 }
             ],
@@ -130,6 +131,13 @@ class BookController {
         $(".book-delete-btn").off('click').click(function () {
             let id = $(this).data('id');
             self.deleteForm(id);
+        });
+
+        $(".book-send-btn").off('click').click(function () {
+            let id = $(this).data('id');
+            self.service.sendToRabbitMQ(id).done(() => {
+                Alert.showSuccess("Book was sent to RabbitMQ");
+            })
         });
     };
 

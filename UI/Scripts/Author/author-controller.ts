@@ -90,7 +90,8 @@ class AuthorController {
                 },
                 {
                     "data": function (record: AuthorVM) {
-                        return '<button class="btn btn-danger author-delete-btn" data-id="' + record.Id + '">Delete</button>';
+                        return '<button class="btn btn-danger author-delete-btn" data-id="' + record.Id + '">Delete</button>'
+                            + '<button class="btn btn-info author-send-btn" data-id="' + record.Id + '">RabbitMQ</button>';
                     }
                 }
             ],
@@ -110,6 +111,14 @@ class AuthorController {
             let id = $(this).data('id');
             self.deleteForm(id);
         });
+
+        $(".author-send-btn").off('click').click(function () {
+            let id = $(this).data('id');
+            self.service.sendToRabbitMQ(id).done(() => {
+                Alert.showSuccess("Author was sent to RabbitMQ");
+            })
+        });
+        
     };
 
     private authorGetLnkOnClick(sender: HTMLElement) {

@@ -27,6 +27,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AWSLambda", "AWSLambda\AWSL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataMaps", "DataMaps\DataMaps.csproj", "{C95EEDC7-FD98-47F7-B2D8-736574DFFEBF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQConsumerConsole", "RabbitMQConsumerConsole\RabbitMQConsumerConsole.csproj", "{18B7C274-EFF2-4F29-AC44-F8CEB4D5145C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ", "RabbitMQ\RabbitMQ.csproj", "{5862C8A2-97F2-42B9-982E-D7D51015D143}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +87,14 @@ Global
 		{C95EEDC7-FD98-47F7-B2D8-736574DFFEBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C95EEDC7-FD98-47F7-B2D8-736574DFFEBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C95EEDC7-FD98-47F7-B2D8-736574DFFEBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18B7C274-EFF2-4F29-AC44-F8CEB4D5145C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18B7C274-EFF2-4F29-AC44-F8CEB4D5145C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18B7C274-EFF2-4F29-AC44-F8CEB4D5145C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18B7C274-EFF2-4F29-AC44-F8CEB4D5145C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5862C8A2-97F2-42B9-982E-D7D51015D143}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5862C8A2-97F2-42B9-982E-D7D51015D143}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5862C8A2-97F2-42B9-982E-D7D51015D143}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5862C8A2-97F2-42B9-982E-D7D51015D143}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

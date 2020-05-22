@@ -99,23 +99,44 @@ namespace Data.Repositories
                 datatableResponse.RecordsFiltered = generalInfo.RecordsFiltered;
                 datatableResponse.RecordsTotal = generalInfo.RecordsTotal;
 
-                var authors = reader.Read<AuthorEM>().AsList();
+                var authors = reader.Read<AuthorEM>();
+                var authorBook = reader.Read<AuthorBookEM>();
+                var books = reader.Read<BookEM>();
 
-                var authorBook = reader.Read<AuthorBookEM>().AsList();
-
-                var books = reader.Read<BookEM>().AsList();
-
-                foreach (var a in authors)
-                {
-                    var bookIds = authorBook.Where(ab => ab.AuthorId == a.Id.Value).Select(s => s.BookId).ToList();
-                    var booksToAdd = books.Where(b => bookIds.Contains(b.Id.Value));
-                    a.Books.AddRange(booksToAdd);
-                }
-
-                datatableResponse.Data = authors;
+               
+                datatableResponse.Data = MapWithBooks(authors, authorBook, books);
 
                 return datatableResponse;
             }
+        }
+
+        public IEnumerable<AuthorEM> GetALL()
+        {
+            using (var con = Connection)
+            {
+                var authors = con.GetAll<AuthorEM>();
+
+                var reader = con.QueryMultiple(@"SELECT AuthorID, BookID FROM AuthorBook
+                                                 SELECT B.Id, B.[Name], B.[CreatedDate], B.Pages, B.Rate FROM Book B
+                                                 WHERE EXISTS(SELECT 1 FROM AuthorBook AB WHERE AB.BookID = B.ID)");
+
+                var authorBook = reader.Read<AuthorBookEM>();
+                var books = reader.Read<BookEM>();
+
+                return MapWithBooks(authors, authorBook, books);
+            }
+        }
+
+        private IEnumerable<AuthorEM> MapWithBooks(IEnumerable<AuthorEM> authors, IEnumerable<AuthorBookEM> authorBook, IEnumerable<BookEM> books)
+        {
+            foreach (var a in authors)
+            {
+                var bookIds = authorBook.Where(ab => ab.AuthorId == a.Id.Value).Select(s => s.BookId).ToList();
+                var booksToAdd = books.Where(b => bookIds.Contains(b.Id.Value));
+                a.Books.AddRange(booksToAdd);
+            }
+
+            return authors;
         }
     }
 }

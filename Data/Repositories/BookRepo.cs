@@ -100,23 +100,41 @@ namespace Data.Repositories
                 datatableResponse.RecordsTotal = generalInfo.RecordsTotal;
 
 
-                var books = reader.Read<BookEM>().AsList();
-
-                var authorBook = reader.Read<AuthorBookEM>().AsList();
-
-                var authors = reader.Read<AuthorEM>().AsList();
-
-                foreach (var b in books)
-                {
-                    var authorIds = authorBook.Where(ab => ab.BookId == b.Id.Value).Select(s => s.AuthorId).ToList();
-                    var authorsToBook = authors.Where(a => authorIds.Contains(a.Id.Value));
-                    b.Authors.AddRange(authorsToBook);
-                }
-
-                datatableResponse.Data = books;
+                var books = reader.Read<BookEM>();
+                var authorBook = reader.Read<AuthorBookEM>();
+                var authors = reader.Read<AuthorEM>();
+       
+                datatableResponse.Data = MapWithAuthors(books, authorBook, authors);
 
                 return datatableResponse;
             }
+        }
+
+        private IEnumerable<BookEM> MapWithAuthors(IEnumerable<BookEM> books, IEnumerable<AuthorBookEM> authorBook, IEnumerable<AuthorEM> authors)
+        {
+            foreach (var b in books)
+            {
+                var authorIds = authorBook.Where(ab => ab.BookId == b.Id.Value).Select(s => s.AuthorId).ToList();
+                var authorsToBook = authors.Where(a => authorIds.Contains(a.Id.Value));
+                b.Authors.AddRange(authorsToBook);
+            }
+            return books;
+        }
+
+        public IEnumerable<BookEM> GetALL()
+        {
+            using (var con = Connection)
+            {
+                var books = con.GetAll<BookEM>();
+
+                var reader = con.QueryMultiple(@"SELECT AuthorID, BookID FROM AuthorBook
+                                                 SELECT A.ID, A.Name, A.Surname FROM Author A WHERE EXISTS(SELECT 1 FROM AuthorBook AB WHERE AB.AuthorID = A.ID)");
+
+                var authorBook = reader.Read<AuthorBookEM>();
+                var authors = reader.Read<AuthorEM>();
+
+                return MapWithAuthors(books, authorBook, authors);
+            }        
         }
     }
 }

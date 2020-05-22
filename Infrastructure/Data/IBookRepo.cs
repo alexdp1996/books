@@ -7,5 +7,6 @@ namespace Infrastructure.Data
     {
         void UpdateAuthors(long bookId, IEnumerable<long> authorIds);
         DataTableResponseEM<BookEM> GetList(DataTableRequestEM model);
+        IEnumerable<BookEM> GetALL();
     }
 }

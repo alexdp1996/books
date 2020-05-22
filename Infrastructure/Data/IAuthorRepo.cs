@@ -7,5 +7,6 @@ namespace Infrastructure.Data
     {
         IEnumerable<AuthorEM> Get(string term);
         DataTableResponseEM<AuthorEM> GetList(DataTableRequestEM model);
+        IEnumerable<AuthorEM> GetALL();
     }
 }

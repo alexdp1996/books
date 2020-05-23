@@ -11,5 +11,6 @@ namespace Infrastructure.Logic
         BookVM Get(long? id);
         DataTableResponseVM<BookVM> GetList(DataTableRequestVM model);
         string Publish(BookVM model);
+        void SendToRabbitMQ(long id);
     }
 }

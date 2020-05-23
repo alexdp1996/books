@@ -7,4 +7,5 @@
 
     public getPublishForm?: string;
     public publish?: string;
+    public sendToRabbitMQ?: string;
 }

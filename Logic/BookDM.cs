@@ -3,10 +3,13 @@ using EntityModels;
 using Infrastructure.Data;
 using Infrastructure.Logic;
 using Newtonsoft.Json;
+using RabbitMQ;
 using Shared.Interfaces;
 using Shared.Services;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Text;
 using ViewModels;
 
 namespace Logic
@@ -95,6 +98,20 @@ namespace Logic
             var arn = ConfigurationManager.AppSettings["AWSSNSTopicARN"];
             var sns = new SNS();
             return sns.PublishEntity(arn, json, "Book", "Book");
+        }
+
+        public void SendToRabbitMQ(long id)
+        {
+            using (var bookRepo = Factory.GetService<IBookRepo>())
+            using (var sender = new RabbitMQWrapper())
+            {
+                var model = bookRepo.Get(id);
+                var list = new List<BookEM>();
+                list.Add(model);
+                var json = JsonConvert.SerializeObject(list);
+                var byteData = Encoding.UTF8.GetBytes(json);
+                sender.SendMessage(ConfigurationManager.AppSettings["RabbitMQExchange"], "Book", byteData);
+            }
         }
     }
 }

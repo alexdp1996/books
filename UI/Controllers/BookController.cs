@@ -94,5 +94,15 @@ namespace UI.Controllers
                 return new EmptyResult();
             }
         }
+
+        [HttpPost]
+        public ActionResult SendToRabitMQ(long id)
+        {
+            using (var bookDM = Factory.GetService<IBookDM>())
+            {
+                bookDM.SendToRabbitMQ(id);
+                return new EmptyResult();
+            }
+        }
     }
 }

@@ -49,6 +49,17 @@
         });
     }
 
+    public sendToRabbitMQ(id?: number) {
+        let self = this;
+        return $.ajax({
+            url: self.urls.sendToRabbitMQ,
+            type: "POST",
+            data: {
+                id: id
+            }
+        });
+    }
+
     public getPublishForm() {
         let self = this;
         return $.ajax({

@@ -105,5 +105,15 @@ namespace UI.Controllers
                 return new JsonResult { Data = res, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
+
+        [HttpPost]
+        public ActionResult SendToRabitMQ(long id)
+        {
+            using (var bookDM = Factory.GetService<IAuthorDM>())
+            {
+                bookDM.SendToRabbitMQ(id);
+                return new EmptyResult();
+            }
+        }
     }
 }

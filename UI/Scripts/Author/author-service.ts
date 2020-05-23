@@ -38,12 +38,22 @@
         });
     }
 
-    // use promise to prevent callback in callback
     public get(id? : number): Promise<string> {
         let self = this;
         return $.ajax({
             url: self.urls.get,
             type: "GET",
+            data: {
+                id: id
+            }
+        });
+    }
+
+    public sendToRabbitMQ(id?: number) {
+        let self = this;
+        return $.ajax({
+            url: self.urls.sendToRabbitMQ,
+            type: "POST",
             data: {
                 id: id
             }

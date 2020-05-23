@@ -50,6 +50,7 @@
         authorUrls.getList = "@Url.Action("GetList","Author")";
         authorUrls.getPublishForm = "@Url.Action("Publish", "Author")";
         authorUrls.publish = "@Url.Action("Publish", "Author")";
+        authorUrls.sendToRabbitMQ = "@Url.Action("SendToRabitMQ", "Author")";
 
         AuthorController = new AuthorController(authorUrls);
         AuthorController.init();

@@ -4,6 +4,7 @@
     <RootNamespace>Shared</RootNamespace>
     <AssemblyName>Shared</AssemblyName>
     <TargetFramework>netstandard2</TargetFramework>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>DEBUG;TRACE</DefineConstants>

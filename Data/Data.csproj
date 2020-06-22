@@ -4,13 +4,19 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Data</RootNamespace>
     <AssemblyName>Data</AssemblyName>
-    <TargetFramework>netstandard2</TargetFramework>
+    <TargetFrameworks>netstandard2;net472</TargetFrameworks>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='net472'">
+    <DefineConstants>$(DefineConstants);NET_FRAMEWORK</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.35" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataMaps\DataMaps.csproj" />
